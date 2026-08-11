@@ -14,7 +14,7 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
-<body class="bg-light" style="background-color: #f8f9fa !important;">
+<body class="bg-light" style="background-color: var(--bg-light) !important;">
 
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg bg-white py-3 border-bottom sticky-top">

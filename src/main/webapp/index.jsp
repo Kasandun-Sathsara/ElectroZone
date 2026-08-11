@@ -228,7 +228,7 @@
                 <!-- Product 3 -->
                 <div class="col-sm-6 col-lg-3">
                     <div class="product-card h-100 bg-white">
-                        <div class="product-img-wrapper" style="background-color: #f8f9fa;">
+                        <div class="product-img-wrapper" style="background-color: var(--bg-light);">
                             <span class="product-badge bg-primary text-white">NEW</span>
                             <button class="like-btn"><i class="bi bi-heart-fill text-muted"></i></button>
                             <img src="assets/img/laptop_1777403253050.png" alt="UltraBook Pro 14" class="img-fluid">
