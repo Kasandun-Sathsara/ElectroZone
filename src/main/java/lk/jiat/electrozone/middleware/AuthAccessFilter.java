@@ -15,7 +15,7 @@ public class AuthAccessFilter implements Filter {
 
         HttpSession httpSession = request.getSession(false);
         if (httpSession != null && httpSession.getAttribute("user") != null) {
-            response.sendRedirect("index.html");
+            response.sendRedirect("index.jsp");
         } else {
             filterChain.doFilter(servletRequest, servletResponse);
             response.setHeader("Cache-Control", "no-cache, no-store, revalidate");

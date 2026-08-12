@@ -16,7 +16,7 @@ public class PaymentController {
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public Response paymentSuccess(@QueryParam("orderId") String orderId) {
-        return Response.seeOther(URI.create(Env.get("app.url") + "/invoice.html?orderId=" + orderId)).build();
+        return Response.seeOther(URI.create(Env.get("app.url") + "/invoice.jsp?orderId=" + orderId)).build();
     }
 
     @Path("/cancel")

@@ -54,7 +54,14 @@ public class UserService {
             if (singleUser == null) { // not found
                 message = "Account not found. Please register first!";
             } else {
-                if (!singleUser.getPassword().equals(userDTO.getPassword())) {
+                boolean passwordMatches = false;
+                try {
+                    passwordMatches = org.mindrot.jbcrypt.BCrypt.checkpw(userDTO.getPassword(), singleUser.getPassword());
+                } catch (IllegalArgumentException e) {
+                    // Fallback to plain text comparison for older accounts
+                    passwordMatches = singleUser.getPassword().equals(userDTO.getPassword());
+                }
+                if (!passwordMatches) {
                     message = "Something went wrong. Please check your login credentials!";
                 } else {
                     Status verifiedStatus = hibernateSession.createNamedQuery("Status.findByValue", Status.class)
@@ -177,7 +184,7 @@ public class UserService {
                 u.setFirstName(userDTO.getFirstName());
                 u.setLastName(userDTO.getLastName());
                 u.setEmail(userDTO.getEmail());
-                u.setPassword(userDTO.getPassword());
+                u.setPassword(org.mindrot.jbcrypt.BCrypt.hashpw(userDTO.getPassword(), org.mindrot.jbcrypt.BCrypt.gensalt()));
 
                 String verificationCode = AppUtil.generateCode();
 

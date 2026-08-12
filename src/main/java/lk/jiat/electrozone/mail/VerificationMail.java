@@ -22,7 +22,7 @@ public class VerificationMail extends lk.jiat.ElectroZone.mail.Mailable {
 
 
         String appURL = Env.get("app.url");
-        String verifyURL = appURL + "/verify-account.html?email=" + to + "&verificationCode=" + verificationCode;
+        String verifyURL = appURL + "/verify-account.jsp?email=" + to + "&verificationCode=" + verificationCode;
 
         HtmlTextEmail htmlTextEmail = getEmailTemplateBuilder()
                 .header()

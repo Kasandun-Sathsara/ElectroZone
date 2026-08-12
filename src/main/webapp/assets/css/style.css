@@ -2921,3 +2921,13 @@ body { background-color: var(--bg-light); }
 .link-primary { color: var(--primary-color) !important; }
 .link-primary:hover { color: var(--primary-hover) !important; }
 
+
+/* Center Notiflix Report Button */
+[id^=NotiflixReportWrap] a#NXReportButton {
+    float: none !important;
+    display: block !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    width: fit-content !important;
+}
+

@@ -24,7 +24,7 @@ public class User extends BaseEntity {
     @Column(nullable = false, length = 150, unique = true)
     private String email;
 
-    @Column(nullable = false, length = 20)
+    @Column(nullable = false, length = 255)
     private String password;
 
     @Column(name = "verification_code", nullable = false, length = 15)
@@ -69,6 +69,10 @@ public class User extends BaseEntity {
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
+    }
+
+    public String getFullName() {
+        return this.firstName + " " + this.lastName;
     }
 
     public String getLastName() {

@@ -17,7 +17,7 @@ public class AccessControlFilter implements Filter {
         if (httpSession != null && httpSession.getAttribute("user") != null) {
             filterChain.doFilter(servletRequest, servletResponse);
         } else {
-            response.sendRedirect("sign-in.html");
+            response.sendRedirect("login.jsp");
         }
     }
 }

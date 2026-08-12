@@ -21,10 +21,13 @@ public class MailServiceProvider {
     private MailServiceProvider() {
         properties.put("mail.smtp.auth", true);
         properties.put("mail.smtp.starttls.enable", true);
-        properties.put("mail.smtp.host", Env.get("mail.host"));
-        properties.put("mail.smtp.port", Env.get("mail.port"));
-        // additional property for gmail
-        properties.put("mail.smtp.ssl.trust", Env.get("mail.host"));
+        if (Env.get("mail.host") != null) {
+            properties.put("mail.smtp.host", Env.get("mail.host"));
+            properties.put("mail.smtp.ssl.trust", Env.get("mail.host"));
+        }
+        if (Env.get("mail.port") != null) {
+            properties.put("mail.smtp.port", Env.get("mail.port"));
+        }
     }
 
     public static MailServiceProvider getInstance() {

@@ -9,10 +9,17 @@ public class Env {
 
     static {
         try {
-            InputStream inputStream = Env.class.getClassLoader().getResourceAsStream("app.properties");
-            APP_PROPERTIES.load(inputStream);
+            InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream("app.properties");
+            if (inputStream == null) {
+                inputStream = Env.class.getResourceAsStream("/app.properties");
+            }
+            if (inputStream != null) {
+                APP_PROPERTIES.load(inputStream);
+            } else {
+                System.err.println("WARNING: app.properties not found in classpath!");
+            }
         } catch (IOException e) {
-            throw new RuntimeException("Application properties loading failed: " + e.getMessage());
+            System.err.println("Application properties loading failed: " + e.getMessage());
         }
     }
 

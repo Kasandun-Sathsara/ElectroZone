@@ -32,7 +32,10 @@ async function signUp() {
                 Notiflix.Report.success(
                     'ElectroZone',
                     data.message,
-                    'Okay'
+                    'Okay',
+                    () => {
+                        window.location.href = "login.jsp";
+                    }
                 );
             } else {
                 Notiflix.Notify.failure(data.message,{

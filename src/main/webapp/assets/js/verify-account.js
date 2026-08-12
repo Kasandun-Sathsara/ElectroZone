@@ -31,7 +31,7 @@ async function verifyAccount() {
                     data.message,
                     'Okay', // button title
                     () => {
-                        window.location = "sign-in.jsp"
+                        window.location = "login.jsp"
                     },
                 );
 
