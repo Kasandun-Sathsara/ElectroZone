@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="jakarta.tags.core" prefix="c" %>
     <!DOCTYPE html>
     <html lang="en">
 
@@ -79,6 +80,11 @@
                         <div class="mb-4 text-center text-md-start mt-4">
                             <h2 class="fw-bolder mb-2 text-dark fs-1">Create Account</h2>
                             <p class="text-muted fs-6">Enter your details to get started.</p>
+                            <c:if test="${not empty error}">
+                                <div class="alert alert-danger p-2 fs-7" role="alert">
+                                    ${error}
+                                </div>
+                            </c:if>
                         </div>
 
                         <form action="register" method="post">

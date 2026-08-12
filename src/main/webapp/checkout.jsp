@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="jakarta.tags.core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -51,7 +52,7 @@
             <p class="text-muted fs-6">Complete your order details below.</p>
         </div>
 
-        <div class="row g-5">
+        <form action="checkout" method="post" class="row g-5">
             
             <!-- Left Column: Forms -->
             <div class="col-lg-7">
@@ -86,38 +87,38 @@
                     <div class="row g-3 mb-3">
                         <div class="col-sm-6">
                             <label class="checkout-label">First name</label>
-                            <input type="text" class="form-control checkout-input" placeholder="Saman">
+                            <input type="text" name="firstName" class="form-control checkout-input" placeholder="Saman" required>
                         </div>
                         <div class="col-sm-6">
                             <label class="checkout-label">Last name</label>
-                            <input type="text" class="form-control checkout-input" placeholder="Perera">
+                            <input type="text" name="lastName" class="form-control checkout-input" placeholder="Perera" required>
                         </div>
                     </div>
                     <div class="mb-3">
                         <label class="checkout-label">Address</label>
-                        <input type="text" class="form-control checkout-input" placeholder="123 Galle Road">
+                        <input type="text" name="address" class="form-control checkout-input" placeholder="123 Galle Road" required>
                     </div>
                     <div class="mb-3">
                         <label class="checkout-label">Apartment, suite, etc. (optional)</label>
-                        <input type="text" class="form-control checkout-input" placeholder="Apt 4B">
+                        <input type="text" name="apartment" class="form-control checkout-input" placeholder="Apt 4B">
                     </div>
                     <div class="row g-3">
                         <div class="col-sm-5">
                             <label class="checkout-label">City</label>
-                            <input type="text" class="form-control checkout-input" placeholder="Colombo">
+                            <input type="text" name="city" class="form-control checkout-input" placeholder="Colombo" required>
                         </div>
                         <div class="col-sm-4">
                             <label class="checkout-label">Country</label>
-                            <select class="form-select checkout-input text-dark">
-                                <option selected>Sri Lanka</option>
-                                <option>United States</option>
-                                <option>United Kingdom</option>
-                                <option>Australia</option>
+                            <select name="country" class="form-select checkout-input text-dark" required>
+                                <option selected value="Sri Lanka">Sri Lanka</option>
+                                <option value="United States">United States</option>
+                                <option value="United Kingdom">United Kingdom</option>
+                                <option value="Australia">Australia</option>
                             </select>
                         </div>
                         <div class="col-sm-3">
                             <label class="checkout-label">Postal Code</label>
-                            <input type="text" class="form-control checkout-input" placeholder="00100">
+                            <input type="text" name="postalCode" class="form-control checkout-input" placeholder="00100" required>
                         </div>
                     </div>
                 </div>
@@ -240,7 +241,7 @@
                         </div>
                     </div>
 
-                    <button class="btn btn-primary w-100 py-3 rounded-3 fw-bold fs-6 mb-3 d-flex justify-content-center align-items-center gap-2 shadow-sm">
+                    <button type="submit" class="btn btn-primary w-100 py-3 rounded-3 fw-bold fs-6 mb-3 d-flex justify-content-center align-items-center gap-2 shadow-sm">
                         Confirm Order <i class="bi bi-arrow-right"></i>
                     </button>
 
@@ -250,7 +251,7 @@
                 </div>
             </div>
 
-        </div>
+        </form>
     </main>
 
     <!-- Footer -->

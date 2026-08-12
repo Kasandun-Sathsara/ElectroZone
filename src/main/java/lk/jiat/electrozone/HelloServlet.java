@@ -1,4 +1,4 @@
-package lk.jiat.electrozone;
+package lk.jiat.ElectroZone;
 
 import java.io.*;
 

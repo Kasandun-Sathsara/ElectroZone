@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="jakarta.tags.core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,10 +36,10 @@
             <!-- Navbar Content -->
             <div class="collapse navbar-collapse" id="navbarContent">
                 <!-- Search Bar -->
-                <div class="search-wrapper mx-lg-4 flex-grow-1 position-relative d-none d-lg-block" style="max-width: 400px;">
+                <form action="search" method="get" class="search-wrapper mx-lg-4 flex-grow-1 position-relative d-none d-lg-block" style="max-width: 400px;">
                     <i class="bi bi-search"></i>
-                    <input type="text" class="form-control rounded-pill search-input w-100" placeholder="Search for products, brands and more">
-                </div>
+                    <input type="text" name="q" class="form-control rounded-pill search-input w-100" placeholder="Search for products, brands and more">
+                </form>
 
                 <!-- Navigation Links -->
                 <ul class="navbar-nav mb-2 mb-lg-0 fw-medium">
@@ -58,15 +59,32 @@
 
                 <!-- Icons -->
                 <div class="d-flex align-items-center ms-lg-auto mt-3 mt-lg-0">
-                    <a href="#" class="text-dark position-relative me-3">
+                    <a href="cart" class="text-dark position-relative me-3">
                         <i class="bi bi-cart3 fs-5"></i>
                         <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.6rem;">
                             2
                         </span>
                     </a>
-                    <a href="login.jsp" class="btn btn-light rounded-circle p-2 d-flex align-items-center justify-content-center border" style="width: 40px; height: 40px;">
-                        <i class="bi bi-person text-dark fs-5"></i>
-                    </a>
+                    <c:choose>
+                        <c:when test="${not empty sessionScope.user}">
+                            <div class="dropdown">
+                                <a href="#" class="btn btn-light rounded-circle p-2 d-flex align-items-center justify-content-center border" style="width: 40px; height: 40px;" data-bs-toggle="dropdown">
+                                    <span class="fw-bold fs-6 text-dark">${sessionScope.user.fullName.substring(0,1)}</span>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0 mt-2">
+                                    <li><a class="dropdown-item" href="orders">My Orders</a></li>
+                                    <li><a class="dropdown-item" href="wishlist">Wishlist</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item text-danger" href="logout">Logout</a></li>
+                                </ul>
+                            </div>
+                        </c:when>
+                        <c:otherwise>
+                            <a href="login.jsp" class="btn btn-light rounded-circle p-2 d-flex align-items-center justify-content-center border" style="width: 40px; height: 40px;">
+                                <i class="bi bi-person text-dark fs-5"></i>
+                            </a>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
             </div>
         </div>

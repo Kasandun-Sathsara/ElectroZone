@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="jakarta.tags.core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -63,6 +64,16 @@
                 <div class="mb-5 text-center text-md-start">
                     <h2 class="fw-bolder mb-2 text-dark fs-1">Welcome back</h2>
                     <p class="text-muted fs-6">Enter your credentials to access your account.</p>
+                    <c:if test="${not empty error}">
+                        <div class="alert alert-danger p-2 fs-7" role="alert">
+                            ${error}
+                        </div>
+                    </c:if>
+                    <c:if test="${not empty success}">
+                        <div class="alert alert-success p-2 fs-7" role="alert">
+                            ${success}
+                        </div>
+                    </c:if>
                 </div>
 
                 <form action="login" method="post">
@@ -111,7 +122,7 @@
 
                     <!-- Sign up link -->
                     <div class="text-center mt-2">
-                        <p class="text-muted fs-7 fw-medium">Don't have an account? <a href="#" class="text-decoration-none fw-bold link-primary ms-1">Sign up</a></p>
+                        <p class="text-muted fs-7 fw-medium">Don't have an account? <a href="signin.jsp" class="text-decoration-none fw-bold link-primary ms-1">Sign up</a></p>
                     </div>
                 </form>
 

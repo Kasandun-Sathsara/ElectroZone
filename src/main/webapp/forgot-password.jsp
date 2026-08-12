@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="jakarta.tags.core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,13 +29,19 @@
 
                 <h1 class="auth-title">Forgot your password?</h1>
                 <p class="auth-subtitle">Don't worry, it happens. Enter the email address associated with your account and we'll send you a link to reset it.</p>
+                <c:if test="${not empty error}">
+                    <div class="alert alert-danger p-2 fs-7" role="alert">${error}</div>
+                </c:if>
+                <c:if test="${not empty success}">
+                    <div class="alert alert-success p-2 fs-7" role="alert">${success}</div>
+                </c:if>
 
-                <form class="auth-form" action="#" method="POST">
+                <form class="auth-form" action="forgot-password" method="POST">
                     <div class="mb-3">
                         <label class="auth-label">Email Address</label>
                         <div class="auth-input-group">
                             <i class="bi bi-envelope-fill auth-input-icon"></i>
-                            <input type="email" class="form-control auth-input" placeholder="name@example.com" required autofocus>
+                            <input type="email" name="email" class="form-control auth-input" placeholder="name@example.com" required autofocus>
                         </div>
                     </div>
                     
