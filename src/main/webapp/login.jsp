@@ -76,7 +76,7 @@
                     </c:if>
                 </div>
 
-                <form action="login" method="post">
+                <form onsubmit="event.preventDefault(); signIn();">
                     <!-- Email Input -->
                     <div class="form-group mb-3 position-relative input-wrapper">
                         <input type="email" class="form-control form-control-lg custom-input" id="email" name="email" placeholder="Email address" required>
@@ -137,6 +137,8 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="assets/js/notiflix-aio-3.2.8.min.js"></script>
+<script src="assets/js/sign-in.js"></script>
 <script>
     // Password toggle
     const togglePassword = document.querySelector('#togglePassword');

@@ -91,13 +91,13 @@
                 <!-- Main Image -->
                 <div class="product-gallery-main mb-3">
                     <span class="badge bg-primary position-absolute top-0 start-0 m-3 fs-8 px-2 py-1">NEW</span>
-                    <img src="assets/img/iphone_15_pro_max_1780590648972.png" alt="iPhone 15 Pro Max" id="mainImage">
+                    <img src="assets/img/iphone_15_pro_max_1780590648972.png" alt="iPhone 15 Pro Max" id="image1">
                 </div>
                 
                 <!-- Thumbnails -->
                 <div class="d-flex gap-3 justify-content-center">
                     <div class="gallery-thumbnail active">
-                        <img src="assets/img/iphone_15_pro_max_1780590648972.png" alt="Thumbnail 1">
+                        <img src="assets/img/iphone_15_pro_max_1780590648972.png" alt="Thumbnail 1" id="thumb-image1">
                     </div>
                     <div class="gallery-thumbnail">
                         <img src="assets/img/iphone_15_black_1780590662560.png" alt="Thumbnail 2">
@@ -114,11 +114,11 @@
             <!-- Right Column: Product Details -->
             <div class="col-lg-6">
                 <div class="d-flex justify-content-between align-items-center mb-2">
-                    <span class="text-primary fw-bold fs-7 tracking-tight text-uppercase">APPLE</span>
-                    <span class="text-success fw-bold fs-7"><i class="bi bi-check-circle-fill me-1"></i>In Stock</span>
+                    <span class="text-primary fw-bold fs-7 tracking-tight text-uppercase" id="brand-name">APPLE</span>
+                    <span class="text-success fw-bold fs-7"><i class="bi bi-check-circle-fill me-1"></i>In Stock (<span id="product-stock">10</span>)</span>
                 </div>
                 
-                <h1 class="fw-bolder mb-3 text-dark tracking-tight display-5">iPhone 15 Pro Max</h1>
+                <h1 class="fw-bolder mb-3 text-dark tracking-tight display-5" id="product-title">iPhone 15 Pro Max</h1>
                 
                 <div class="d-flex align-items-center mb-4">
                     <div class="text-warning me-2 fs-6">
@@ -134,7 +134,7 @@
 
                 <div class="d-flex align-items-end mb-4 pb-4 border-bottom">
                     <div>
-                        <div class="fw-bolder display-6 text-dark tracking-tight mb-0 lh-1">LKR 389,900.00</div>
+                        <div class="fw-bolder display-6 text-dark tracking-tight mb-0 lh-1">LKR <span id="product-price">389,900.00</span></div>
                     </div>
                     <div class="ms-4 text-center">
                         <div class="text-muted text-decoration-line-through fs-7 fw-medium mb-1">LKR 422,900.00</div>
@@ -146,8 +146,8 @@
                 <div class="mb-4">
                     <span class="text-dark fs-7 fw-medium mb-2 d-block">Color: <span class="text-muted">Natural Titanium</span></span>
                     <div class="d-flex gap-2">
-                        <div class="color-wrapper active">
-                            <span class="color-option" style="background-color: #bebdb9;"></span>
+                        <div class="color-wrapper active" id="color-border">
+                            <span class="color-option" style="background-color: #bebdb9;" id="color-background"></span>
                         </div>
                         <div class="color-wrapper">
                             <span class="color-option" style="background-color: #3b404d;"></span>
@@ -165,9 +165,7 @@
                 <div class="mb-4 pb-4 border-bottom">
                     <span class="text-dark fs-7 fw-medium mb-2 d-block">Storage</span>
                     <div class="d-flex gap-2">
-                        <button class="storage-btn">256GB</button>
-                        <button class="storage-btn active">512GB</button>
-                        <button class="storage-btn">1TB</button>
+                        <button class="storage-btn active" id="product-storage">512GB</button>
                     </div>
                 </div>
 
@@ -175,12 +173,12 @@
                 <div class="d-flex gap-3 mb-4">
                     <div class="qty-selector">
                         <button class="qty-btn"><i class="bi bi-dash"></i></button>
-                        <input type="text" value="1" class="qty-input">
+                        <input type="text" value="1" class="qty-input" id="add-to-cart-qty">
                         <button class="qty-btn"><i class="bi bi-plus"></i></button>
                     </div>
-                    <button class="btn btn-primary btn-lg fw-bold flex-grow-1 shadow-sm d-flex align-items-center justify-content-center gap-2">
+                    <a href="#" id="add-to-cart-main" class="btn btn-primary btn-lg fw-bold flex-grow-1 shadow-sm d-flex align-items-center justify-content-center gap-2 text-decoration-none">
                         <i class="bi bi-cart-plus fs-5"></i> Add to Cart
-                    </button>
+                    </a>
                     <button class="btn btn-buy-now btn-lg fw-bold px-4 shadow-sm">
                         Buy Now
                     </button>
@@ -249,7 +247,7 @@
                 <a href="#" class="text-decoration-none fw-bold link-primary fs-7">View all <i class="bi bi-arrow-right"></i></a>
             </div>
 
-            <div class="row g-4">
+            <div class="row g-4" id="similar-product-main">
                 <!-- Product 1 -->
                 <div class="col-sm-6 col-lg-3">
                     <div class="product-card h-100 bg-white shadow-sm border-0">
@@ -332,6 +330,9 @@
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/notiflix-aio-3.2.8.min.js"></script>
+    <script src="assets/js/cart.js"></script>
+    <script src="assets/js/single-product.js"></script>
     <script>
         // Simple script for gallery thumbnails
         document.querySelectorAll('.gallery-thumbnail').forEach(item => {

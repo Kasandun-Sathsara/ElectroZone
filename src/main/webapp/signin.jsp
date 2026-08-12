@@ -87,14 +87,24 @@
                             </c:if>
                         </div>
 
-                        <form action="register" method="post">
-                            <!-- Full Name Input -->
-                            <div class="mb-3">
-                                <label for="fullName" class="form-label fw-bold fs-7 text-dark mb-1">Full Name</label>
-                                <div class="form-group position-relative input-wrapper">
-                                    <i class="bi bi-person-fill position-absolute icon-left pe-none"></i>
-                                    <input type="text" class="form-control form-control-lg custom-input has-icon-left"
-                                        id="fullName" name="fullName" placeholder="John Doe" required>
+                        <form onsubmit="event.preventDefault(); signUp();">
+                            <!-- Name Inputs -->
+                            <div class="row g-3 mb-3">
+                                <div class="col-md-6">
+                                    <label for="firstName" class="form-label fw-bold fs-7 text-dark mb-1">First Name</label>
+                                    <div class="form-group position-relative input-wrapper">
+                                        <i class="bi bi-person-fill position-absolute icon-left pe-none"></i>
+                                        <input type="text" class="form-control form-control-lg custom-input has-icon-left"
+                                            id="firstName" placeholder="John" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="lastName" class="form-label fw-bold fs-7 text-dark mb-1">Last Name</label>
+                                    <div class="form-group position-relative input-wrapper">
+                                        <i class="bi bi-person-fill position-absolute icon-left pe-none"></i>
+                                        <input type="text" class="form-control form-control-lg custom-input has-icon-left"
+                                            id="lastName" placeholder="Doe" required>
+                                    </div>
                                 </div>
                             </div>
 
@@ -180,6 +190,8 @@
         </div>
 
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="assets/js/notiflix-aio-3.2.8.min.js"></script>
+        <script src="assets/js/sign-up.js"></script>
         <script>
             // Password toggle
             const togglePassword = document.querySelector('#togglePassword');
