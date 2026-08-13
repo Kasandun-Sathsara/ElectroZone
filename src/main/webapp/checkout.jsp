@@ -57,120 +57,71 @@
             <!-- Left Column: Forms -->
             <div class="col-lg-7">
                 
-                <!-- Step 1: Contact Information -->
-                <div class="card border-0 shadow-sm rounded-4 mb-4 p-4">
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <div class="d-flex align-items-center gap-2">
                             <span class="step-circle">1</span>
-                            <h5 class="fw-bold mb-0">Contact Information</h5>
+                            <h5 class="fw-bold mb-0">Contact & Shipping Information</h5>
                         </div>
-                        <a href="login.jsp" class="text-primary text-decoration-none fw-medium fs-7">Log in</a>
                     </div>
                     
-                    <div class="mb-3">
-                        <label class="checkout-label">Email address</label>
-                        <input type="email" class="form-control checkout-input" placeholder="you@example.com">
+                    <div class="form-check mb-4 border p-3 rounded-3 bg-light">
+                        <input class="form-check-input" type="checkbox" id="usePrimaryAddressCheckbox">
+                        <label class="form-check-label fw-bold ms-2 mt-1" for="usePrimaryAddressCheckbox">
+                            Use my primary saved address
+                        </label>
                     </div>
-                    <div>
-                        <label class="checkout-label">Phone number</label>
-                        <input type="tel" class="form-control checkout-input" placeholder="+94 77 123 4567">
-                    </div>
-                </div>
 
-                <!-- Step 2: Shipping Address -->
-                <div class="card border-0 shadow-sm rounded-4 mb-4 p-4">
-                    <div class="d-flex align-items-center gap-2 mb-4">
-                        <span class="step-circle">2</span>
-                        <h5 class="fw-bold mb-0">Shipping Address</h5>
-                    </div>
-                    
                     <div class="row g-3 mb-3">
                         <div class="col-sm-6">
                             <label class="checkout-label">First name</label>
-                            <input type="text" name="firstName" class="form-control checkout-input" placeholder="Saman" required>
+                            <input type="text" id="firstName" name="firstName" class="form-control checkout-input" placeholder="Saman" required>
                         </div>
                         <div class="col-sm-6">
                             <label class="checkout-label">Last name</label>
-                            <input type="text" name="lastName" class="form-control checkout-input" placeholder="Perera" required>
+                            <input type="text" id="lastName" name="lastName" class="form-control checkout-input" placeholder="Perera" required>
                         </div>
                     </div>
                     <div class="mb-3">
+                        <label class="checkout-label">Phone number</label>
+                        <input type="tel" id="mobile" name="mobile" class="form-control checkout-input" placeholder="+94 77 123 4567" required>
+                    </div>
+                    <div class="mb-3">
                         <label class="checkout-label">Address</label>
-                        <input type="text" name="address" class="form-control checkout-input" placeholder="123 Galle Road" required>
+                        <input type="text" id="lineOne" name="address" class="form-control checkout-input" placeholder="123 Galle Road" required>
                     </div>
                     <div class="mb-3">
                         <label class="checkout-label">Apartment, suite, etc. (optional)</label>
-                        <input type="text" name="apartment" class="form-control checkout-input" placeholder="Apt 4B">
+                        <input type="text" id="lineTwo" name="apartment" class="form-control checkout-input" placeholder="Apt 4B">
                     </div>
                     <div class="row g-3">
                         <div class="col-sm-5">
                             <label class="checkout-label">City</label>
-                            <input type="text" name="city" class="form-control checkout-input" placeholder="Colombo" required>
+                            <select id="citySelect" name="city" class="form-select checkout-input text-dark" required>
+                                <option selected disabled value="0">Select City</option>
+                            </select>
                         </div>
                         <div class="col-sm-4">
                             <label class="checkout-label">Country</label>
-                            <select name="country" class="form-select checkout-input text-dark" required>
+                            <select name="country" class="form-select checkout-input text-dark" disabled>
                                 <option selected value="Sri Lanka">Sri Lanka</option>
-                                <option value="United States">United States</option>
-                                <option value="United Kingdom">United Kingdom</option>
-                                <option value="Australia">Australia</option>
                             </select>
                         </div>
                         <div class="col-sm-3">
                             <label class="checkout-label">Postal Code</label>
-                            <input type="text" name="postalCode" class="form-control checkout-input" placeholder="00100" required>
+                            <input type="text" id="postalCode" name="postalCode" class="form-control checkout-input" placeholder="00100" required>
                         </div>
                     </div>
                 </div>
 
-                <!-- Step 3: Payment Method -->
-                <div class="card border-0 shadow-sm rounded-4 mb-4 p-4">
-                    <div class="d-flex align-items-center gap-2 mb-4">
-                        <span class="step-circle">3</span>
-                        <h5 class="fw-bold mb-0">Payment Method</h5>
-                    </div>
-                    
+                    <!-- Remove dummy payment method blocks and only show PayHere -->
                     <div class="payment-box active mb-3">
                         <label class="payment-option mb-0">
                             <input type="radio" name="paymentMethod" class="custom-radio-input" checked>
                             <i class="bi bi-credit-card-2-front-fill text-primary payment-icon"></i>
-                            <span class="fw-bold fs-7">Credit Card</span>
-                            <div class="ms-auto">
-                                <span class="mock-card-icon"></span>
-                                <span class="mock-card-icon"></span>
+                            <span class="fw-bold fs-7">Online Payment (PayHere)</span>
+                            <div class="ms-auto d-flex gap-2 align-items-center">
+                                <img src="https://www.payhere.lk/downloads/images/payhere_short_banner.png" alt="PayHere" style="max-height: 30px;">
                             </div>
-                        </label>
-                        <div class="payment-option-content">
-                            <div class="mb-3">
-                                <label class="checkout-label text-primary" style="opacity: 0.8;">Card number</label>
-                                <input type="text" class="form-control checkout-input bg-white" placeholder="0000 0000 0000 0000">
-                            </div>
-                            <div class="row g-3">
-                                <div class="col-sm-6">
-                                    <label class="checkout-label text-primary" style="opacity: 0.8;">Expiration (MM/YY)</label>
-                                    <input type="text" class="form-control checkout-input bg-white" placeholder="MM / YY">
-                                </div>
-                                <div class="col-sm-6">
-                                    <label class="checkout-label text-primary" style="opacity: 0.8;">CVC</label>
-                                    <input type="text" class="form-control checkout-input bg-white" placeholder="123">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="payment-box mb-3">
-                        <label class="payment-option mb-0">
-                            <input type="radio" name="paymentMethod" class="custom-radio-input">
-                            <i class="bi bi-cash-stack payment-icon"></i>
-                            <span class="fw-bold fs-7 text-dark">Cash on Delivery</span>
-                        </label>
-                    </div>
-
-                    <div class="payment-box">
-                        <label class="payment-option mb-0">
-                            <input type="radio" name="paymentMethod" class="custom-radio-input">
-                            <i class="bi bi-bank payment-icon"></i>
-                            <span class="fw-bold fs-7 text-dark">Bank Transfer</span>
                         </label>
                     </div>
 
@@ -183,76 +134,39 @@
                 <div class="card border-0 shadow-sm rounded-4 p-4 sticky-top" style="top: 100px;">
                     <h5 class="fw-bold mb-4">Order Summary</h5>
                     
-                    <!-- Item 1 -->
-                    <div class="d-flex align-items-center mb-4 pb-2 border-bottom border-light">
-                        <div class="item-thumbnail me-3">
-                            <img src="assets/img/iphone_15_pro_max_1780590648972.png" alt="UltraPhone X1" class="img-fluid mix-blend-multiply" style="max-height: 48px;">
-                            <span class="item-badge">1</span>
-                        </div>
-                        <div class="flex-grow-1">
-                            <h6 class="fw-bold fs-7 mb-1">UltraPhone X1</h6>
-                            <p class="text-muted fs-8 mb-1">Midnight Black · 256GB</p>
-                            <p class="text-muted fs-8 mb-0">Qty: 1</p>
-                        </div>
-                        <div class="fw-bold fs-7 text-dark">LKR 299,700</div>
-                    </div>
-
-                    <!-- Item 2 -->
-                    <div class="d-flex align-items-center mb-4 pb-4 border-bottom border-light">
-                        <div class="item-thumbnail item-thumbnail-2 me-3">
-                            <img src="assets/img/headphones_1777403193238.png" alt="NoiseCancel Pro" class="img-fluid mix-blend-multiply" style="max-height: 48px;">
-                            <span class="item-badge">1</span>
-                        </div>
-                        <div class="flex-grow-1">
-                            <h6 class="fw-bold fs-7 mb-1">NoiseCancel Pro</h6>
-                            <p class="text-muted fs-8 mb-1">Titanium Silver</p>
-                            <p class="text-muted fs-8 mb-0">Qty: 1</p>
-                        </div>
-                        <div class="fw-bold fs-7 text-dark">LKR 89,700</div>
-                    </div>
-
-                    <!-- Discount Code -->
-                    <div class="mb-4 pb-4 border-bottom">
-                        <div class="input-group">
-                            <input type="text" class="form-control checkout-input bg-light border-light" placeholder="Gift card or discount code" style="border-top-right-radius: 0; border-bottom-right-radius: 0;">
-                            <button class="btn btn-light bg-light border-light text-secondary fw-medium px-4 fs-7" type="button" style="border-top-right-radius: 6px; border-bottom-right-radius: 6px; background-color: #e2e8f0 !important;">Apply</button>
-                        </div>
+                    <div id="checkout-order-items">
+                        <!-- Items injected via checkout.js -->
                     </div>
 
                     <!-- Totals -->
                     <div class="d-flex justify-content-between mb-2">
                         <span class="text-muted fs-7">Subtotal</span>
-                        <span class="text-dark fw-medium fs-7">LKR 389,400</span>
-                    </div>
-                    <div class="d-flex justify-content-between mb-2">
-                        <span class="text-muted fs-7">Shipping</span>
-                        <span class="text-success fw-medium fs-7">Free</span>
+                        <span class="text-dark fw-medium fs-7" id="checkout-subtotal">LKR 0.00</span>
                     </div>
                     <div class="d-flex justify-content-between mb-4 pb-4 border-bottom">
-                        <span class="text-muted fs-7">Tax (Estimated)</span>
-                        <span class="text-dark fw-medium fs-7">LKR 31,152</span>
+                        <span class="text-muted fs-7">Shipping</span>
+                        <span class="text-success fw-medium fs-7" id="checkout-shipping">LKR 0.00</span>
                     </div>
 
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <span class="text-dark fw-bold fs-5">Total</span>
                         <div>
                             <span class="text-muted fs-8 fw-medium me-1">LKR</span>
-                            <span class="text-dark fw-bolder fs-3">420,552</span>
+                            <span class="text-dark fw-bolder fs-3" id="checkout-total">0.00</span>
                         </div>
                     </div>
 
-                    <button type="submit" class="btn btn-primary w-100 py-3 rounded-3 fw-bold fs-6 mb-3 d-flex justify-content-center align-items-center gap-2 shadow-sm">
-                        Confirm Order <i class="bi bi-arrow-right"></i>
+                    <button type="button" onclick="processCheckout()" class="btn btn-primary w-100 py-3 rounded-3 fw-bold fs-6 mb-3 d-flex justify-content-center align-items-center gap-2 shadow-sm">
+                        Confirm & Pay <i class="bi bi-arrow-right"></i>
                     </button>
 
                     <div class="text-center text-muted fs-8 fw-medium">
-                        <i class="bi bi-lock-fill"></i> Payments are secure and encrypted
+                        <i class="bi bi-lock-fill"></i> Payments are processed securely via PayHere
                     </div>
                 </div>
             </div>
 
-        </form>
-    </main>
+        </div>
 
     <!-- Footer -->
     <footer class="bg-white border-top py-4 mt-auto">
@@ -268,19 +182,21 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/notiflix-aio-3.2.8.min.js"></script>
+    <!-- PayHere Script -->
+    <script type="text/javascript" src="https://www.payhere.lk/lib/payhere.js"></script>
+    <script src="assets/js/checkout.js"></script>
     <script>
-        // Simple script to handle payment method selection styling
-        document.querySelectorAll('input[name="paymentMethod"]').forEach(radio => {
-            radio.addEventListener('change', function() {
-                // Remove active class from all
-                document.querySelectorAll('.payment-box').forEach(box => {
-                    box.classList.remove('active');
+        // Load cities
+        fetch("api/auth/load-data")
+        .then(response => response.json())
+        .then(data => {
+            if(data.status){
+                const citySelect = document.getElementById("citySelect");
+                data.cities.forEach(city => {
+                    citySelect.innerHTML += `<option value="${city.id}">${city.name}</option>`;
                 });
-                // Add active class to selected
-                if(this.checked) {
-                    this.closest('.payment-box').classList.add('active');
-                }
-            });
+            }
         });
     </script>
 </body>

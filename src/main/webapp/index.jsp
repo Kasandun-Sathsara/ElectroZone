@@ -21,7 +21,7 @@
     <nav class="navbar navbar-expand-lg bg-white py-3 border-bottom sticky-top">
         <div class="container">
             <!-- Brand -->
-            <a class="navbar-brand d-flex align-items-center" href="#">
+            <a class="navbar-brand d-flex align-items-center" href="index.jsp">
                 <div class="brand-icon me-2 d-flex align-items-center justify-content-center shadow-sm">
                     <i class="bi bi-lightning-fill text-white"></i>
                 </div>
@@ -44,13 +44,13 @@
                 <!-- Navigation Links -->
                 <ul class="navbar-nav mb-2 mb-lg-0 fw-medium">
                     <li class="nav-item mx-2">
-                        <a class="nav-link text-dark" href="#">Home</a>
+                        <a class="nav-link text-dark" href="index.jsp">Home</a>
                     </li>
                     <li class="nav-item mx-2">
-                        <a class="nav-link text-muted" href="#">Categories</a>
+                        <a class="nav-link text-muted" href="products.jsp">Categories</a>
                     </li>
                     <li class="nav-item mx-2">
-                        <a class="nav-link text-muted" href="#">Deals</a>
+                        <a class="nav-link text-muted" href="deals.jsp">Deals</a>
                     </li>
                     <li class="nav-item mx-2">
                         <a class="nav-link text-muted" href="#">Support</a>
@@ -192,105 +192,8 @@
                 <a href="#" class="text-decoration-none fw-bold link-primary fs-7">View All <i class="bi bi-arrow-right"></i></a>
             </div>
 
-            <div class="row g-4">
-                <!-- Product 1 -->
-                <div class="col-sm-6 col-lg-3">
-                    <div class="product-card h-100 bg-white">
-                        <div class="product-img-wrapper">
-                            <span class="product-badge bg-danger text-white">-15%</span>
-                            <button class="like-btn"><i class="bi bi-heart-fill text-muted"></i></button>
-                            <img src="assets/img/watch_1777403179511.png" alt="Chronos Smart Watch" class="img-fluid">
-                        </div>
-                        <div class="p-4 d-flex flex-column" style="height: calc(100% - 250px);">
-                            <div class="d-flex align-items-center mb-2">
-                                <i class="bi bi-star-fill text-warning fs-8 me-1"></i>
-                                <span class="fw-bold fs-8">4.8</span>
-                                <span class="text-muted fs-8 ms-1">(124)</span>
-                            </div>
-                            <h5 class="fs-6 fw-bold mb-3 text-dark lh-base" style="height: 48px; overflow: hidden;">Chronos Smart Watch Series 7 Midnight</h5>
-                            <div class="d-flex justify-content-between align-items-end mt-auto">
-                                <div>
-                                    <div class="text-muted text-decoration-line-through fs-8">LKR 99,000</div>
-                                    <div class="fw-bold fs-5 text-dark">LKR 84,150</div>
-                                </div>
-                                <button class="add-to-cart-btn"><i class="bi bi-cart-plus fs-5"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Product 2 -->
-                <div class="col-sm-6 col-lg-3">
-                    <div class="product-card h-100 bg-white">
-                        <div class="product-img-wrapper" style="background-color: #f1f2f6;">
-                            <button class="like-btn"><i class="bi bi-heart-fill text-muted"></i></button>
-                            <img src="assets/img/headphones_1777403193238.png" alt="SonicBlast Headphones" class="img-fluid">
-                        </div>
-                        <div class="p-4 d-flex flex-column" style="height: calc(100% - 250px);">
-                            <div class="d-flex align-items-center mb-2">
-                                <i class="bi bi-star-fill text-warning fs-8 me-1"></i>
-                                <span class="fw-bold fs-8">4.9</span>
-                                <span class="text-muted fs-8 ms-1">(850)</span>
-                            </div>
-                            <h5 class="fs-6 fw-bold mb-3 text-dark lh-base" style="height: 48px; overflow: hidden;">SonicBlast Pro Wireless Noise Cancelling Headphones</h5>
-                            <div class="d-flex justify-content-between align-items-end mt-auto">
-                                <div>
-                                    <div class="fw-bold fs-5 text-dark">LKR 65,500</div>
-                                </div>
-                                <button class="add-to-cart-btn"><i class="bi bi-cart-plus fs-5"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Product 3 -->
-                <div class="col-sm-6 col-lg-3">
-                    <div class="product-card h-100 bg-white">
-                        <div class="product-img-wrapper" style="background-color: var(--bg-light);">
-                            <span class="product-badge bg-primary text-white">NEW</span>
-                            <button class="like-btn"><i class="bi bi-heart-fill text-muted"></i></button>
-                            <img src="assets/img/laptop_1777403253050.png" alt="UltraBook Pro 14" class="img-fluid">
-                        </div>
-                        <div class="p-4 d-flex flex-column" style="height: calc(100% - 250px);">
-                            <div class="d-flex align-items-center mb-2">
-                                <i class="bi bi-star-fill text-warning fs-8 me-1"></i>
-                                <span class="fw-bold fs-8">4.7</span>
-                                <span class="text-muted fs-8 ms-1">(42)</span>
-                            </div>
-                            <h5 class="fs-6 fw-bold mb-3 text-dark lh-base" style="height: 48px; overflow: hidden;">UltraBook Pro 14" M2 Chip 512GB SSD</h5>
-                            <div class="d-flex justify-content-between align-items-end mt-auto">
-                                <div>
-                                    <div class="fw-bold fs-5 text-dark">LKR 429,990</div>
-                                </div>
-                                <button class="add-to-cart-btn"><i class="bi bi-cart-plus fs-5"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Product 4 -->
-                <div class="col-sm-6 col-lg-3">
-                    <div class="product-card h-100 bg-white">
-                        <div class="product-img-wrapper">
-                            <button class="like-btn"><i class="bi bi-heart-fill text-muted"></i></button>
-                            <img src="assets/img/earbuds_1777403268133.png" alt="AeroBuds" class="img-fluid">
-                        </div>
-                        <div class="p-4 d-flex flex-column" style="height: calc(100% - 250px);">
-                            <div class="d-flex align-items-center mb-2">
-                                <i class="bi bi-star-fill text-warning fs-8 me-1"></i>
-                                <span class="fw-bold fs-8">4.6</span>
-                                <span class="text-muted fs-8 ms-1">(210)</span>
-                            </div>
-                            <h5 class="fs-6 fw-bold mb-3 text-dark lh-base" style="height: 48px; overflow: hidden;">AeroBuds True Wireless Earbuds</h5>
-                            <div class="d-flex justify-content-between align-items-end mt-auto">
-                                <div>
-                                    <div class="fw-bold fs-5 text-dark">LKR 26,450</div>
-                                </div>
-                                <button class="add-to-cart-btn"><i class="bi bi-cart-plus fs-5"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="row g-4" id="best-sellers-container">
+                <!-- Products will be dynamically loaded here by index.js -->
             </div>
         </section>
 
@@ -368,7 +271,7 @@
                 
                 <div class="col-6 col-sm-4 col-lg-2">
                     <h6 class="fw-bold mb-4 text-dark">Shop</h6>
-                    <a href="#" class="footer-link">New Arrivals</a>
+                    <a href="new-arrivals.jsp" class="footer-link">New Arrivals</a>
                     <a href="#" class="footer-link">Best Sellers</a>
                     <a href="#" class="footer-link">Laptops & Computers</a>
                     <a href="#" class="footer-link">Smartphones</a>
@@ -416,5 +319,25 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const searchInputs = document.querySelectorAll('.search-input');
+            searchInputs.forEach(input => {
+                input.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        const query = this.value.trim();
+                        if (query) {
+                            window.location.href = 'products.jsp?q=' + encodeURIComponent(query);
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+    <script src="assets/js/notiflix-aio-3.2.8.min.js"></script>
+    <script src="assets/js/index.js"></script>
 </body>
+
 </html>

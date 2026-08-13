@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ElectroZone - Product Management</title>
+    <title>ElectroZone - Order Management</title>
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
@@ -52,16 +52,15 @@
                     <i class="bi bi-grid"></i> Dashboard
                 </div>
             </a>
-            <a href="products.jsp" class="sidebar-nav-link active">
+            <a href="products.jsp" class="sidebar-nav-link">
                 <div class="sidebar-nav-link-content">
                     <i class="bi bi-box-seam"></i> Products
                 </div>
             </a>
-            <a href="#" class="sidebar-nav-link">
+            <a href="orders.jsp" class="sidebar-nav-link active">
                 <div class="sidebar-nav-link-content">
                     <i class="bi bi-cart3"></i> Orders
                 </div>
-                <span class="nav-badge">12</span>
             </a>
             <a href="customers.jsp" class="sidebar-nav-link">
                 <div class="sidebar-nav-link-content">
@@ -96,21 +95,18 @@
             <div class="admin-breadcrumbs">
                 <a href="#">Home</a>
                 <i class="bi bi-chevron-right" style="font-size: 0.7rem;"></i>
-                <span class="breadcrumb-current">Products</span>
+                <span class="breadcrumb-current">Orders</span>
             </div>
 
             <!-- Page Header -->
             <header class="page-header flex-column flex-md-row">
                 <div class="mb-3 mb-md-0">
-                    <h1 class="page-title">Product Management</h1>
-                    <p class="page-subtitle">Manage your product catalog, inventory, and pricing.</p>
+                    <h1 class="page-title">Order Management</h1>
+                    <p class="page-subtitle">Manage customer orders and update their status.</p>
                 </div>
                 <div class="header-actions">
                     <button class="btn-outline-custom">
                         <i class="bi bi-download"></i> Export
-                    </button>
-                    <button class="btn-primary-custom">
-                        <i class="bi bi-plus-lg"></i> Add Product
                     </button>
                 </div>
             </header>
@@ -144,18 +140,15 @@
                     <table class="admin-table">
                         <thead>
                             <tr>
-                                <th class="checkbox-cell">
-                                    <input class="form-check-input" type="checkbox">
-                                </th>
-                                <th>Product</th>
-                                <th>Category</th>
-                                <th>Price</th>
-                                <th>Stock</th>
+                                <th>Order ID</th>
+                                <th>Customer Name</th>
+                                <th>Date</th>
+                                <th>Amount</th>
                                 <th>Status</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
-                        <tbody id="admin-products-tbody">
+                        <tbody id="admin-orders-tbody">
                             <!-- Populated by JS -->
                         </tbody>
                     </table>
@@ -164,16 +157,7 @@
                 <!-- Table Footer / Pagination -->
                 <div class="table-footer flex-column flex-sm-row gap-3">
                     <div class="showing-text">
-                        Showing <strong>1</strong> to <strong>5</strong> of <strong>50</strong> products
-                    </div>
-                    <div class="pagination-controls">
-                        <a href="#" class="page-btn disabled">Previous</a>
-                        <a href="#" class="page-btn active">1</a>
-                        <a href="#" class="page-btn">2</a>
-                        <a href="#" class="page-btn">3</a>
-                        <span class="page-dots">...</span>
-                        <a href="#" class="page-btn">10</a>
-                        <a href="#" class="page-btn">Next</a>
+                        Showing all orders
                     </div>
                 </div>
             </div>
@@ -183,6 +167,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../assets/js/notiflix-aio-3.2.8.min.js"></script>
-    <script src="../assets/js/admin-products.js"></script>
+    <script src="../assets/js/admin-orders.js"></script>
 </body>
 </html>

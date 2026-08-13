@@ -1,10 +1,8 @@
+let checkoutData = null;
+
 window.addEventListener("load", async () => {
     try {
-        Notiflix.Loading.pulse("Wait...", {
-            clickToClose: false,
-            svgColor: '#0284c7'
-        });
-        await loadCities();
+        Notiflix.Loading.pulse("Wait...", { clickToClose: false, svgColor: '#0284c7' });
         await loadCheckoutData();
     } finally {
         Notiflix.Loading.remove();
@@ -13,254 +11,163 @@ window.addEventListener("load", async () => {
 
 async function loadCheckoutData() {
     try {
-        const response = await fetch("api/checkouts/user-checkout-data")
-        if (response.redirected) {
-            Notiflix.Report.info(
-                'Checkout Info Message',
-                'Please login first!',
-                'Ok',
-                () => {
-                    window.location = "sign-in.jsp";
+        const response = await fetch("api/checkouts/user-checkout-data");
+        if (response.ok) {
+            const data = await response.json();
+            if (data.status) {
+                checkoutData = data;
+                renderOrderSummary();
+                populateAddressForm();
+            } else {
+                Notiflix.Notify.failure(data.message, { position: 'center-top' });
+                if (data.message === "Please login first!") {
+                    window.location.href = "login.jsp";
                 }
-            );
+            }
+        }
+    } catch (e) {
+        console.error("Checkout data loading failed:", e);
+    }
+}
+
+function renderOrderSummary() {
+    const cartList = checkoutData.cartList;
+    const sellerList = checkoutData.sellerList;
+    const deliveryTypes = checkoutData.deliveryTypes;
+    const userAddress = checkoutData.userPrimaryAddress;
+    
+    let subtotal = 0;
+    let shipping = 0;
+    let total = 0;
+
+    let withinCityCost = deliveryTypes.find(d => d.name === "WITHIN_CITY")?.price || 0;
+    let outOfCityCost = deliveryTypes.find(d => d.name === "OUT_OF_CITY")?.price || 0;
+
+    const summaryContainer = document.getElementById("checkout-order-items");
+    if (summaryContainer) {
+        summaryContainer.innerHTML = "";
+        cartList.forEach((cartItem, index) => {
+            const seller = sellerList[index];
+            let itemTotal = cartItem.price * cartItem.qty;
+            subtotal += itemTotal;
+            
+            let itemShipping = 0;
+            if (userAddress && seller.cityDTO) {
+                if (userAddress.cityDTO.name === seller.cityDTO.name) {
+                    itemShipping = withinCityCost;
+                } else {
+                    itemShipping = outOfCityCost;
+                }
+            }
+            shipping += itemShipping;
+            
+            let imageSrc = cartItem.images && cartItem.images.length > 0 ? cartItem.images[0] : 'assets/img/default-product.png';
+            
+            summaryContainer.innerHTML += `
+                <div class="d-flex align-items-center mb-4 pb-2 border-bottom border-light">
+                    <div class="item-thumbnail me-3 position-relative">
+                        <img src="${imageSrc}" alt="${cartItem.productTitle}" class="img-fluid mix-blend-multiply" style="max-height: 48px;">
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary" style="font-size: 0.6rem;">${cartItem.qty}</span>
+                    </div>
+                    <div class="flex-grow-1 ms-3">
+                        <h6 class="fw-bold fs-7 mb-1" style="max-height: 2.4em; overflow: hidden;">${cartItem.productTitle}</h6>
+                        <p class="text-muted fs-8 mb-0">Qty: ${cartItem.qty}</p>
+                    </div>
+                    <div class="fw-bold fs-7 text-dark text-end ms-2" style="min-width: 80px;">LKR ${new Intl.NumberFormat("en-US", {minimumFractionDigits: 2}).format(itemTotal)}</div>
+                </div>
+            `;
+        });
+    }
+    
+    total = subtotal + shipping;
+    
+    document.getElementById("checkout-subtotal").textContent = `LKR ${new Intl.NumberFormat("en-US", {minimumFractionDigits: 2}).format(subtotal)}`;
+    document.getElementById("checkout-shipping").textContent = `LKR ${new Intl.NumberFormat("en-US", {minimumFractionDigits: 2}).format(shipping)}`;
+    document.getElementById("checkout-total").textContent = `${new Intl.NumberFormat("en-US", {minimumFractionDigits: 2}).format(total)}`;
+}
+
+function populateAddressForm() {
+    const address = checkoutData.userPrimaryAddress;
+    if (address) {
+        document.getElementById("firstName").value = address.firstName;
+        document.getElementById("lastName").value = address.lastName;
+        document.getElementById("mobile").value = address.mobile;
+        document.getElementById("lineOne").value = address.lineOne;
+        document.getElementById("lineTwo").value = address.lineTwo || "";
+        document.getElementById("postalCode").value = address.postalCode;
+        
+        // Disable them by default if using current address
+        toggleAddressFields(true);
+        document.getElementById("usePrimaryAddressCheckbox").checked = true;
+    }
+}
+
+function toggleAddressFields(disabled) {
+    document.getElementById("firstName").disabled = disabled;
+    document.getElementById("lastName").disabled = disabled;
+    document.getElementById("mobile").disabled = disabled;
+    document.getElementById("lineOne").disabled = disabled;
+    document.getElementById("lineTwo").disabled = disabled;
+    document.getElementById("postalCode").disabled = disabled;
+    document.getElementById("citySelect").disabled = disabled;
+}
+
+document.getElementById("usePrimaryAddressCheckbox")?.addEventListener("change", (e) => {
+    toggleAddressFields(e.target.checked);
+});
+
+async function processCheckout() {
+    try {
+        const isCurrentAddress = document.getElementById("usePrimaryAddressCheckbox") ? document.getElementById("usePrimaryAddressCheckbox").checked : false;
+        
+        const requestData = {
+            isCurrentAddress: isCurrentAddress,
+            firstName: document.getElementById("firstName").value,
+            lastName: document.getElementById("lastName").value,
+            mobile: document.getElementById("mobile").value,
+            lineOne: document.getElementById("lineOne").value,
+            lineTwo: document.getElementById("lineTwo").value,
+            postalCode: document.getElementById("postalCode").value,
+            cityId: isCurrentAddress ? 0 : parseInt(document.getElementById("citySelect").value || "0")
+        };
+        
+        if (!isCurrentAddress && requestData.cityId === 0) {
+            Notiflix.Notify.warning("Please select a city", { position: 'center-top' });
             return;
         }
-        if (response.ok) {
-            const data = await response.json();
-            if (data.status) {
-                console.log(data);
-                fillUserCurrentAddress(data.userPrimaryAddress);
-                makeOrderSummary(data);
-            } else {
-                Notiflix.Notify.failure(data.message, {
-                    position: 'center-top'
-                });
-            }
-        } else {
-            Notiflix.Notify.failure("Checkout data loading failed!", {
-                position: 'center-top'
-            });
-        }
-    } catch (e) {
-        Notiflix.Notify.failure(e.message, {
-            position: 'center-top'
-        });
-    }
-}
 
-function makeOrderSummary(data) {
-    const cartList = data.cartList;
-    const deliveryTypes = data.deliveryTypes;
-    const sellerList = data.sellerList;
-
-    let tableBody = document.getElementById("st-tbody");
-    let itemRow = document.getElementById("st-item-tr");
-    let subtotalRow = document.getElementById("st-subtotal-tr");
-    let orderShippingRow = document.getElementById("st-order-shipping-tr");
-    let orderTotalRow = document.getElementById("st-order-total-tr");
-
-    tableBody.innerHTML = "";
-    let total = 0;
-    let itemCount = 0;
-    cartList.forEach((item) => {
-        let itemRowClone = itemRow.cloneNode(true);
-        itemRowClone.querySelector("#st-product-title").textContent = item.productTitle;
-        itemRowClone.querySelector("#st-product-qty").textContent = item.qty;
-        let subTotal = parseFloat(item.price) * parseInt(item.qty);
-
-        itemRowClone.querySelector("#st-product-price").textContent = new Intl.NumberFormat("en-US", {
-            minimumFractionDigits: 2
-        }).format(subTotal);
-        tableBody.appendChild(itemRowClone);
-        total += subTotal;
-        itemCount += item.qty;
-    });
-
-    subtotalRow.querySelector("#st-product-total-amount").textContent = new Intl.NumberFormat("en-US", {
-        minimumFractionDigits: 2
-    }).format(total);
-
-    let citySelect = document.getElementById("city-select");
-    citySelect.addEventListener("change", () => {
-        let shippingCharges = 0;
-        let cityName = citySelect.options[citySelect.selectedIndex]?.text || "";
-        sellerList.forEach((seller) => {
-            if (cityName === seller.cityDTO.name) {
-                // Within city
-                shippingCharges += deliveryTypes[0].price;
-            } else {
-                // out of city
-                shippingCharges += deliveryTypes[1].price;
-            }
-        });
-        orderShippingRow.querySelector("#st-product-shipping-charges").textContent = new Intl.NumberFormat("en-US", {
-            minimumFractionDigits: 2
-        }).format(shippingCharges);
-        orderTotalRow.querySelector("#st-order-total-amount").textContent = new Intl.NumberFormat("en-US", {
-            minimumFractionDigits: 2
-        }).format(total + shippingCharges);
-    });
-    tableBody.appendChild(subtotalRow);
-    tableBody.appendChild(orderShippingRow);
-    tableBody.appendChild(orderTotalRow);
-}
-
-function fillUserCurrentAddress(address) {
-    const currentAddressTick = document.getElementById("checkbox1");
-    currentAddressTick.addEventListener("change", () => {
-        let firstName = document.getElementById("first-name");
-        let lastName = document.getElementById("last-name");
-        let city = document.getElementById("city-select");
-        let lineOne = document.getElementById("line-one");
-        let lineTwo = document.getElementById("line-two");
-        let postalCode = document.getElementById("postal-code");
-        let mobile = document.getElementById("mobile");
-        if (currentAddressTick.checked) {
-            firstName.value = address.firstName;
-            lastName.value = address.lastName;
-            city.value = address.cityDTO.id;
-            lineOne.value = address.lineOne;
-            lineTwo.value = address.lineTwo;
-            postalCode.value = address.postalCode;
-            mobile.value = address.mobile;
-            city.disabled = true;
-            city.dispatchEvent(new Event("change"));
-        } else {
-            firstName.value = "";
-            lastName.value = "";
-            city.value = 0;
-            lineOne.value = "";
-            lineTwo.value = "";
-            postalCode.value = "";
-            mobile.value = "";
-            city.disabled = false;
-            city.dispatchEvent(new Event("change"));
-        }
-    });
-}
-
-async function loadCities() {
-    try {
-        const response = await fetch("api/data/cities");
-        if (response.ok) {
-            const data = await response.json();
-            let citySelect = document.getElementById("city-select");
-            citySelect.innerHTML = `<option value="0">Select</option>`;
-            data.cities.forEach((city) => {
-                let option = document.createElement("option");
-                option.value = city.id;
-                option.innerHTML = city.name;
-                citySelect.appendChild(option);
-            })
-        } else {
-            Notiflix.Notify.failure("City data loading failed!", {
-                position: 'center-top'
-            });
-        }
-    } catch (e) {
-        Notiflix.Notify.failure(e.message, {
-            position: 'center-top'
-        });
-    }
-}
-
-async function checkout() {
-    let firstName = document.getElementById("first-name");
-    let lastName = document.getElementById("last-name");
-    let city = document.getElementById("city-select");
-    let lineOne = document.getElementById("line-one");
-    let lineTwo = document.getElementById("line-two");
-    let postalCode = document.getElementById("postal-code");
-    let mobile = document.getElementById("mobile");
-    let currentAddressTick = document.getElementById("checkbox1");
-
-    const checkoutData = {
-        isCurrentAddress: currentAddressTick.checked,
-        firstName: firstName.value,
-        lastName: lastName.value,
-        cityId: city.value,
-        lineOne: lineOne.value,
-        lineTwo: lineTwo.value,
-        postalCode: postalCode.value,
-        mobile: mobile.value,
-    }
-    const checkoutDataJSON = JSON.stringify(checkoutData);
-
-    try {
-        Notiflix.Loading.pulse("Wait...", {
-            clickToClose: false,
-            svgColor: '#0284c7'
-        });
-
+        Notiflix.Loading.pulse("Processing Order...", { clickToClose: false, svgColor: '#0284c7' });
+        
         const response = await fetch("api/checkouts/user-checkout", {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: checkoutDataJSON
-        })
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(requestData)
+        });
+        
         if (response.ok) {
             const data = await response.json();
             if (data.status) {
-                // console.log(data);
+                // Initialize PayHere
+                payhere.onCompleted = function onCompleted(orderId) {
+                    Notiflix.Notify.success("Payment completed. OrderID:" + orderId, { position: 'center-top' });
+                    window.location.href = "my-account.jsp";
+                };
+                payhere.onDismissed = function onDismissed() {
+                    Notiflix.Notify.info("Payment dismissed", { position: 'center-top' });
+                };
+                payhere.onError = function onError(error) {
+                    Notiflix.Notify.failure("Payment Error: " + error, { position: 'center-top' });
+                };
+                
                 payhere.startPayment(data.paymentDetails);
             } else {
-                Notiflix.Notify.failure(data.message, {
-                    position: 'center-top'
-                });
+                Notiflix.Notify.failure(data.message, { position: 'center-top' });
             }
-        } else {
-            Notiflix.Notify.failure("Checkout process failed!", {
-                position: 'center-top'
-            });
         }
     } catch (e) {
-        Notiflix.Notify.failure(e.message, {
-            position: 'center-top'
-        });
+        console.error("Checkout failed:", e);
+        Notiflix.Notify.failure(e.message, { position: 'center-top' });
     } finally {
         Notiflix.Loading.remove();
-    }
-}
-
-// Payment completed. It can be a successful failure.
-payhere.onCompleted = async function onCompleted(orderId) {
-    console.log("Payment completed. OrderID:" + orderId);
-    // Note: validate the payment and show success or failure page to the customer
-    await verifyOrder(orderId);
-};
-
-// Payment window closed
-payhere.onDismissed = function onDismissed() {
-    // Note: Prompt user to pay again or show an error page
-    console.log("Payment dismissed");
-};
-
-// Error occurred
-payhere.onError = function onError(error) {
-    // Note: show an error page
-    console.log("Error:" + error);
-};
-
-async function verifyOrder(orderId) {
-    try {
-        const response = await fetch(`api/orders/verify-order?orderId=${orderId}`);
-        if (response.ok) {
-            const data = await response.json();
-            if (data.status) {
-                window.location = `invoice.jsp?orderId=${orderId}`;
-            } else {
-                // redirect to failed page
-            }
-
-        } else {
-            Notiflix.Notify.failure("Order verifying failed!", {
-                position: 'center-top'
-            });
-        }
-    } catch (e) {
-        Notiflix.Notify.failure(e.message, {
-            position: 'center-top'
-        });
     }
 }

@@ -2907,8 +2907,8 @@ body { background-color: var(--bg-light); }
 
 
 /* Global Bootstrap Overrides for new Theme */
-.text-primary { color: var(--primary-color) !important; }
-.bg-primary { background-color: var(--primary-color) !important; }
+.text-primary { color: rgba(0, 212, 255, var(--bs-text-opacity, 1)) !important; }
+.bg-primary { background-color: rgba(0, 212, 255, var(--bs-bg-opacity, 1)) !important; }
 .btn-primary { 
     background-color: var(--primary-color) !important; 
     border-color: var(--primary-color) !important; 
@@ -2922,12 +2922,4 @@ body { background-color: var(--bg-light); }
 .link-primary:hover { color: var(--primary-hover) !important; }
 
 
-/* Center Notiflix Report Button */
-[id^=NotiflixReportWrap] a#NXReportButton {
-    float: none !important;
-    display: block !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-    width: fit-content !important;
-}
 

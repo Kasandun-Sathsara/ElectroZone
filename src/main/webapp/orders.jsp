@@ -36,9 +36,9 @@
             <!-- Links & Actions -->
             <div class="collapse navbar-collapse" id="navbarContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 fw-medium">
-                    <li class="nav-item mx-2"><a class="nav-link text-dark" href="#">Home</a></li>
+                    <li class="nav-item mx-2"><a class="nav-link text-dark" href="index.jsp">Home</a></li>
                     <li class="nav-item mx-2"><a class="nav-link text-muted hover-dark" href="#">Products</a></li>
-                    <li class="nav-item mx-2"><a class="nav-link text-muted hover-dark" href="#">Deals</a></li>
+                    <li class="nav-item mx-2"><a class="nav-link text-muted hover-dark" href="deals.jsp">Deals</a></li>
                     <li class="nav-item mx-2"><a class="nav-link text-muted hover-dark" href="#">Support</a></li>
                 </ul>
                 

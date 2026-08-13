@@ -97,8 +97,11 @@
                     <!-- Cart Items will be injected here by cart.js -->
                 </div>
 
-                    <i class="bi bi-arrow-left"></i> Continue Shopping
-                </a>
+                <div class="mt-4">
+                    <a href="search.jsp" class="btn btn-outline-secondary px-4 py-2 fw-medium text-dark border-light shadow-sm hover-bg-light">
+                        <i class="bi bi-arrow-left"></i> Continue Shopping
+                    </a>
+                </div>
 
             </div>
 
@@ -136,9 +139,9 @@
                         <span class="text-dark fw-bolder fs-4" id="order-final-amount">LKR 0.00</span>
                     </div>
 
-                    <button class="btn btn-primary w-100 py-3 rounded-3 fw-bold fs-6 mb-4 d-flex justify-content-center align-items-center gap-2 shadow-sm">
+                    <a href="checkout.jsp" class="btn btn-primary w-100 py-3 rounded-3 fw-bold fs-6 mb-4 d-flex justify-content-center align-items-center gap-2 shadow-sm text-white text-decoration-none">
                         Proceed to Checkout <i class="bi bi-arrow-right"></i>
-                    </button>
+                    </a>
 
                     <div class="d-flex justify-content-center align-items-center gap-3 mb-4 text-muted fs-8 fw-medium">
                         <span class="d-flex align-items-center gap-1"><i class="bi bi-lock-fill"></i> Secure Payment</span>

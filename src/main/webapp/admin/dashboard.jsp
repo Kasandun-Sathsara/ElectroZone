@@ -96,7 +96,7 @@
                             </span>
                         </div>
                         <div class="stat-label">Total Revenue</div>
-                        <h2 class="stat-value">$124,592.00</h2>
+                        <h2 class="stat-value" id="stat-revenue">LKR 0.00</h2>
                     </div>
                 </div>
 
@@ -111,7 +111,7 @@
                             </span>
                         </div>
                         <div class="stat-label">Total Orders</div>
-                        <h2 class="stat-value">1,245</h2>
+                        <h2 class="stat-value" id="stat-orders">0</h2>
                     </div>
                 </div>
 
@@ -126,7 +126,7 @@
                             </span>
                         </div>
                         <div class="stat-label">Total Products</div>
-                        <h2 class="stat-value">320</h2>
+                        <h2 class="stat-value" id="stat-products">0</h2>
                     </div>
                 </div>
 
@@ -141,7 +141,7 @@
                             </span>
                         </div>
                         <div class="stat-label">Total Customers</div>
-                        <h2 class="stat-value">850</h2>
+                        <h2 class="stat-value" id="stat-customers">0</h2>
                     </div>
                 </div>
 
@@ -169,42 +169,8 @@
                                         <th class="th-total">Total</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td class="td-order-id">#ORD-001</td>
-                                        <td>John Doe</td>
-                                        <td><span class="status-pill pill-shipped">Shipped</span></td>
-                                        <td>Oct 24</td>
-                                        <td class="td-total">$299.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="td-order-id">#ORD-002</td>
-                                        <td>Jane Smith</td>
-                                        <td><span class="status-pill pill-pending">Pending</span></td>
-                                        <td>Oct 24</td>
-                                        <td class="td-total">$1,250.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="td-order-id">#ORD-003</td>
-                                        <td>Robert Brown</td>
-                                        <td><span class="status-pill pill-delivered">Delivered</span></td>
-                                        <td>Oct 23</td>
-                                        <td class="td-total">$85.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="td-order-id">#ORD-004</td>
-                                        <td>Emily Davis</td>
-                                        <td><span class="status-pill pill-processing">Processing</span></td>
-                                        <td>Oct 23</td>
-                                        <td class="td-total">$450.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="td-order-id">#ORD-005</td>
-                                        <td>Michael Wilson</td>
-                                        <td><span class="status-pill pill-cancelled">Cancelled</span></td>
-                                        <td>Oct 22</td>
-                                        <td class="td-total">$120.00</td>
-                                    </tr>
+                                <tbody id="recent-orders-tbody">
+                                    <!-- Populated by JS -->
                                 </tbody>
                             </table>
                         </div>
@@ -219,52 +185,8 @@
                             <a href="#" class="admin-card-link text-muted">See All</a>
                         </div>
                         
-                        <div class="flex-grow-1">
-                            <!-- Alert 1 -->
-                            <div class="alert-item">
-                                <div class="alert-img-wrapper bg-teal">
-                                    <img src="../assets/img/watch_1777403179511.png" alt="Watch">
-                                </div>
-                                <div class="alert-info">
-                                    <h4 class="alert-title">Smart Watch<br>Series 7</h4>
-                                    <p class="alert-id">ID: #PROD-248</p>
-                                </div>
-                                <div class="alert-status">
-                                    <p class="alert-qty">2 Left</p>
-                                    <p class="alert-text">Restock Soon</p>
-                                </div>
-                            </div>
-
-                            <!-- Alert 2 -->
-                            <div class="alert-item">
-                                <div class="alert-img-wrapper bg-peach">
-                                    <img src="../assets/img/headphones_1777403193238.png" alt="Headphones">
-                                </div>
-                                <div class="alert-info">
-                                    <h4 class="alert-title">Noise Cancelling<br>Headphones</h4>
-                                    <p class="alert-id">ID: #PROD-112</p>
-                                </div>
-                                <div class="alert-status">
-                                    <p class="alert-qty">5 Left</p>
-                                    <p class="alert-text">Low Stock</p>
-                                </div>
-                            </div>
-
-                            <!-- Alert 3 -->
-                            <div class="alert-item">
-                                <div class="alert-img-wrapper bg-rose">
-                                    <!-- Use a generic camera or placeholder, since camera_1780590494553.png isn't guaranteed -->
-                                    <img src="https://placehold.co/100x100/ffe4e6/1e293b?text=Camera" alt="Camera">
-                                </div>
-                                <div class="alert-info">
-                                    <h4 class="alert-title">Instax Mini 11</h4>
-                                    <p class="alert-id">ID: #PROD-334</p>
-                                </div>
-                                <div class="alert-status">
-                                    <p class="alert-qty">8 Left</p>
-                                    <p class="alert-text">Low Stock</p>
-                                </div>
-                            </div>
+                        <div class="flex-grow-1" id="low-stock-container">
+                            <!-- Populated by JS -->
                         </div>
 
                         <button class="btn-restock">
@@ -279,5 +201,7 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/js/notiflix-aio-3.2.8.min.js"></script>
+    <script src="../assets/js/admin-dashboard.js"></script>
 </body>
 </html>

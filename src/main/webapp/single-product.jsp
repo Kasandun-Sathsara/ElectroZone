@@ -52,7 +52,7 @@
                         <a class="nav-link text-muted" href="#">Gadgets</a>
                     </li>
                     <li class="nav-item mx-2">
-                        <a class="nav-link text-muted" href="#">Deals</a>
+                        <a class="nav-link text-muted" href="deals.jsp">Deals</a>
                     </li>
                 </ul>
 
@@ -78,7 +78,7 @@
         <!-- Breadcrumbs -->
         <nav aria-label="breadcrumb" class="mb-4">
             <ol class="breadcrumb mb-0">
-                <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Home</a></li>
+                <li class="breadcrumb-item"><a href="index.jsp" class="breadcrumb-link">Home</a></li>
                 <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Smartphones</a></li>
                 <li class="breadcrumb-item"><a href="#" class="breadcrumb-link">Apple</a></li>
                 <li class="breadcrumb-item active breadcrumb-current" aria-current="page">iPhone 15 Pro Max</li>

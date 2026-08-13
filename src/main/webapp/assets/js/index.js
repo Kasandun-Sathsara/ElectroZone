@@ -4,21 +4,21 @@ window.addEventListener("load", async () => {
         svgColor: '#0284c7'
     });
     try {
-        await loadAllBrands();
-        await loadNewArrivals();
+        await loadDeals();
+        // await loadAllBrands(); // if you want to implement dynamic categories later
     } finally {
         Notiflix.Loading.remove();
     }
 });
 
-async function loadNewArrivals() {
+async function loadDeals() {
     try {
-        const response = await fetch("api/data/new-arrivals");
+        const response = await fetch("api/data/deals");
         if (response.ok) {
             const data = await response.json();
-            renderingNewArrivals(data.newArrivals);
+            renderingDeals(data.deals);
         } else {
-            Notiflix.Notify.failure("Product data loading failed!", {
+            Notiflix.Notify.failure("Failed to load best sellers!", {
                 position: 'center-top'
             });
         }
@@ -29,99 +29,44 @@ async function loadNewArrivals() {
     }
 }
 
-function renderingNewArrivals(productList) {
-    console.log(productList);
-    const newArrivalProductContainer = document.getElementById("new-arrival-product-container");
-    newArrivalProductContainer.innerHTML = "";
+function renderingDeals(productList) {
+    const container = document.getElementById("best-sellers-container");
+    container.innerHTML = "";
+    if(!productList || productList.length === 0) {
+        container.innerHTML = `<div class="col-12 text-center text-muted"><p>No products available right now.</p></div>`;
+        return;
+    }
     productList.forEach((product) => {
-
-            newArrivalProductContainer.innerHTML += `<div class="col-xl-3 col-lg-4 col-sm-6 col-12 mb--30">
-                            <div class="axil-product product-style-one">
-                                <div class="thumbnail">
-                                    <a href="single-product.jsp?productId=${product.stockId}">
-                                        <img data-sal="zoom-out" data-sal-delay="200" data-sal-duration="800"
-                                             loading="lazy" class="main-img" src="${product.images[0]}"
-                                             alt="Product Images">
-                                        <img class="hover-img" src="${product.images[1]}"
-                                             alt="Product Images">
-                                    </a>
-
-                                    <div class="product-hover-action">
-                                        <ul class="cart-action">
-                                            <li class="quickview"><a href="single-product.jsp?productId=${product.stockId}"><i class="far fa-eye"></i></a></li>
-                                            <li class="select-option"><a onclick="addToCart(${product.stockId},1);">Add To Cart</a></li>
-                                            <li class="wishlist"><a href="#"><i class="far fa-heart"></i></a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="product-content">
-                                    <div class="inner">
-                                        <h5 class="title"><a href="#">${product.title}</a></h5>
-                                        <div class="product-price-variant">
-                                            <span class="price current-price">Rs. ${
-                new Intl.NumberFormat("en-US", {
-                    minimumFractionDigits: 2,
-                }).format(product.price)
-            }</span>
-                                        </div>
-                                        <div class="color-variant-wrapper">
-                                            <ul class="color-variant">
-                                                <li class="color-extra-01 active">
-                                                <span>
-                                                   <span class="color" style="background-color: ${product.colorValue}"></span>
-                                                </span>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>`;
-
-    });
-
-    refreshAnimations();
-}
-
-function refreshAnimations() {
-    if (typeof sal === "function") {
-        sal();
-    }
-    if (typeof $ !== "undefined") {
-        $('.categrie-product-activation').slick('refresh');
-    }
-}
-
-async function loadAllBrands() {
-    try {
-        const productBrandContainer = document.getElementById("product-brand-container");
-        productBrandContainer.innerHTML = "";
-        const response = await fetch("api/data/brands");
-        if (response.ok) {
-            const data = await response.json();
-            data.brands.forEach((brand) => {
-                productBrandContainer.innerHTML += `<div class="slick-single-layout" id="product-brand-card">
-                    <div class="categrie-product" data-sal="zoom-out" data-sal-delay="200" data-sal-duration="500"
-                         id="product-brand-mini-card">
-                        <a href="search.jsp?brand=${brand.id}&name=${brand.name}" id="product-brand-a">
-                            <img class="img-fluid" src="./assets/images/product/categories/sample.png"
-                                 alt="product categorie">
-                            <h6 class="cat-title" id="product-brand-title">${brand.name}</h6>
+        let imageSrc = product.images && product.images.length > 0 ? product.images[0] : 'assets/img/default-product.png';
+        container.innerHTML += `
+            <div class="col-sm-6 col-lg-3">
+                <div class="product-card h-100 bg-white shadow-sm border border-light">
+                    <div class="product-img-wrapper" style="position: relative; overflow: hidden; height: 200px; display: flex; align-items: center; justify-content: center; padding: 10px;">
+                        <span class="product-badge bg-primary text-white position-absolute top-0 start-0 m-2 px-2 py-1 rounded" style="font-size: 0.75rem; z-index: 10;">DEAL</span>
+                        <button class="like-btn position-absolute top-0 end-0 m-2 border-0 bg-transparent" onclick="addToWishlist(${product.stockId})" style="z-index: 10;"><i class="bi bi-heart-fill text-muted"></i></button>
+                        <a href="single-product.jsp?productId=${product.stockId}" class="w-100 h-100 d-flex align-items-center justify-content-center">
+                            <img src="${imageSrc}" alt="${product.title}" class="img-fluid" style="max-height: 100%; max-width: 100%; object-fit: contain;">
                         </a>
                     </div>
-                    <!-- End .categrie-product -->
-                </div>`
-            });
-            refreshAnimations();
-
-        } else {
-            Notiflix.Notify.failure("Brands loading failed!", {
-                position: 'center-top'
-            });
-        }
-    } catch (e) {
-        Notiflix.Notify.failure(e.message, {
-            position: 'center-top'
-        });
-    }
+                    <div class="p-3 d-flex flex-column" style="height: calc(100% - 200px);">
+                        <div class="d-flex align-items-center mb-2">
+                            <i class="bi bi-star-fill text-warning fs-8 me-1"></i>
+                            <span class="fw-bold fs-8">4.5</span>
+                        </div>
+                        <h5 class="fs-6 fw-bold mb-3 text-dark lh-base" style="height: 48px; overflow: hidden;">
+                            <a href="single-product.jsp?productId=${product.stockId}" class="text-dark text-decoration-none">${product.title}</a>
+                        </h5>
+                        <div class="d-flex justify-content-between align-items-end mt-auto">
+                            <div>
+                                <div class="fw-bold fs-5 text-dark">LKR ${new Intl.NumberFormat("en-US", {minimumFractionDigits: 2}).format(product.price)}</div>
+                            </div>
+                            <button class="btn btn-outline-primary rounded-circle" onclick="addToCart(${product.stockId},1);" style="width: 40px; height: 40px; padding: 0; display: flex; align-items: center; justify-content: center;">
+                                <i class="bi bi-cart-plus fs-5"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    });
 }

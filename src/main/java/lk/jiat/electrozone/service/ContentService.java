@@ -41,6 +41,32 @@ public class ContentService {
         return AppUtil.GSON.toJson(responseObject);
     }
 
+    public String loadDealsProducts() {
+        JsonObject responseObject = new JsonObject();
+        Session hibernateSession = HibernateUtil.getSessionFactory().openSession();
+        List<ProductDTO> productDTOList = new ArrayList<>();
+        // Fetch cheapest products as 'deals'
+        List<Stock> stockList = hibernateSession.createQuery("FROM Stock s ORDER BY s.price ASC", Stock.class)
+                .setMaxResults(ContentService.MAX_RESULT)
+                .getResultList();
+        for(Stock stock :stockList){
+            Product product = stock.getProduct();
+            ProductDTO productDTO = new ProductDTO();
+            productDTO.setProductId(product.getId());
+            productDTO.setTitle(product.getTitle());
+            productDTO.setColorId(product.getColor().getId());
+            productDTO.setColorValue(product.getColor().getValue());
+            productDTO.setImages(product.getImages());
+            productDTO.setStockId(stock.getId());
+            productDTO.setQty(stock.getQty());
+            productDTO.setPrice(stock.getPrice());
+            productDTOList.add(productDTO);
+        }
+        hibernateSession.close();
+        responseObject.add("deals", AppUtil.GSON.toJsonTree(productDTOList));
+        return AppUtil.GSON.toJson(responseObject);
+    }
+
     public String loadProductSpecifications() {
         JsonObject responseObject = new JsonObject();
         Session hibernateSession = HibernateUtil.getSessionFactory().openSession();

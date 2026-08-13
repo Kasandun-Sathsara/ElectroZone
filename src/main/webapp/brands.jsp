@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ElectroZone - Smartphones & Accessories</title>
+    <title>ElectroZone - Shop by Brands</title>
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
@@ -35,12 +35,9 @@
             <!-- Navbar Content -->
             <div class="collapse navbar-collapse" id="navbarContent">
                 <!-- Search Bar -->
-                <div class="search-wrapper mx-lg-4 flex-grow-1 position-relative d-none d-lg-flex align-items-center" style="max-width: 500px;">
-                    <div class="position-relative w-100">
-                        <i class="bi bi-search" style="position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #6c757d;"></i>
-                        <input type="text" class="form-control rounded-pill search-input w-100 bg-light border-0 ps-5" placeholder="Search for laptops, phones...">
-                    </div>
-                    <a href="search.jsp" class="btn btn-link text-dark fw-medium text-nowrap text-decoration-none ms-2 fs-7 hover-primary">Advanced Search</a>
+                <div class="search-wrapper mx-lg-4 flex-grow-1 position-relative d-none d-lg-block" style="max-width: 400px;">
+                    <i class="bi bi-search" style="position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #6c757d;"></i>
+                    <input type="text" class="form-control rounded-pill search-input w-100 bg-light border-0 ps-5" placeholder="Search for laptops, phones...">
                 </div>
 
                 <!-- Navigation Links -->
@@ -81,7 +78,7 @@
             <ol class="breadcrumb fs-7">
                 <li class="breadcrumb-item"><a href="index.jsp" class="text-muted text-decoration-none">Home</a></li>
                 <li class="breadcrumb-item"><a href="#" class="text-muted text-decoration-none">Electronics</a></li>
-                <li class="breadcrumb-item active text-dark fw-medium" aria-current="page">Smartphones & Accessories</li>
+                <li class="breadcrumb-item active text-dark fw-medium" aria-current="page">Shop by Brands</li>
             </ol>
         </nav>
     </div>
@@ -121,22 +118,48 @@
                 </div>
 
                 <!-- Price Range -->
-                <div class="mb-4 pt-3 border-top" id="price-filter-container">
+                <div class="mb-4 pt-3 border-top">
                     <h6 class="fw-bold text-uppercase text-muted fs-8 mb-3 letter-spacing-1">Price Range (LKR)</h6>
                     <div class="position-relative mt-4 mb-3">
-                        <input type="range" class="form-range" id="price-slider" min="0" max="600000" step="1000" onchange="applyFilters()">
+                        <div class="progress" style="height: 4px;">
+                            <div class="progress-bar bg-primary" role="progressbar" style="width: 40%; margin-left: 20%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <div class="position-absolute top-50 translate-middle bg-primary rounded-circle border border-2 border-white slider-thumb" style="width: 16px; height: 16px; left: 20%;"></div>
+                        <div class="position-absolute top-50 translate-middle bg-primary rounded-circle border border-2 border-white slider-thumb" style="width: 16px; height: 16px; left: 60%;"></div>
                     </div>
                     <div class="d-flex justify-content-between mb-3 text-dark fw-medium fs-7">
-                        <span id="price-min-label">LKR 0</span>
-                        <span id="price-max-label">LKR 600,000</span>
+                        <span>LKR 0</span>
+                        <span>LKR 600k+</span>
+                    </div>
+                    <div class="d-flex align-items-center gap-2">
+                        <input type="text" class="form-control form-control-sm text-center fs-7 text-muted" value="LKR 0" readonly>
+                        <span class="text-muted">-</span>
+                        <input type="text" class="form-control form-control-sm text-center fs-7 text-muted" value="LKR 255k" readonly>
                     </div>
                 </div>
 
                 <!-- Brands -->
                 <div class="mb-4 pt-3 border-top">
                     <h6 class="fw-bold text-uppercase text-muted fs-8 mb-3 letter-spacing-1">Brands</h6>
-                    <div id="brands-container">
-                        <!-- Loaded dynamically -->
+                    <div class="form-check mb-2 custom-checkbox">
+                        <input class="form-check-input" type="checkbox" id="brandApple">
+                        <label class="form-check-label fs-7 text-muted" for="brandApple">Apple</label>
+                    </div>
+                    <div class="form-check mb-2 custom-checkbox">
+                        <input class="form-check-input" type="checkbox" id="brandSamsung" checked>
+                        <label class="form-check-label fs-7 text-dark fw-medium" for="brandSamsung">Samsung</label>
+                    </div>
+                    <div class="form-check mb-2 custom-checkbox">
+                        <input class="form-check-input" type="checkbox" id="brandSony">
+                        <label class="form-check-label fs-7 text-muted" for="brandSony">Sony</label>
+                    </div>
+                    <div class="form-check mb-2 custom-checkbox">
+                        <input class="form-check-input" type="checkbox" id="brandGoogle">
+                        <label class="form-check-label fs-7 text-muted" for="brandGoogle">Google</label>
+                    </div>
+                    <div class="form-check custom-checkbox">
+                        <input class="form-check-input" type="checkbox" id="brandDell">
+                        <label class="form-check-label fs-7 text-muted" for="brandDell">Dell</label>
                     </div>
                 </div>
 
@@ -178,7 +201,7 @@
                 
                 <!-- Top Bar -->
                 <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-3">
-                    <h2 class="fw-bold fs-4 mb-0">Smartphones & Accessories</h2>
+                    <h2 class="fw-bold fs-4 mb-0">Shop by Brands</h2>
                     
                     <div class="d-flex align-items-center gap-3">
                         <span id="result-count" class="text-muted fs-7">Showing products...</span>
@@ -200,8 +223,14 @@
                 </div>
 
                 <!-- Active Filters -->
-                <div class="d-flex flex-wrap align-items-center gap-2 mb-4" id="active-filters-container">
-                    <!-- Populated by JS -->
+                <div class="d-flex flex-wrap align-items-center gap-2 mb-4">
+                    <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill fw-medium border border-primary border-opacity-25 d-flex align-items-center gap-1" onclick="this.remove()">
+                        Samsung <i class="bi bi-x cursor-pointer"></i>
+                    </span>
+                    <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill fw-medium border border-primary border-opacity-25 d-flex align-items-center gap-1" onclick="this.remove()">
+                        LKR 0 - LKR 255k <i class="bi bi-x cursor-pointer"></i>
+                    </span>
+                    <a href="#" onclick="this.parentElement.innerHTML=''" class="text-muted fs-7 ms-2 text-decoration-none hover-dark">Clear All</a>
                 </div>
 
                 <!-- Grid -->
@@ -334,3 +363,4 @@
 </body>
 
 </html>
+

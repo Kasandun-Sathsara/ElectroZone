@@ -23,55 +23,68 @@ async function loadSingleProduct() {
             const data = await response.json();
             if (data.status) {
                 const product = data.singleProduct;
-                product.images.forEach((image, index) => {
-                    let mainImg = document.getElementById(`image${index + 1}`);
-                    let thumbImg = document.getElementById(`thumb-image${index + 1}`);
-                    if (mainImg && thumbImg) {
-                        mainImg.src = image;
-                        thumbImg.src = image;
-                    }
-                });
-                document.getElementById("product-title").innerHTML = product.title;
-                document.getElementById("published-on").innerHTML = product.createdAt;
-                document.getElementById("product-price").innerHTML = new Intl.NumberFormat("en-US", {
-                    minimumFractionDigits: 2
-                }).format(product.price);
-                document.getElementById("brand-name").innerHTML = product.brandName;
-                document.getElementById("model-name").innerHTML = product.modelName;
-                document.getElementById("product-quality").innerHTML = product.qualityValue;
-                document.getElementById("product-stock").innerHTML = product.qty;
+                
+                const mainImageContainer = document.querySelector('.product-gallery-main');
+                const thumbContainer = document.querySelector('.d-flex.gap-3.justify-content-center');
+                
+                if (mainImageContainer && thumbContainer && product.images && product.images.length > 0) {
+                    mainImageContainer.innerHTML = `<span class="badge bg-primary position-absolute top-0 start-0 m-3 fs-8 px-2 py-1">NEW</span>
+                                                    <img src="${product.images[0]}" alt="${product.title}" id="mainImage" class="img-fluid" style="max-height:400px; object-fit:contain;">`;
+                    
+                    thumbContainer.innerHTML = "";
+                    product.images.forEach((img, idx) => {
+                        thumbContainer.innerHTML += `
+                            <div class="gallery-thumbnail ${idx === 0 ? 'active' : ''}" onclick="changeMainImage(this, '${img}')" style="cursor:pointer; width:80px; height:80px; border-radius:8px; overflow:hidden; border:2px solid transparent;">
+                                <img src="${img}" alt="Thumbnail ${idx+1}" style="width:100%; height:100%; object-fit:contain;">
+                            </div>
+                        `;
+                    });
+                }
+                
+                const setText = (id, text) => { if(document.getElementById(id)) document.getElementById(id).innerHTML = text; };
+                
+                setText("product-title", product.title);
+                setText("published-on", product.createdAt);
+                setText("product-price", new Intl.NumberFormat("en-US", {minimumFractionDigits: 2}).format(product.price));
+                setText("brand-name", product.brandName);
+                setText("model-name", product.modelName);
+                setText("product-quality", product.qualityValue);
+                setText("product-stock", product.qty);
+                setText("product-storage", product.storageValue);
+                setText("product-description", product.description);
 
-                // color variation
-                document.getElementById("color-border").style.borderColor = "black";
-                document.getElementById("color-background").style.backgroundColor = product.colorValue;
+                const colorBorder = document.getElementById("color-border");
+                const colorBg = document.getElementById("color-background");
+                if (colorBorder && colorBg) {
+                    colorBorder.style.borderColor = "black";
+                    colorBg.style.backgroundColor = product.colorValue;
+                }
 
-                // product storage
-                document.getElementById("product-storage").innerHTML = product.storageValue;
-                // description
-                document.getElementById("product-description").innerHTML = product.description;
-
-                const addToCartBtn = document.getElementById("add-to-cart-main"); // anchor tag -> prevent href
-                addToCartBtn.addEventListener("click", async (evt) => {
-                    const qtyInput = document.getElementById("add-to-cart-qty");
-                    await addToCart(product.stockId, qtyInput.value);
-                    evt.preventDefault();
-                });
+                const addToCartBtn = document.getElementById("add-to-cart-main");
+                if (addToCartBtn) {
+                    addToCartBtn.addEventListener("click", async (evt) => {
+                        evt.preventDefault();
+                        const qtyInput = document.getElementById("add-to-cart-qty");
+                        await addToCart(product.stockId, qtyInput ? qtyInput.value : 1);
+                    });
+                }
             } else {
-                Notiflix.Notify.failure(data.message, {
-                    position: 'center-top'
-                });
+                Notiflix.Notify.failure(data.message, { position: 'center-top' });
             }
         } else {
-            Notiflix.Notify.failure("Single Product data loading failed!", {
-                position: 'center-top'
-            });
+            Notiflix.Notify.failure("Single Product data loading failed!", { position: 'center-top' });
         }
     } catch (e) {
-        Notiflix.Notify.failure(e.message, {
-            position: 'center-top'
-        });
+        Notiflix.Notify.failure(e.message, { position: 'center-top' });
     }
 }
+
+window.changeMainImage = function(element, src) {
+    document.querySelectorAll('.gallery-thumbnail').forEach(el => el.classList.remove('active'));
+    element.classList.add('active');
+    const mainImg = document.getElementById('mainImage');
+    if (mainImg) mainImg.src = src;
+};
 
 async function loadSimilarProducts() {
     try {

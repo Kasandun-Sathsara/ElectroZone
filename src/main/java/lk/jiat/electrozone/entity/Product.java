@@ -39,7 +39,7 @@ public class Product extends BaseEntity {
     @JoinColumn(name = "seller_id")
     private Seller seller;
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Stock> stocks = new HashSet<>();
 
     @Column(name="images")

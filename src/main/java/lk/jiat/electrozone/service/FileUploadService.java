@@ -54,13 +54,12 @@ public class FileUploadService {
         }
 
         String appUrl = Env.get("app.url");
-        /*
-         * http://localhost:8080/smarttrade/UPLOAD_DIRECTORY_NAME/subDirecotry/productId/fileName
-         * http://localhost:8080/smarttrade/uploads/product/1/123456.png
-         * */
-        String url = context.getContextPath() + uploadPath + "/" + fileName;
-        String path = uploadPath + "/" + fileName;
-        String fullUrl = appUrl + "/" + uploadPath + "/" + fileName;
+        String relativePath = pathName + "/" + fileName;
+        String url = context.getContextPath() + relativePath;
+        // We will just store the path relative to the app root, e.g. uploads/...
+        String path = relativePath.substring(1); 
+        
+        String fullUrl = appUrl + url;
 
         return new FileItem(fileName, contentDisposition.getFileName(), path, url, fullUrl);
     }
