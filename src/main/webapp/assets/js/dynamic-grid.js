@@ -11,10 +11,19 @@ window.addEventListener("load", async () => {
 
     if(typeof Notiflix !== 'undefined') Notiflix.Loading.pulse("Wait...", { clickToClose: false, svgColor: '#0284c7' });
 
-    // Check for search query in URL
     const urlParams = new URLSearchParams(window.location.search);
     if(urlParams.has('q')) {
-        searchQuery = urlParams.get('q').toLowerCase();
+        let qVal = urlParams.get('q');
+        searchQuery = qVal.toLowerCase();
+        
+        let displayTitle = qVal.charAt(0).toUpperCase() + qVal.slice(1);
+        let titleEl = document.getElementById("page-title");
+        let breadEl = document.getElementById("page-breadcrumb");
+        if(titleEl) titleEl.innerText = 'Search Results: "' + displayTitle + '"';
+        if(breadEl) breadEl.innerText = displayTitle;
+        
+        let advSearchBtn = document.getElementById("advanced-search-btn");
+        if(advSearchBtn) advSearchBtn.href = "search.jsp?q=" + encodeURIComponent(qVal);
     }
 
     let apiUrl = "";
@@ -205,7 +214,14 @@ function renderDynamicProducts() {
     
     container.innerHTML = "";
     if(filteredProductList.length === 0) {
-        container.innerHTML = "<p class='text-muted mt-4 w-100 text-center'>No products match your criteria.</p>";
+        container.innerHTML = `
+            <div class="col-12 text-center py-5">
+                <i class="bi bi-box-seam text-muted" style="font-size: 4rem; opacity: 0.5;"></i>
+                <h4 class="text-dark fw-bold mt-3">No Products Found</h4>
+                <p class="text-muted mb-4">We couldn't find any products matching your search criteria.</p>
+                <a href="products.jsp" class="btn btn-primary px-4 py-2 rounded-pill shadow-sm">View All Products</a>
+            </div>
+        `;
         return;
     }
 

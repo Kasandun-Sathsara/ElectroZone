@@ -195,10 +195,13 @@
             if(data.cities){
                 const citySelect = document.getElementById("citySelect");
                 data.cities.forEach(city => {
-                    citySelect.innerHTML += `<option value="${city.id}">${city.name}</option>`;
+                    let option = document.createElement("option");
+                    option.value = city.id;
+                    option.textContent = city.name;
+                    citySelect.appendChild(option);
                 });
             }
-        });
+        }).catch(err => console.error("Error loading cities:", err));
     </script>
 <script src="assets/js/cart.js?v=2"></script>
 </body>

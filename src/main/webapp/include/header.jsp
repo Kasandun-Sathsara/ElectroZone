@@ -29,13 +29,7 @@
                         <a class="nav-link text-dark" href="index.jsp">Home</a>
                     </li>
                     <li class="nav-item mx-2">
-                        <a class="nav-link text-muted" href="products.jsp">Categories</a>
-                    </li>
-                    <li class="nav-item mx-2">
-                        <a class="nav-link text-muted" href="deals.jsp">Deals</a>
-                    </li>
-                    <li class="nav-item mx-2">
-                        <a class="nav-link text-muted" href="#">Support</a>
+                        <a class="nav-link text-muted" href="products.jsp">Products</a>
                     </li>
                 </ul>
 

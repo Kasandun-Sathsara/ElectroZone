@@ -121,7 +121,19 @@ public class CartService {
             cartDTO.setCartId(cart.getId());
             cartDTO.setStockId(stock.getId());
             cartDTO.setProductTitle(stock.getProduct().getTitle());
-            cartDTO.setImages(stock.getProduct().getImages());
+
+            List<String> imagePaths = new ArrayList<>();
+            List<lk.jiat.ElectroZone.entity.ProductImage> pImages = hibernateSession.createQuery("FROM ProductImage p WHERE p.product=:product", lk.jiat.ElectroZone.entity.ProductImage.class)
+                    .setParameter("product", stock.getProduct())
+                    .setMaxResults(1)
+                    .getResultList();
+            if (!pImages.isEmpty()) {
+                imagePaths.add(pImages.get(0).getImageUrl());
+            } else {
+                imagePaths.add("assets/img/default-product.png");
+            }
+            cartDTO.setImages(imagePaths);
+
             cartDTO.setQty(cart.getQty());
             cartDTO.setPrice(stock.getPrice());
             cartDTOList.add(cartDTO);

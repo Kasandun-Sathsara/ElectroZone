@@ -12,13 +12,20 @@ window.addEventListener("load", async () => {
 });
 
 async function loadAdvancedSearchData() {
+    const urlParams = new URLSearchParams(window.location.search);
+    if(urlParams.has('q')) {
+        let qVal = urlParams.get('q');
+        let searchInput = document.getElementById("search-input");
+        if(searchInput) searchInput.value = qVal;
+    }
+    
     try {
         const response = await fetch("api/advanced-search/all-data");
         if (response.ok) {
             const data = await response.json();
             if (data.status) {
+                populateSelect("filter-category", data.categoryList, "id", "name");
                 populateSelect("filter-brand", data.brandList, "name", "name");
-                populateSelect("filter-condition", data.qualityList, "value", "value");
                 populateSelect("filter-color", data.colorList, "value", "value");
                 populateSelect("filter-storage", data.storageList, "value", "value");
             } else {
@@ -48,25 +55,28 @@ function populateSelect(selectId, dataList, valueProp, textProp) {
 }
 
 async function searchProduct(firstResult = 0) {
+    if(typeof Notiflix !== 'undefined') Notiflix.Loading.pulse("Wait...", { clickToClose: false, svgColor: '#0284c7' });
     try {
-        Notiflix.Loading.pulse("Wait...", { clickToClose: false, svgColor: '#0284c7' });
-
         const brandName = document.getElementById("filter-brand")?.value || "";
-        const conditionValue = document.getElementById("filter-condition")?.value || "";
         const colorValue = document.getElementById("filter-color")?.value || "";
         const storageValue = document.getElementById("filter-storage")?.value || "";
         const sortValue = document.getElementById("sort-select")?.value || "1";
+        
+        const categoryId = document.getElementById("filter-category")?.value || "";
+        const title = document.getElementById("search-input")?.value || "";
 
         const searchData = {
             firstResult: firstResult,
             brandName: brandName,
-            conditionValue: conditionValue,
             colorValue: colorValue,
             storageValue: storageValue,
             priceStart: 0,
             priceEnd: 100000000,
             sortValue: sortValue
         };
+        
+        if (categoryId) searchData.categoryId = parseInt(categoryId);
+        if (title) searchData.title = title;
 
         const response = await fetch("api/advanced-search/search-data", {
             method: "POST",
@@ -95,9 +105,41 @@ function updateProductView(data) {
     const container = document.getElementById("search-results-container");
     if (!container) return;
     container.innerHTML = "";
+    
+    // Update count
+    const countEl = document.getElementById("result-count-number");
+    if (countEl) countEl.innerText = data.allProductCount || data.productList.length;
+    
+    // Update search term text
+    const termEl = document.getElementById("result-search-term");
+    const searchInput = document.getElementById("search-input");
+    if (termEl && searchInput && searchInput.value) {
+        termEl.innerText = `for "${searchInput.value}"`;
+    } else if (termEl) {
+        termEl.innerText = "";
+    }
+    
+    // Update active filters UI
+    const activeFiltersList = document.getElementById("active-filters-list");
+    if (activeFiltersList) {
+        activeFiltersList.innerHTML = '<span class="text-muted fs-8 fw-medium me-2">Active Filters:</span>';
+        const brand = document.getElementById("filter-brand")?.value;
+        const cat = document.getElementById("filter-category");
+        const catText = cat && cat.selectedIndex > 0 ? cat.options[cat.selectedIndex].text : "";
+        
+        if (brand) activeFiltersList.innerHTML += `<span class="active-filter-chip">${brand} <i class="bi bi-x"></i></span>`;
+        if (catText) activeFiltersList.innerHTML += `<span class="active-filter-chip">${catText} <i class="bi bi-x"></i></span>`;
+    }
 
     if (data.productList.length === 0) {
-        container.innerHTML = `<div class="text-center text-muted p-5"><h5>No products found matching your criteria.</h5></div>`;
+        container.innerHTML = `
+            <div class="col-12 text-center py-5">
+                <i class="bi bi-box-seam text-muted" style="font-size: 4rem; opacity: 0.5;"></i>
+                <h4 class="text-dark fw-bold mt-3">No Products Found</h4>
+                <p class="text-muted mb-4">We couldn't find any products matching your search criteria.</p>
+                <a href="search.jsp" class="btn btn-primary px-4 py-2 rounded-pill shadow-sm">Clear Filters</a>
+            </div>
+        `;
         return;
     }
 
@@ -146,5 +188,15 @@ function updateProductView(data) {
             </div>
         `;
     });
+}
+
+function clearFilters() {
+    document.getElementById("search-input").value = "";
+    document.getElementById("filter-category").selectedIndex = 0;
+    document.getElementById("filter-brand").selectedIndex = 0;
+    document.getElementById("filter-color").selectedIndex = 0;
+    document.getElementById("filter-storage").selectedIndex = 0;
+    document.getElementById("sort-select").value = "1";
+    searchProduct(0);
 }
 

@@ -57,7 +57,7 @@
             
             <div class="row g-2 text-center text-md-start flex-nowrap overflow-auto hide-scrollbar pb-3">
                 <div class="col-auto">
-                    <a href="#" class="category-item px-3">
+                    <a href="products.jsp?q=Laptop" class="category-item px-3">
                         <div class="category-icon-wrapper">
                             <i class="bi bi-laptop"></i>
                         </div>
@@ -65,7 +65,7 @@
                     </a>
                 </div>
                 <div class="col-auto">
-                    <a href="#" class="category-item px-3">
+                    <a href="products.jsp?q=Phone" class="category-item px-3">
                         <div class="category-icon-wrapper">
                             <i class="bi bi-phone"></i>
                         </div>
@@ -73,7 +73,7 @@
                     </a>
                 </div>
                 <div class="col-auto">
-                    <a href="#" class="category-item px-3">
+                    <a href="products.jsp?q=Audio" class="category-item px-3">
                         <div class="category-icon-wrapper">
                             <i class="bi bi-headphones"></i>
                         </div>
@@ -81,7 +81,7 @@
                     </a>
                 </div>
                 <div class="col-auto">
-                    <a href="#" class="category-item px-3">
+                    <a href="products.jsp?q=Camera" class="category-item px-3">
                         <div class="category-icon-wrapper">
                             <i class="bi bi-camera"></i>
                         </div>
@@ -89,7 +89,7 @@
                     </a>
                 </div>
                 <div class="col-auto">
-                    <a href="#" class="category-item px-3">
+                    <a href="products.jsp?q=Gaming" class="category-item px-3">
                         <div class="category-icon-wrapper">
                             <i class="bi bi-controller"></i>
                         </div>
@@ -97,7 +97,7 @@
                     </a>
                 </div>
                 <div class="col-auto">
-                    <a href="#" class="category-item px-3">
+                    <a href="products.jsp?q=Wearable" class="category-item px-3">
                         <div class="category-icon-wrapper">
                             <i class="bi bi-smartwatch"></i>
                         </div>
@@ -105,7 +105,7 @@
                     </a>
                 </div>
                 <div class="col-auto">
-                    <a href="#" class="category-item px-3">
+                    <a href="products.jsp?q=Smart" class="category-item px-3">
                         <div class="category-icon-wrapper">
                             <i class="bi bi-house-door"></i>
                         </div>
@@ -134,7 +134,7 @@
                     <div class="promo-content">
                         <h2 class="fw-bold mb-2 text-dark">VR Headsets</h2>
                         <p class="text-muted mb-4 pe-md-4">Immerse yourself in new worlds.</p>
-                        <a href="#" class="text-decoration-none fw-bold link-primary">Shop Collection <i class="bi bi-arrow-right ms-1"></i></a>
+                        <a href="products.jsp?q=VR" class="text-decoration-none fw-bold link-primary">Shop Collection <i class="bi bi-arrow-right ms-1"></i></a>
                     </div>
                     <img src="assets/img/vr_headset_1777403554263.png" alt="VR Headset">
                 </div>

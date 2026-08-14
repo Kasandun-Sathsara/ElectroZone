@@ -30,7 +30,19 @@ public class ContentService {
             productDTO.setTitle(product.getTitle());
             productDTO.setColorId(product.getColor().getId());
             productDTO.setColorValue(product.getColor().getValue());
-            productDTO.setImages(product.getImages());
+
+            List<String> imagePaths = new ArrayList<>();
+            List<lk.jiat.ElectroZone.entity.ProductImage> pImages = hibernateSession.createQuery("FROM ProductImage p WHERE p.product=:product", lk.jiat.ElectroZone.entity.ProductImage.class)
+                    .setParameter("product", product)
+                    .setMaxResults(1)
+                    .getResultList();
+            if (!pImages.isEmpty()) {
+                imagePaths.add(pImages.get(0).getImageUrl());
+            } else {
+                imagePaths.add("assets/img/default-product.png");
+            }
+            productDTO.setImages(imagePaths);
+
             productDTO.setStockId(stock.getId());
             productDTO.setQty(stock.getQty());
             productDTO.setPrice(stock.getPrice());
@@ -69,7 +81,19 @@ public class ContentService {
             productDTO.setTitle(product.getTitle());
             productDTO.setColorId(product.getColor().getId());
             productDTO.setColorValue(product.getColor().getValue());
-            productDTO.setImages(product.getImages());
+
+            List<String> imagePaths = new ArrayList<>();
+            List<lk.jiat.ElectroZone.entity.ProductImage> pImages = hibernateSession.createQuery("FROM ProductImage p WHERE p.product=:product", lk.jiat.ElectroZone.entity.ProductImage.class)
+                    .setParameter("product", product)
+                    .setMaxResults(1)
+                    .getResultList();
+            if (!pImages.isEmpty()) {
+                imagePaths.add(pImages.get(0).getImageUrl());
+            } else {
+                imagePaths.add("assets/img/default-product.png");
+            }
+            productDTO.setImages(imagePaths);
+
             productDTO.setStockId(stock.getId());
             productDTO.setQty(stock.getQty());
             productDTO.setPrice(stock.getPrice());

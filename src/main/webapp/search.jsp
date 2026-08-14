@@ -31,8 +31,8 @@
                 <div class="col-md-10 col-lg-8">
                     <div class="position-relative">
                         <i class="bi bi-search search-icon-large"></i>
-                        <input type="text" class="form-control main-search-input" value="Gaming Laptop">
-                        <button class="btn btn-primary btn-search-large shadow-sm">Search</button>
+                        <input type="text" class="form-control main-search-input" id="search-input" placeholder="Search across thousands of electronics with precision...">
+                        <button class="btn btn-primary btn-search-large shadow-sm" onclick="searchProduct(0)">Search</button>
                     </div>
                 </div>
             </div>
@@ -54,18 +54,12 @@
                     </select>
                 </div>
                 <div class="col-md-4 col-lg">
-                    <label class="filter-label">Condition</label>
-                    <select class="form-select filter-select" id="filter-condition" onchange="searchProduct(0)">
-                        <option value="">All Conditions</option>
-                    </select>
-                </div>
-                <div class="col-md-6 col-lg">
                     <label class="filter-label">Color</label>
                     <select class="form-select filter-select" id="filter-color" onchange="searchProduct(0)">
                         <option value="">All Colors</option>
                     </select>
                 </div>
-                <div class="col-md-6 col-lg">
+                <div class="col-md-4 col-lg">
                     <label class="filter-label">Storage</label>
                     <select class="form-select filter-select" id="filter-storage" onchange="searchProduct(0)">
                         <option value="">All Storages</option>
@@ -75,19 +69,17 @@
             
             <!-- Active Filters -->
             <div class="d-flex flex-wrap justify-content-between align-items-center">
-                <div class="d-flex align-items-center gap-2 flex-wrap">
+                <div class="d-flex align-items-center gap-2 flex-wrap" id="active-filters-list">
                     <span class="text-muted fs-8 fw-medium me-2">Active Filters:</span>
-                    <span class="active-filter-chip">Laptops <i class="bi bi-x"></i></span>
-                    <span class="active-filter-chip">In Stock <i class="bi bi-x"></i></span>
                 </div>
-                <a href="#" class="text-muted text-decoration-underline fs-8 hover-dark mt-2 mt-md-0">Clear All Filters</a>
+                <a href="javascript:void(0)" onclick="clearFilters()" class="text-muted text-decoration-underline fs-8 hover-dark mt-2 mt-md-0">Clear All Filters</a>
             </div>
         </div>
 
         <!-- Results Header -->
         <div class="d-flex flex-wrap justify-content-between align-items-end mb-4">
             <h5 class="fw-bold text-dark mb-0 d-flex align-items-end gap-2">
-                142 Results Found <span class="text-muted fs-6 fw-normal">for "Gaming Laptop"</span>
+                <span id="result-count-number">0</span> Results Found <span id="result-search-term" class="text-muted fs-6 fw-normal"></span>
             </h5>
             
             <div class="d-flex align-items-center gap-3 mt-3 mt-md-0">

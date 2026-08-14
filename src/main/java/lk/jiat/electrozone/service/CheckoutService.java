@@ -125,9 +125,9 @@ public class CheckoutService {
                 .getResultList();
 
         DeliveryType withinCity = hibernateSession.createNamedQuery("DeliveryType.findByName", DeliveryType.class)
-                .setParameter("name", String.valueOf(DeliveryType.Value.WITHIN_CITY)).getSingleResult();
+                .setParameter("name", String.valueOf(DeliveryType.Value.WITHIN_CITY)).setMaxResults(1).getSingleResult();
         DeliveryType outOfCity = hibernateSession.createNamedQuery("DeliveryType.findByName", DeliveryType.class)
-                .setParameter("name", String.valueOf(DeliveryType.Value.OUT_OF_CITY)).getSingleResult();
+                .setParameter("name", String.valueOf(DeliveryType.Value.OUT_OF_CITY)).setMaxResults(1).getSingleResult();
 
         for (OrderItem orderItem : orderItems) {
             if (items.length() > 0) {
@@ -137,16 +137,29 @@ public class CheckoutService {
                     .append(" x ")
                     .append(orderItem.getQty());
             amount += orderItem.getStock().getPrice() * orderItem.getQty();
-            User seller = orderItem.getSeller().getUser();
-            Address sellerAddress = hibernateSession.createQuery("FROM Address a WHERE a.user=:user AND a.isPrimary=true", Address.class)
-                    .setParameter("user", seller)
-                    .getSingleResultOrNull();
-            if (sellerAddress != null) {
-                if (address.getCity().getName().equals(sellerAddress.getCity().getName())) {
-                    amount += withinCity.getPrice();
+            User seller = null;
+            if (orderItem.getSeller() != null) {
+                seller = orderItem.getSeller().getUser();
+            } else if (orderItem.getStock() != null && orderItem.getStock().getProduct() != null && orderItem.getStock().getProduct().getSeller() != null) {
+                seller = orderItem.getStock().getProduct().getSeller().getUser();
+            }
+
+            if (seller != null) {
+                Address sellerAddress = hibernateSession.createQuery("FROM Address a WHERE a.user=:user AND a.isPrimary=true", Address.class)
+                        .setParameter("user", seller)
+                        .setMaxResults(1)
+                        .getSingleResultOrNull();
+                if (sellerAddress != null) {
+                    if (address.getCity().getName().equals(sellerAddress.getCity().getName())) {
+                        amount += withinCity.getPrice();
+                    } else {
+                        amount += outOfCity.getPrice();
+                    }
                 } else {
-                    amount += outOfCity.getPrice();
+                    amount += withinCity.getPrice(); // fallback
                 }
+            } else {
+                amount += withinCity.getPrice(); // fallback
             }
         }
 //
@@ -185,41 +198,40 @@ public class CheckoutService {
             Address primaryAddress = hibernateSession.createQuery("FROM Address a WHERE a.user.id=:userId AND a.isPrimary=:primary", Address.class)
                     .setParameter("userId", sessionUser.getId())
                     .setParameter("primary", true)
+                    .setMaxResults(1)
                     .getSingleResultOrNull();
-            if (primaryAddress == null) {
-                message = "You haven't a primary address!";
-            } else {
+                    
+            if (primaryAddress != null) {
                 AddressDTO addressDTO = getAddressDTO(primaryAddress);
-                List<Cart> cartList = hibernateSession.createQuery("FROM Cart c WHERE c.user.id=:userId", Cart.class)
-                        .setParameter("userId", sessionUser.getId())
-                        .getResultList();
-                if (cartList.isEmpty()) {
-                    message = "Your cart is empty. Please add items first!";
-                } else {
-                    List<CartDTO> cartDTOList = new CartService().generateCartDTOs(cartList);
-                    List<SellerDTO> sellerDTOList = new ArrayList<>();
-                    for (Cart c : cartList) {
-                        SellerDTO sellerDTO = getSellerDTO(c);
-                        sellerDTOList.add(sellerDTO);
-                    }
-                    List<DeliveryTypeDTO> deliveryTypeDTOList = new ArrayList<>();
-                    List<DeliveryType> deliveryTypeList = hibernateSession.createQuery("FROM DeliveryType d", DeliveryType.class).getResultList();
-                    for (DeliveryType deliveryType : deliveryTypeList) {
-                        DeliveryTypeDTO typeDTO = new DeliveryTypeDTO();
-                        typeDTO.setId(deliveryType.getId());
-                        typeDTO.setName(deliveryType.getName());
-                        typeDTO.setPrice(deliveryType.getPrice());
-                        deliveryTypeDTOList.add(typeDTO);
-                    }
-                    status = true;
-                    responseObject.add("userPrimaryAddress", AppUtil.GSON.toJsonTree(addressDTO));
-                    responseObject.add("cartList", AppUtil.GSON.toJsonTree(cartDTOList));
-                    responseObject.add("sellerList", AppUtil.GSON.toJsonTree(sellerDTOList));
-                    responseObject.add("deliveryTypes", AppUtil.GSON.toJsonTree(deliveryTypeDTOList));
-
+                responseObject.add("userPrimaryAddress", AppUtil.GSON.toJsonTree(addressDTO));
+            }
+            
+            List<Cart> cartList = hibernateSession.createQuery("FROM Cart c WHERE c.user.id=:userId", Cart.class)
+                    .setParameter("userId", sessionUser.getId())
+                    .getResultList();
+                    
+            if (cartList.isEmpty()) {
+                message = "Your cart is empty. Please add items first!";
+            } else {
+                List<CartDTO> cartDTOList = new CartService().generateCartDTOs(cartList);
+                List<SellerDTO> sellerDTOList = new ArrayList<>();
+                for (Cart c : cartList) {
+                    SellerDTO sellerDTO = getSellerDTO(c);
+                    sellerDTOList.add(sellerDTO);
                 }
-
-
+                List<DeliveryTypeDTO> deliveryTypeDTOList = new ArrayList<>();
+                List<DeliveryType> deliveryTypeList = hibernateSession.createQuery("FROM DeliveryType d", DeliveryType.class).getResultList();
+                for (DeliveryType deliveryType : deliveryTypeList) {
+                    DeliveryTypeDTO typeDTO = new DeliveryTypeDTO();
+                    typeDTO.setId(deliveryType.getId());
+                    typeDTO.setName(deliveryType.getName());
+                    typeDTO.setPrice(deliveryType.getPrice());
+                    deliveryTypeDTOList.add(typeDTO);
+                }
+                status = true;
+                responseObject.add("cartList", AppUtil.GSON.toJsonTree(cartDTOList));
+                responseObject.add("sellerList", AppUtil.GSON.toJsonTree(sellerDTOList));
+                responseObject.add("deliveryTypes", AppUtil.GSON.toJsonTree(deliveryTypeDTOList));
             }
             hibernateSession.close();
         }
@@ -234,18 +246,31 @@ public class CheckoutService {
         Seller seller = c.getStock().getProduct().getSeller();
         SellerDTO sellerDTO = new SellerDTO();
         sellerDTO.setId(0);
-        sellerDTO.setFirstName(seller.getUser().getFirstName());
-        sellerDTO.setLastName(seller.getUser().getLastName());
 
         CityDTO cityDTO = new CityDTO();
-        for (Address address : seller.getUser().getAddresses()) {
-            if (address.isPrimary()) {
-                cityDTO.setId(address.getCity().getId());
-                cityDTO.setName(address.getCity().getName());
-                break;
+        if (seller != null && seller.getUser() != null) {
+            sellerDTO.setFirstName(seller.getUser().getFirstName());
+            sellerDTO.setLastName(seller.getUser().getLastName());
+
+            boolean hasPrimary = false;
+            if (seller.getUser().getAddresses() != null) {
+                for (Address address : seller.getUser().getAddresses()) {
+                    if (address.isPrimary()) {
+                        cityDTO.setId(address.getCity().getId());
+                        cityDTO.setName(address.getCity().getName());
+                        hasPrimary = true;
+                        break;
+                    }
+                }
             }
+            if (hasPrimary) {
+                sellerDTO.setCityDTO(cityDTO);
+            }
+        } else {
+            sellerDTO.setFirstName("Unknown");
+            sellerDTO.setLastName("Seller");
         }
-        sellerDTO.setCityDTO(cityDTO);
+        
         return sellerDTO;
     }
 

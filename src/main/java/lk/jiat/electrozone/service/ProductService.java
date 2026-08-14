@@ -48,7 +48,15 @@ public class ProductService {
                     dto.setStockId(stock.getId());
                     dto.setTitle(stock.getProduct().getTitle());
                     dto.setPrice(stock.getPrice());
-                    dto.setImage(stock.getProduct().getImages().get(0));
+                    List<lk.jiat.ElectroZone.entity.ProductImage> pImages = hibernateSession.createQuery("FROM ProductImage p WHERE p.product=:product", lk.jiat.ElectroZone.entity.ProductImage.class)
+                            .setParameter("product", stock.getProduct())
+                            .setMaxResults(1)
+                            .getResultList();
+                    if (!pImages.isEmpty()) {
+                        dto.setImage(pImages.get(0).getImageUrl());
+                    } else {
+                        dto.setImage("assets/img/default-product.png");
+                    }
                     searchResponseDTOS.add(dto);
                 }
                 responseObject.add("basicSearchData", AppUtil.GSON.toJsonTree(searchResponseDTOS));

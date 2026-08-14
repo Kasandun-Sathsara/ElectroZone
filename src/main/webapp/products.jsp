@@ -24,8 +24,7 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb fs-7">
                 <li class="breadcrumb-item"><a href="index.jsp" class="text-muted text-decoration-none">Home</a></li>
-                <li class="breadcrumb-item"><a href="#" class="text-muted text-decoration-none">Electronics</a></li>
-                <li class="breadcrumb-item active text-dark fw-medium" aria-current="page">Smartphones & Accessories</li>
+                <li class="breadcrumb-item active text-dark fw-medium" aria-current="page" id="page-breadcrumb">Products</li>
             </ol>
         </nav>
     </div>
@@ -34,95 +33,12 @@
     <main class="container mb-5">
         <div class="row">
             
-            <!-- Sidebar Filters -->
-            <aside class="col-lg-3 d-none d-lg-block pe-4">
-                
-                <!-- Categories -->
-                <div class="mb-4">
-                    <h6 class="fw-bold text-uppercase text-muted fs-8 mb-3 letter-spacing-1">Categories</h6>
-                    <ul class="list-unstyled mb-0 filter-list">
-                        <li class="d-flex justify-content-between align-items-center mb-2">
-                            <a href="#" class="text-dark fw-medium text-decoration-none fs-7">Smartphones</a>
-                            <span class="text-muted fs-8">(120)</span>
-                        </li>
-                        <li class="d-flex justify-content-between align-items-center mb-2">
-                            <a href="#" class="text-muted text-decoration-none fs-7 hover-dark">Laptops</a>
-                            <span class="text-muted fs-8">(45)</span>
-                        </li>
-                        <li class="d-flex justify-content-between align-items-center mb-2">
-                            <a href="#" class="text-muted text-decoration-none fs-7 hover-dark">Tablets</a>
-                            <span class="text-muted fs-8">(12)</span>
-                        </li>
-                        <li class="d-flex justify-content-between align-items-center mb-2">
-                            <a href="#" class="text-muted text-decoration-none fs-7 hover-dark">Audio</a>
-                            <span class="text-muted fs-8">(89)</span>
-                        </li>
-                        <li class="d-flex justify-content-between align-items-center">
-                            <a href="#" class="text-muted text-decoration-none fs-7 hover-dark">Wearables</a>
-                            <span class="text-muted fs-8">(34)</span>
-                        </li>
-                    </ul>
-                </div>
-
-                <!-- Price Range -->
-                <div class="mb-4 pt-3 border-top" id="price-filter-container">
-                    <h6 class="fw-bold text-uppercase text-muted fs-8 mb-3 letter-spacing-1">Price Range (LKR)</h6>
-                    <div class="position-relative mt-4 mb-3">
-                        <input type="range" class="form-range" id="price-slider" min="0" max="600000" step="1000" onchange="applyFilters()">
-                    </div>
-                    <div class="d-flex justify-content-between mb-3 text-dark fw-medium fs-7">
-                        <span id="price-min-label">LKR 0</span>
-                        <span id="price-max-label">LKR 600,000</span>
-                    </div>
-                </div>
-
-                <!-- Brands -->
-                <div class="mb-4 pt-3 border-top">
-                    <h6 class="fw-bold text-uppercase text-muted fs-8 mb-3 letter-spacing-1">Brands</h6>
-                    <div id="brands-container">
-                        <!-- Loaded dynamically -->
-                    </div>
-                </div>
-
-                <!-- Ratings -->
-                <div class="mb-4 pt-3 border-top">
-                    <h6 class="fw-bold text-uppercase text-muted fs-8 mb-3 letter-spacing-1">Ratings</h6>
-                    <div class="form-check mb-2 custom-radio d-flex align-items-center">
-                        <input class="form-check-input mt-0 me-2" type="radio" name="rating" id="rating4">
-                        <label class="form-check-label fs-7 text-muted d-flex align-items-center" for="rating4">
-                            <div class="text-warning me-2 d-flex">
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star"></i>
-                            </div>
-                            & Up
-                        </label>
-                    </div>
-                    <div class="form-check custom-radio d-flex align-items-center">
-                        <input class="form-check-input mt-0 me-2" type="radio" name="rating" id="rating3">
-                        <label class="form-check-label fs-7 text-muted d-flex align-items-center" for="rating3">
-                            <div class="text-warning me-2 d-flex">
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star-fill"></i>
-                                <i class="bi bi-star"></i>
-                                <i class="bi bi-star"></i>
-                            </div>
-                            & Up
-                        </label>
-                    </div>
-                </div>
-
-            </aside>
-
             <!-- Product Grid Area -->
-            <div class="col-lg-9">
+            <div class="col-lg-12">
                 
                 <!-- Top Bar -->
                 <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-3">
-                    <h2 class="fw-bold fs-4 mb-0">Smartphones & Accessories</h2>
+                    <h2 class="fw-bold fs-4 mb-0" id="page-title">All Products</h2>
                     
                     <div class="d-flex align-items-center gap-3">
                         <span id="result-count" class="text-muted fs-7">Showing products...</span>
@@ -136,6 +52,7 @@
                                 <li><a class="dropdown-item" href="javascript:void(0)" onclick="sortProducts('price_desc')">Price: High to Low</a></li>
                             </ul>
                         </div>
+                        <a href="search.jsp" class="btn btn-primary btn-sm px-3 rounded-3 fs-7 shadow-sm" id="advanced-search-btn"><i class="bi bi-sliders me-1"></i> Advanced Search</a>
                         <div class="btn-group border bg-white rounded-3 overflow-hidden d-none d-sm-flex" role="group">
                             <button type="button" id="btn-grid-view" onclick="setView('grid')" class="btn btn-light btn-sm text-dark px-2 active"><i class="bi bi-grid-fill"></i></button>
                             <button type="button" id="btn-list-view" onclick="setView('list')" class="btn btn-white btn-sm text-muted px-2"><i class="bi bi-list"></i></button>

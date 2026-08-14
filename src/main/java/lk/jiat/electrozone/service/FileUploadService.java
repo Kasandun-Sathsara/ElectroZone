@@ -57,9 +57,9 @@ public class FileUploadService {
 
         String appUrl = Env.get("app.url");
         String relativePath = pathName + "/" + fileName;
-        String url = context.getContextPath() + relativePath;
+        String url = context.getContextPath() + "/" + relativePath;
         // We will just store the path relative to the app root, e.g. uploads/...
-        String path = relativePath.substring(1); 
+        String path = relativePath; 
         
         String fullUrl = appUrl + url;
 

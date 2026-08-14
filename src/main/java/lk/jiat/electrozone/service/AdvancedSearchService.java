@@ -69,6 +69,16 @@ public class AdvancedSearchService {
             params.put("brandName", requestObject.get("brandName").getAsString());
         }
 
+        if (requestObject.has("title")) {
+            hql.append(" AND p.title LIKE :title ");
+            params.put("title", "%" + requestObject.get("title").getAsString() + "%");
+        }
+
+        if (requestObject.has("categoryId")) {
+            hql.append(" AND p.category.id=:categoryId ");
+            params.put("categoryId", requestObject.get("categoryId").getAsInt());
+        }
+
         if (requestObject.has("conditionValue")) {
             hql.append(" AND q.value=:conditionValue ");
             params.put("conditionValue", requestObject.get("conditionValue").getAsString());
@@ -174,10 +184,45 @@ public class AdvancedSearchService {
         List<ProductDTO> productDTOList = generateProductDTO(stockQuery);
 
         // attach value to response object
+        List<Category> categoryList = hibernateSession.createQuery("FROM Category c", Category.class).getResultList();
+        List<JsonObject> categoryJsonList = new ArrayList<>();
+        for (Category c : categoryList) {
+            JsonObject obj = new JsonObject();
+            obj.addProperty("id", c.getId());
+            obj.addProperty("name", c.getName());
+            categoryJsonList.add(obj);
+        }
+        responseObject.add("categoryList", AppUtil.GSON.toJsonTree(categoryJsonList));
+        
         responseObject.add("brandList", AppUtil.GSON.toJsonTree(brandList));
-        responseObject.add("qualityList", AppUtil.GSON.toJsonTree(qualityList));
-        responseObject.add("colorList", AppUtil.GSON.toJsonTree(colorList));
-        responseObject.add("storageList", AppUtil.GSON.toJsonTree(storageList));
+        
+        List<JsonObject> qualityJsonList = new ArrayList<>();
+        for (Quality q : qualityList) {
+            JsonObject obj = new JsonObject();
+            obj.addProperty("id", q.getId());
+            obj.addProperty("value", q.getValue());
+            qualityJsonList.add(obj);
+        }
+        responseObject.add("qualityList", AppUtil.GSON.toJsonTree(qualityJsonList));
+        
+        List<JsonObject> colorJsonList = new ArrayList<>();
+        for (Color c : colorList) {
+            JsonObject obj = new JsonObject();
+            obj.addProperty("id", c.getId());
+            obj.addProperty("value", c.getValue());
+            colorJsonList.add(obj);
+        }
+        responseObject.add("colorList", AppUtil.GSON.toJsonTree(colorJsonList));
+        
+        List<JsonObject> storageJsonList = new ArrayList<>();
+        for (Storage s : storageList) {
+            JsonObject obj = new JsonObject();
+            obj.addProperty("id", s.getId());
+            obj.addProperty("value", s.getValue());
+            storageJsonList.add(obj);
+        }
+        responseObject.add("storageList", AppUtil.GSON.toJsonTree(storageJsonList));
+        
         responseObject.add("productList", AppUtil.GSON.toJsonTree(productDTOList));
         responseObject.addProperty("minPrice", minPrice);
         responseObject.addProperty("maxPrice", maxPrice);
@@ -199,7 +244,19 @@ public class AdvancedSearchService {
             productDTO.setStockId(stock.getId());
             productDTO.setTitle(stock.getProduct().getTitle());
             productDTO.setPrice(stock.getPrice());
-            productDTO.setImages(stock.getProduct().getImages());
+            List<String> imagePaths = new ArrayList<>();
+            Session session = HibernateUtil.getSessionFactory().openSession();
+            List<lk.jiat.ElectroZone.entity.ProductImage> pImages = session.createQuery("FROM ProductImage p WHERE p.product=:product", lk.jiat.ElectroZone.entity.ProductImage.class)
+                    .setParameter("product", stock.getProduct())
+                    .setMaxResults(1)
+                    .getResultList();
+            session.close();
+            if (!pImages.isEmpty()) {
+                imagePaths.add(pImages.get(0).getImageUrl());
+            } else {
+                imagePaths.add("assets/img/default-product.png");
+            }
+            productDTO.setImages(imagePaths);
             productDTOList.add(productDTO);
         }
         return productDTOList;

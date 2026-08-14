@@ -44,7 +44,19 @@ public class SingleProductService {
                     ProductDTO productDTO = new ProductDTO();
                     productDTO.setStockId(s.getId());
                     productDTO.setTitle(s.getProduct().getTitle());
-                    productDTO.setImages(s.getProduct().getImages());
+
+                    List<String> imagePaths = new ArrayList<>();
+                    List<lk.jiat.ElectroZone.entity.ProductImage> pImages = hibernateSession.createQuery("FROM ProductImage p WHERE p.product=:product", lk.jiat.ElectroZone.entity.ProductImage.class)
+                            .setParameter("product", s.getProduct())
+                            .setMaxResults(1)
+                            .getResultList();
+                    if (!pImages.isEmpty()) {
+                        imagePaths.add(pImages.get(0).getImageUrl());
+                    } else {
+                        imagePaths.add("assets/img/default-product.png");
+                    }
+                    productDTO.setImages(imagePaths);
+
                     productDTO.setPrice(s.getPrice());
                     productDTO.setStorageValue(s.getProduct().getStorage().getValue());
                     productDTO.setColorValue(s.getProduct().getColor().getValue());
@@ -84,7 +96,19 @@ public class SingleProductService {
             
             productDTO.setQualityValue(stock.getProduct().getQuality() != null ? stock.getProduct().getQuality().getValue() : "N/A");
             
-            productDTO.setImages(stock.getProduct().getImages());
+            List<String> imagePaths = new ArrayList<>();
+            List<lk.jiat.ElectroZone.entity.ProductImage> pImages = hibernateSession.createQuery("FROM ProductImage p WHERE p.product=:product", lk.jiat.ElectroZone.entity.ProductImage.class)
+                    .setParameter("product", stock.getProduct())
+                    .getResultList();
+            if (!pImages.isEmpty()) {
+                for (lk.jiat.ElectroZone.entity.ProductImage pi : pImages) {
+                    imagePaths.add(pi.getImageUrl());
+                }
+            } else {
+                imagePaths.add("assets/img/default-product.png");
+            }
+            productDTO.setImages(imagePaths);
+            
             productDTO.setColorValue(stock.getProduct().getColor().getValue());
             productDTO.setStorageValue(stock.getProduct().getStorage().getValue());
             productDTO.setDescription(stock.getProduct().getDescription());
