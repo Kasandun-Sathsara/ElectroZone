@@ -126,7 +126,7 @@ async function processCheckout() {
             lastName: document.getElementById("lastName").value,
             mobile: document.getElementById("mobile").value,
             lineOne: document.getElementById("lineOne").value,
-            lineTwo: document.getElementById("lineTwo").value,
+            lineTwo: document.getElementById("lineTwo").value + (document.getElementById("districtSelect") && document.getElementById("districtSelect").value !== "0" ? ", " + document.getElementById("districtSelect").value : ""),
             postalCode: document.getElementById("postalCode").value,
             cityId: isCurrentAddress ? 0 : parseInt(document.getElementById("citySelect").value || "0")
         };

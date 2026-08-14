@@ -5,8 +5,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
+import jakarta.servlet.annotation.WebFilter;
 import java.io.IOException;
 
+@WebFilter(urlPatterns = {"/my-account.jsp", "/wishlist.jsp", "/orders.jsp", "/checkout.jsp"})
 public class AccessControlFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {

@@ -27,9 +27,12 @@ public class AuthFilter implements ContainerRequestFilter {
         HttpSession httpSession = request.getSession(false);
         System.out.println(request.getContextPath());
         if (httpSession == null || httpSession.getAttribute("user") == null) {
-            containerRequestContext
-                    .abortWith(Response.status(Response.Status.TEMPORARY_REDIRECT)
-                            .location(URI.create(request.getContextPath() + "/login.jsp")).build());
+            com.google.gson.JsonObject jsonObject = new com.google.gson.JsonObject();
+            jsonObject.addProperty("message", "Please login first");
+            containerRequestContext.abortWith(Response.status(Response.Status.UNAUTHORIZED)
+                    .entity(jsonObject.toString())
+                    .type(jakarta.ws.rs.core.MediaType.APPLICATION_JSON)
+                    .build());
         }
 
     }

@@ -184,31 +184,36 @@ public class CartService {
             int stockId = Integer.parseInt(sId);
             int requestQty = Integer.parseInt(qty);
             Session hibernateSession = HibernateUtil.getSessionFactory().openSession();
-            Stock stock = hibernateSession.find(Stock.class, stockId);
-            if (stock == null) {
-                message = "Product not found!";
-            } else {
-                // stock available
-                HttpSession httpSession = request.getSession();
-                User user = (User) httpSession.getAttribute("user");
-                List<Cart> sessionCart = getSessionAttribute(httpSession);
-                if (user == null) {
-                    // User not logged in
-                    if (sessionCart == null) {
-                        // first time
-                        // no session cart -> create new session cart for user
-                        return guestUserFirstTime(stock, requestQty, httpSession);
-                    } else {
-                        // second time
-                        // session cart exists -> add new cart item to list
-                        return guestUserSecondTime(stock, requestQty, httpSession);
-                    }
+            try {
+                Stock stock = hibernateSession.find(Stock.class, stockId);
+                if (stock == null) {
+                    message = "Product not found!";
                 } else {
-                    // User already logged
-                    return loggedUserCart(stock, requestQty, httpSession, hibernateSession);
+                    // stock available
+                    HttpSession httpSession = request.getSession();
+                    User user = (User) httpSession.getAttribute("user");
+                    List<Cart> sessionCart = getSessionAttribute(httpSession);
+                    if (user == null) {
+                        // User not logged in
+                        if (sessionCart == null) {
+                            // first time
+                            // no session cart -> create new session cart for user
+                            return guestUserFirstTime(stock, requestQty, httpSession);
+                        } else {
+                            // second time
+                            // session cart exists -> add new cart item to list
+                            return guestUserSecondTime(stock, requestQty, httpSession);
+                        }
+                    } else {
+                        // User already logged
+                        return loggedUserCart(stock, requestQty, httpSession, hibernateSession);
+                    }
+                }
+            } finally {
+                if (hibernateSession != null && hibernateSession.isOpen()) {
+                    hibernateSession.close();
                 }
             }
-            hibernateSession.close();
         }
 
         responseObject.addProperty("status", status);
