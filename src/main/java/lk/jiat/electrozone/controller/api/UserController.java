@@ -53,4 +53,34 @@ public class UserController {
         new CartService().mergeUserCarts(request);
         return Response.ok().entity(responseJson).build();
     }
+
+    @Path("/forgot-password/send-otp")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response sendPasswordResetOtp(String jsonData, @Context HttpServletRequest request) {
+        UserDTO userDTO = AppUtil.GSON.fromJson(jsonData, UserDTO.class);
+        String responseJson = new UserService().sendPasswordResetOtp(userDTO, request);
+        return Response.ok().entity(responseJson).build();
+    }
+
+    @Path("/forgot-password/verify-otp")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response verifyPasswordResetOtp(String jsonData, @Context HttpServletRequest request) {
+        UserDTO userDTO = AppUtil.GSON.fromJson(jsonData, UserDTO.class);
+        String responseJson = new UserService().verifyPasswordResetOtp(userDTO, request);
+        return Response.ok().entity(responseJson).build();
+    }
+
+    @Path("/forgot-password/reset")
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response resetPassword(String jsonData, @Context HttpServletRequest request) {
+        UserDTO userDTO = AppUtil.GSON.fromJson(jsonData, UserDTO.class);
+        String responseJson = new UserService().resetPassword(userDTO, request);
+        return Response.ok().entity(responseJson).build();
+    }
 }

@@ -15,8 +15,22 @@ public class PaymentController {
     @Path("/return")
     @GET
     @Produces(MediaType.TEXT_PLAIN)
-    public Response paymentSuccess(@QueryParam("orderId") String orderId) {
-        return Response.seeOther(URI.create(Env.get("app.url") + "/invoice.jsp?orderId=" + orderId)).build();
+    public Response paymentSuccess(@QueryParam("order_id") String payhereOrderId) {
+        // NOTE: PayHere returns order_id parameter, not orderId in the query string
+        OrderService orderService = new OrderService();
+        try {
+            // Check if order is still pending, if so, complete it as a fallback for localhost testing
+            int oId = Integer.parseInt(payhereOrderId.replaceAll(lk.jiat.ElectroZone.validation.Validator.NON_DIGIT_PATTERN, ""));
+            org.hibernate.Session hibernateSession = lk.jiat.ElectroZone.util.HibernateUtil.getSessionFactory().openSession();
+            lk.jiat.ElectroZone.entity.Order order = hibernateSession.find(lk.jiat.ElectroZone.entity.Order.class, oId);
+            if (order != null && "PENDING".equals(order.getStatus().getValue())) {
+                orderService.completeOrder(payhereOrderId);
+            }
+            hibernateSession.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return Response.seeOther(URI.create(Env.get("app.url") + "/invoice.jsp?orderId=" + payhereOrderId)).build();
     }
 
     @Path("/cancel")

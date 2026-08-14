@@ -21,6 +21,8 @@ public class MailServiceProvider {
     private MailServiceProvider() {
         properties.put("mail.smtp.auth", true);
         properties.put("mail.smtp.starttls.enable", true);
+        properties.put("mail.smtp.starttls.required", true);
+        properties.put("mail.smtp.ssl.protocols", "TLSv1.2");
         if (Env.get("mail.host") != null) {
             properties.put("mail.smtp.host", Env.get("mail.host"));
             properties.put("mail.smtp.ssl.trust", Env.get("mail.host"));

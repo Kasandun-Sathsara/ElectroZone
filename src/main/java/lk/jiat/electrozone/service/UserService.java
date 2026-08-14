@@ -225,4 +225,135 @@ public class UserService {
         return AppUtil.GSON.toJson(responseObject);
     }
 
+    public String sendPasswordResetOtp(UserDTO userDTO, HttpServletRequest request) {
+        JsonObject responseObject = new JsonObject();
+        boolean status = false;
+        String message = "";
+
+        if (userDTO.getEmail() == null || userDTO.getEmail().isBlank()) {
+            message = "Email is required!";
+        } else if (!userDTO.getEmail().matches(Validator.EMAIL_VALIDATION)) {
+            message = "Please provide a valid email address!";
+        } else {
+            Session hibernateSession = HibernateUtil.getSessionFactory().openSession();
+            User user = hibernateSession.createNamedQuery("User.getByEmail", User.class)
+                    .setParameter("email", userDTO.getEmail())
+                    .getSingleResultOrNull();
+
+            if (user == null) {
+                // Show success even if not found to prevent email enumeration, but we won't send an email
+                status = true;
+                message = "If this email is registered, you will receive an OTP shortly.";
+            } else {
+                String otp = AppUtil.generateCode();
+                
+                // Store in session
+                HttpSession session = request.getSession();
+                session.setAttribute("resetEmail", user.getEmail());
+                session.setAttribute("resetOtp", otp);
+                session.setMaxInactiveInterval(10 * 60); // OTP expires in 10 minutes
+
+                // Send Email
+                String subject = "Password Reset OTP - ElectroZone";
+                String htmlBody = "<div style='font-family: Arial, sans-serif; padding: 20px; max-width: 600px; margin: 0 auto;'>" +
+                        "<h2 style='color: #2563eb;'>ElectroZone Password Reset</h2>" +
+                        "<p>Hello " + user.getFirstName() + ",</p>" +
+                        "<p>You requested a password reset. Your OTP is:</p>" +
+                        "<div style='background-color: #f3f4f6; padding: 15px; border-radius: 5px; font-size: 24px; letter-spacing: 5px; font-weight: bold; text-align: center; margin: 20px 0;'>" +
+                        otp +
+                        "</div>" +
+                        "<p>This code is valid for 10 minutes. If you did not request a password reset, please ignore this email.</p>" +
+                        "<p>Best Regards,<br>ElectroZone Team</p>" +
+                        "</div>";
+
+                new Thread(() -> {
+                    lk.jiat.ElectroZone.util.EmailUtil.sendEmail(user.getEmail(), subject, htmlBody);
+                }).start();
+
+                status = true;
+                message = "OTP has been sent to your email address.";
+            }
+            hibernateSession.close();
+        }
+
+        responseObject.addProperty("status", status);
+        responseObject.addProperty("message", message);
+        return AppUtil.GSON.toJson(responseObject);
+    }
+
+    public String verifyPasswordResetOtp(UserDTO userDTO, HttpServletRequest request) {
+        JsonObject responseObject = new JsonObject();
+        boolean status = false;
+        String message = "";
+
+        HttpSession session = request.getSession(false);
+        if (session == null || session.getAttribute("resetEmail") == null || session.getAttribute("resetOtp") == null) {
+            message = "Session expired or invalid. Please request a new OTP.";
+        } else if (userDTO.getVerificationCode() == null || userDTO.getVerificationCode().isBlank()) {
+            message = "OTP is required!";
+        } else {
+            String savedOtp = (String) session.getAttribute("resetOtp");
+            if (savedOtp.equals(userDTO.getVerificationCode())) {
+                status = true;
+                message = "OTP verified successfully.";
+                session.setAttribute("otpVerified", true); // Mark as verified so they can proceed to reset
+            } else {
+                message = "Invalid OTP. Please try again.";
+            }
+        }
+
+        responseObject.addProperty("status", status);
+        responseObject.addProperty("message", message);
+        return AppUtil.GSON.toJson(responseObject);
+    }
+
+    public String resetPassword(UserDTO userDTO, HttpServletRequest request) {
+        JsonObject responseObject = new JsonObject();
+        boolean status = false;
+        String message = "";
+
+        HttpSession session = request.getSession(false);
+        if (session == null || session.getAttribute("resetEmail") == null || session.getAttribute("otpVerified") == null) {
+            message = "Session expired or invalid flow. Please start over.";
+        } else if (userDTO.getPassword() == null || userDTO.getPassword().isBlank()) {
+            message = "New password is required!";
+        } else if (!userDTO.getPassword().matches(Validator.PASSWORD_VALIDATION)) {
+            message = "Password must be at least 8 characters long and include uppercase, lowercase, digit, and special character.";
+        } else {
+            String email = (String) session.getAttribute("resetEmail");
+            
+            Session hibernateSession = HibernateUtil.getSessionFactory().openSession();
+            User user = hibernateSession.createNamedQuery("User.getByEmail", User.class)
+                    .setParameter("email", email)
+                    .getSingleResultOrNull();
+
+            if (user != null) {
+                Transaction tx = hibernateSession.beginTransaction();
+                try {
+                    user.setPassword(lk.jiat.ElectroZone.util.EncryptionUtil.hashPassword(userDTO.getPassword()));
+                    hibernateSession.merge(user);
+                    tx.commit();
+                    
+                    status = true;
+                    message = "Password reset successfully. You can now login.";
+                    
+                    // Clear session attributes
+                    session.removeAttribute("resetEmail");
+                    session.removeAttribute("resetOtp");
+                    session.removeAttribute("otpVerified");
+                } catch (HibernateException e) {
+                    tx.rollback();
+                    message = "Failed to reset password. Please try again.";
+                }
+            } else {
+                message = "User not found.";
+            }
+            hibernateSession.close();
+        }
+
+        responseObject.addProperty("status", status);
+        responseObject.addProperty("message", message);
+        return AppUtil.GSON.toJson(responseObject);
+    }
+
 }

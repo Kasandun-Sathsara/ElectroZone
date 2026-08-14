@@ -148,9 +148,13 @@ async function processCheckout() {
             const data = await response.json();
             if (data.status) {
                 // Initialize PayHere
-                payhere.onCompleted = function onCompleted(orderId) {
+                payhere.onCompleted = async function onCompleted(orderId) {
                     Notiflix.Notify.success("Payment completed. OrderID:" + orderId, { position: 'center-top' });
-                    window.location.href = "my-account.jsp";
+                    // Complete the order first before redirecting to invoice
+                    try {
+                        await fetch("api/payments/return?order_id=" + orderId);
+                    } catch(e) { console.error("Return call error:", e); }
+                    window.location.href = "invoice.jsp?orderId=" + orderId;
                 };
                 payhere.onDismissed = function onDismissed() {
                     Notiflix.Notify.info("Payment dismissed", { position: 'center-top' });

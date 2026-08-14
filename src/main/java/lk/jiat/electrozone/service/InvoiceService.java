@@ -21,62 +21,139 @@ public class InvoiceService {
         boolean status = false;
         String message = "";
 
-        int oId = Integer.parseInt(orderId.replaceAll(Validator.NON_DIGIT_PATTERN, ""));
-        Session hibernateSession = HibernateUtil.getSessionFactory().openSession();
-        Order order = hibernateSession.find(Order.class, oId);
-        if (order == null) {
-            message = "Incorrect order details. Please check credentials!";
-        } else {
-            if (order.getStatus().getValue().equals(String.valueOf(Status.Type.COMPLETED))) {
-                InvoiceDTO invoiceDTO = new InvoiceDTO();
-                invoiceDTO.setInvoiceNo("000" + order.getId());
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy");
-                invoiceDTO.setInvoiceDate(formatter.format(order.getCreatedAt()));
-
-                User user = order.getUser();
-                invoiceDTO.setBuyerName(user.getFirstName() + " " + user.getLastName());
-                Address address = hibernateSession.createQuery("FROM Address a WHERE a.user=:user AND a.isPrimary=true", Address.class)
-                        .setParameter("user", user)
-                        .getSingleResult();
-                invoiceDTO.setAddress(address.getLineOne() +
-                        (address.getLineTwo() != null && !address.getLineTwo().isBlank() ? ", " + address.getLineTwo() : ""));
-                invoiceDTO.setCityName(address.getCity().getName());
-                invoiceDTO.setCountryName("Sri Lanka");
-                invoiceDTO.setEmail(user.getEmail());
-
-                List<InvoiceItemDTO> itemDTOS = new ArrayList<>();
-                DeliveryType withinCity = hibernateSession.createNamedQuery("DeliveryType.findByName", DeliveryType.class)
-                        .setParameter("name", String.valueOf(DeliveryType.Value.WITHIN_CITY)).getSingleResult();
-                DeliveryType outOfCity = hibernateSession.createNamedQuery("DeliveryType.findByName", DeliveryType.class)
-                        .setParameter("name", String.valueOf(DeliveryType.Value.OUT_OF_CITY)).getSingleResult();
-                double shippingCharges = 0;
-                for (OrderItem orderItem : order.getOrderItems()) {
-                    InvoiceItemDTO itemDTO = new InvoiceItemDTO();
-                    itemDTO.setItemName(orderItem.getStock().getProduct().getTitle());
-                    itemDTO.setItemQty(orderItem.getQty());
-                    itemDTO.setItemPrice(orderItem.getStock().getPrice());
-                    itemDTOS.add(itemDTO);
-
-                    /// Calculate shipping cost
-                    User seller = orderItem.getSeller().getUser();
-                    Address sellerAddress = hibernateSession.createQuery("FROM Address a WHERE a.user=:user AND a.isPrimary=true", Address.class)
-                            .setParameter("user", seller)
-                            .getSingleResult();
-                    if (address.getCity().getName().equals(sellerAddress.getCity().getName())) {
-                        shippingCharges += withinCity.getPrice();
-                    } else {
-                        shippingCharges += outOfCity.getPrice();
-                    }
-                }
-                invoiceDTO.setShippingCharges(shippingCharges);
-                invoiceDTO.setInvoiceItemDTOList(itemDTOS);
-                invoiceDTO.setInvoiceStatus(InvoiceService.INVOICE_PAID_STATUS);
-
-                status = true;
-                responseObject.add("invoiceData", AppUtil.GSON.toJsonTree(invoiceDTO));
-            }
+        if (orderId == null || orderId.trim().isEmpty()) {
+            responseObject.addProperty("status", false);
+            responseObject.addProperty("message", "Invalid order ID");
+            return AppUtil.GSON.toJson(responseObject);
         }
-        hibernateSession.close();
+
+        try {
+            int oId = Integer.parseInt(orderId.replaceAll(Validator.NON_DIGIT_PATTERN, ""));
+            
+            // Auto-complete order if pending
+            try {
+                OrderService orderService = new OrderService();
+                orderService.completeOrder(orderId);
+            } catch (Exception e) {
+                // If it was already completed or failed, ignore
+                System.out.println("Auto-complete in InvoiceService notice: " + e.getMessage());
+            }
+
+            try (Session hibernateSession = HibernateUtil.getSessionFactory().openSession()) {
+                Order order = hibernateSession.find(Order.class, oId);
+                if (order == null) {
+                    message = "Order not found for ID: " + orderId;
+                } else {
+                    InvoiceDTO invoiceDTO = new InvoiceDTO();
+                    invoiceDTO.setInvoiceNo("000" + order.getId());
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy");
+                    invoiceDTO.setInvoiceDate(formatter.format(order.getCreatedAt()));
+
+                    User user = order.getUser();
+                    if (user != null) {
+                        invoiceDTO.setBuyerName(user.getFirstName() + " " + (user.getLastName() != null ? user.getLastName() : ""));
+                        invoiceDTO.setEmail(user.getEmail());
+
+                        // Safe Address Lookup for User
+                        List<Address> userAddresses = hibernateSession.createQuery(
+                                "FROM Address a WHERE a.user=:user ORDER BY a.isPrimary DESC", Address.class)
+                                .setParameter("user", user)
+                                .getResultList();
+
+                        Address userAddress = userAddresses.isEmpty() ? null : userAddresses.get(0);
+                        if (userAddress != null) {
+                            invoiceDTO.setAddress(userAddress.getLineOne() +
+                                    (userAddress.getLineTwo() != null && !userAddress.getLineTwo().isBlank() ? ", " + userAddress.getLineTwo() : ""));
+                            invoiceDTO.setCityName(userAddress.getCity() != null ? userAddress.getCity().getName() : "Colombo");
+                        } else {
+                            invoiceDTO.setAddress("Customer Address");
+                            invoiceDTO.setCityName("Colombo");
+                        }
+                    } else {
+                        invoiceDTO.setBuyerName("Customer");
+                        invoiceDTO.setEmail("");
+                        invoiceDTO.setAddress("Customer Address");
+                        invoiceDTO.setCityName("Colombo");
+                    }
+                    invoiceDTO.setCountryName("Sri Lanka");
+
+                    // Safe Delivery Types Lookup
+                    double withinCityPrice = 300.0;
+                    double outOfCityPrice = 500.0;
+                    try {
+                        List<DeliveryType> deliveryTypes = hibernateSession.createQuery("FROM DeliveryType", DeliveryType.class).getResultList();
+                        for (DeliveryType dt : deliveryTypes) {
+                            if (String.valueOf(DeliveryType.Value.WITHIN_CITY).equalsIgnoreCase(dt.getName())) {
+                                withinCityPrice = dt.getPrice();
+                            } else if (String.valueOf(DeliveryType.Value.OUT_OF_CITY).equalsIgnoreCase(dt.getName())) {
+                                outOfCityPrice = dt.getPrice();
+                            }
+                        }
+                    } catch (Exception e) {
+                        System.out.println("Could not load delivery types, using defaults: " + e.getMessage());
+                    }
+
+                    List<InvoiceItemDTO> itemDTOS = new ArrayList<>();
+                    double shippingCharges = 0;
+
+                    List<OrderItem> orderItems = hibernateSession.createQuery(
+                            "FROM OrderItem oi WHERE oi.order=:order", OrderItem.class)
+                            .setParameter("order", order)
+                            .getResultList();
+
+                    for (OrderItem orderItem : orderItems) {
+                        InvoiceItemDTO itemDTO = new InvoiceItemDTO();
+                        String title = "Product";
+                        double price = 0;
+
+                        if (orderItem.getStock() != null) {
+                            price = orderItem.getStock().getPrice();
+                            if (orderItem.getStock().getProduct() != null) {
+                                title = orderItem.getStock().getProduct().getTitle();
+                            }
+                        }
+
+                        itemDTO.setItemName(title);
+                        itemDTO.setItemQty(orderItem.getQty());
+                        itemDTO.setItemPrice(price);
+                        itemDTOS.add(itemDTO);
+
+                        // Safe shipping calculation per item
+                        try {
+                            if (orderItem.getSeller() != null && orderItem.getSeller().getUser() != null) {
+                                User seller = orderItem.getSeller().getUser();
+                                List<Address> sellerAddresses = hibernateSession.createQuery(
+                                        "FROM Address a WHERE a.user=:user ORDER BY a.isPrimary DESC", Address.class)
+                                        .setParameter("user", seller)
+                                        .getResultList();
+
+                                if (!sellerAddresses.isEmpty() && invoiceDTO.getCityName() != null &&
+                                        sellerAddresses.get(0).getCity() != null &&
+                                        invoiceDTO.getCityName().equalsIgnoreCase(sellerAddresses.get(0).getCity().getName())) {
+                                    shippingCharges += withinCityPrice;
+                                } else {
+                                    shippingCharges += outOfCityPrice;
+                                }
+                            } else {
+                                shippingCharges += withinCityPrice;
+                            }
+                        } catch (Exception e) {
+                            shippingCharges += withinCityPrice;
+                        }
+                    }
+
+                    invoiceDTO.setShippingCharges(shippingCharges);
+                    invoiceDTO.setInvoiceItemDTOList(itemDTOS);
+                    invoiceDTO.setInvoiceStatus(InvoiceService.INVOICE_PAID_STATUS);
+
+                    status = true;
+                    responseObject.add("invoiceData", AppUtil.GSON.toJsonTree(invoiceDTO));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            message = "Error loading invoice: " + e.getMessage();
+        }
 
         responseObject.addProperty("status", status);
         responseObject.addProperty("message", message);

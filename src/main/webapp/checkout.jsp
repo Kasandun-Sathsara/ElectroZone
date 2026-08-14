@@ -186,7 +186,7 @@
     <script src="assets/js/notiflix-aio-3.2.8.min.js"></script>
     <!-- PayHere Script -->
     <script type="text/javascript" src="https://www.payhere.lk/lib/payhere.js"></script>
-    <script src="assets/js/checkout.js"></script>
+    <script src="assets/js/checkout.js?v=3"></script>
     <script>
         // Load cities
         fetch("api/data/cities")
