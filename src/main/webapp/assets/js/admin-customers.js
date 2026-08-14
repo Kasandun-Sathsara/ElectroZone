@@ -18,6 +18,7 @@ function loadCustomers() {
             Notiflix.Loading.remove();
             if (data.status) {
                 allCustomers = data.customers;
+                updateStatsCards();
                 filterCustomers();
             } else {
                 Notiflix.Notify.failure(data.message);
@@ -26,7 +27,27 @@ function loadCustomers() {
         .catch(err => {
             Notiflix.Loading.remove();
             console.error(err);
+            Notiflix.Notify.failure("Error: " + err.message);
         });
+}
+
+function updateStatsCards() {
+    const totalCustomers = allCustomers.length;
+    const activeMembers = allCustomers.filter(c => c.status === "ACTIVE").length;
+    
+    const now = new Date();
+    const currentMonth = now.getMonth();
+    const currentYear = now.getFullYear();
+    
+    const newThisMonth = allCustomers.filter(c => {
+        if (!c.sinceAt || c.sinceAt === "Unknown") return false;
+        const joinDate = new Date(c.sinceAt);
+        return joinDate.getMonth() === currentMonth && joinDate.getFullYear() === currentYear;
+    }).length;
+    
+    document.getElementById("stat-total-customers").innerText = totalCustomers.toLocaleString();
+    document.getElementById("stat-active-members").innerText = activeMembers.toLocaleString();
+    document.getElementById("stat-new-this-month").innerText = "+" + newThisMonth.toLocaleString();
 }
 
 function filterCustomers() {

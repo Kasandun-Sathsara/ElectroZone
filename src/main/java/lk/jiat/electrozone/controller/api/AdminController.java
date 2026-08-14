@@ -22,4 +22,23 @@ public class AdminController {
         String response = adminService.getDashboardStats();
         return Response.ok().entity(response).build();
     }
+
+    @IsAdmin
+    @Path("/customers/all")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAllCustomers() {
+        String response = adminService.getAllCustomers();
+        return Response.ok().entity(response).build();
+    }
+
+    @IsAdmin
+    @Path("/customers/{id}/status")
+    @jakarta.ws.rs.PUT
+    @jakarta.ws.rs.Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateCustomerStatus(@jakarta.ws.rs.PathParam("id") int id, @jakarta.ws.rs.FormParam("status") String statusName) {
+        String response = adminService.updateCustomerStatus(id, statusName);
+        return Response.ok().entity(response).build();
+    }
 }

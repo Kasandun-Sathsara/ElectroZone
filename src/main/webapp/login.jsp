@@ -100,7 +100,7 @@
                             </div>
                         </div>
                         <div class="col-6 text-end">
-                            <a href="#" class="text-decoration-none fw-bold fs-7 link-primary">Forgot password?</a>
+                            <a href="forgot-password.jsp" class="text-decoration-none fw-bold fs-7 link-primary">Forgot password?</a>
                         </div>
                     </div>
 

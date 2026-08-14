@@ -1,3 +1,18 @@
+// Load remembered credentials on page load
+window.addEventListener("load", () => {
+    if(localStorage.getItem("userEmail")) {
+        const emailInput = document.getElementById("email");
+        const passwordInput = document.getElementById("password");
+        const rememberMeInput = document.getElementById("rememberMe");
+        
+        if (emailInput && passwordInput && rememberMeInput) {
+            emailInput.value = localStorage.getItem("userEmail");
+            passwordInput.value = localStorage.getItem("userPassword");
+            rememberMeInput.checked = true;
+        }
+    }
+});
+
 async function signIn() {
     Notiflix.Loading.pulse("Wait...", {
         clickToClose: false,
@@ -6,6 +21,7 @@ async function signIn() {
 
     let email = document.getElementById("email");
     let password = document.getElementById("password");
+    let rememberMe = document.getElementById("rememberMe");
 
     const userLoginObj = {
         email: email.value,
@@ -25,6 +41,14 @@ async function signIn() {
         if (response.ok) {
             const data = await response.json();
             if(data.status){
+                if (rememberMe && rememberMe.checked) {
+                    localStorage.setItem("userEmail", email.value);
+                    localStorage.setItem("userPassword", password.value);
+                } else {
+                    localStorage.removeItem("userEmail");
+                    localStorage.removeItem("userPassword");
+                }
+                
                 Notiflix.Report.success(
                     'ElectroZone',
                     data.message,

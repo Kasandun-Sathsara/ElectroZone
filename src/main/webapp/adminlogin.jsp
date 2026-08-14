@@ -91,16 +91,13 @@
 
                     <!-- Options -->
                     <div class="row mb-5 align-items-center">
-                        <div class="col-6">
+                        <div class="col-12">
                             <div class="form-check d-flex align-items-center gap-2">
                                 <input class="form-check-input custom-checkbox mt-0" type="checkbox" id="rememberMe">
                                 <label class="form-check-label text-muted fs-7 pt-1 fw-medium" for="rememberMe">
                                     Remember me
                                 </label>
                             </div>
-                        </div>
-                        <div class="col-6 text-end">
-                            <a href="#" class="text-decoration-none fw-bold fs-7 link-primary">Forgot password?</a>
                         </div>
                     </div>
 
@@ -121,12 +118,25 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 <script src="assets/js/notiflix-aio-3.2.8.min.js"></script>
 <script>
+    // Load remembered credentials on page load
+    window.addEventListener("load", () => {
+        if(localStorage.getItem("adminEmail")) {
+            document.getElementById("email").value = localStorage.getItem("adminEmail");
+            document.getElementById("password").value = localStorage.getItem("adminPassword");
+            document.getElementById("rememberMe").checked = true;
+        }
+    });
+
     async function signIn() {
         Notiflix.Loading.pulse("Wait...", { clickToClose: false, svgColor: '#0284c7' });
         
+        const emailInput = document.getElementById("email").value;
+        const passwordInput = document.getElementById("password").value;
+        const rememberMe = document.getElementById("rememberMe").checked;
+        
         const userLoginObj = {
-            email: document.getElementById("email").value,
-            password: document.getElementById("password").value
+            email: emailInput,
+            password: passwordInput
         };
 
         try {
@@ -139,6 +149,13 @@
             if (response.ok) {
                 const data = await response.json();
                 if(data.status){
+                    if(rememberMe) {
+                        localStorage.setItem("adminEmail", emailInput);
+                        localStorage.setItem("adminPassword", passwordInput);
+                    } else {
+                        localStorage.removeItem("adminEmail");
+                        localStorage.removeItem("adminPassword");
+                    }
                     Notiflix.Report.success(
                         'ElectroZone Admin',
                         'Login successful. Redirecting to dashboard...',

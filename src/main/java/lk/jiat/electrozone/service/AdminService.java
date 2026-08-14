@@ -185,14 +185,28 @@ public class AdminService {
     public String getAllCustomers() {
         JsonObject responseObject = new JsonObject();
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            List<User> users = session.createQuery("FROM User u WHERE u.role.name = 'USER' ORDER BY u.id DESC", User.class).getResultList();
+            List<User> users = session.createQuery("FROM User u ORDER BY u.id DESC", User.class).getResultList();
             JsonArray customersArray = new JsonArray();
             for (User u : users) {
                 JsonObject obj = new JsonObject();
                 obj.addProperty("id", u.getId());
                 obj.addProperty("fullName", u.getFullName());
                 obj.addProperty("email", u.getEmail());
-                obj.addProperty("mobile", u.getMobile());
+                
+                String mobile = "N/A";
+                if (u.getAddresses() != null && !u.getAddresses().isEmpty()) {
+                    for (Address a : u.getAddresses()) {
+                        if (a.isPrimary()) {
+                            mobile = a.getMobile();
+                            break;
+                        }
+                    }
+                    if(mobile.equals("N/A")) {
+                        mobile = u.getAddresses().iterator().next().getMobile();
+                    }
+                }
+                obj.addProperty("mobile", mobile);
+                
                 obj.addProperty("sinceAt", u.getCreatedAt() != null ? u.getCreatedAt().toString() : "Unknown");
                 obj.addProperty("status", u.getStatus() != null ? u.getStatus().getValue() : "UNKNOWN");
                 customersArray.add(obj);

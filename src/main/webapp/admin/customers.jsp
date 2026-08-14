@@ -96,7 +96,7 @@
                     <div class="stat-card shadow-sm">
                         <div class="stat-content">
                             <span class="stat-label label-blue">Total Customers</span>
-                            <span class="stat-value">24,582</span>
+                            <span class="stat-value" id="stat-total-customers">0</span>
                         </div>
                         <div class="stat-icon icon-bg-blue">
                             <i class="bi bi-people-fill"></i>
@@ -109,7 +109,7 @@
                     <div class="stat-card shadow-sm">
                         <div class="stat-content">
                             <span class="stat-label label-teal">Active Members</span>
-                            <span class="stat-value">23,901</span>
+                            <span class="stat-value" id="stat-active-members">0</span>
                         </div>
                         <div class="stat-icon icon-bg-green">
                             <i class="bi bi-check-circle-fill"></i>
@@ -122,7 +122,7 @@
                     <div class="stat-card shadow-sm">
                         <div class="stat-content">
                             <span class="stat-label label-purple">New This Month</span>
-                            <span class="stat-value">+843</span>
+                            <span class="stat-value" id="stat-new-this-month">0</span>
                         </div>
                         <div class="stat-icon icon-bg-purple">
                             <i class="bi bi-graph-up-arrow"></i>
@@ -193,7 +193,7 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../assets/js/notiflix-3.2.6.min.js"></script>
+    <script src="../assets/js/notiflix-aio-3.2.8.min.js"></script>
     <script src="../assets/js/admin-customers.js"></script>
 </body>
 </html>
