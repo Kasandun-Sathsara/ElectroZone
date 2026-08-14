@@ -121,7 +121,7 @@ function renderingSimilarProducts(productList) {
                 <div class="col-sm-6 col-lg-3 mb-4">
                     <div class="product-card h-100 bg-white shadow-sm border-0">
                         <div class="product-img-wrapper bg-light" style="cursor:pointer;" onclick="window.location='single-product.jsp?productId=${product.stockId}'">
-                            <img src="${product.images[0]}" alt="${product.title}" class="img-fluid" style="mix-blend-mode: multiply;">
+                            <img src="${product.images[0]}" alt="${product.title}" class="img-fluid" style="max-height: 100%; object-fit: contain;">
                         </div>
                         <div class="p-4 d-flex flex-column" style="height: calc(100% - 250px);">
                             <span class="text-muted fs-8 fw-medium mb-1">${product.brandName}</span>

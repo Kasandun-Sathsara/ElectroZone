@@ -37,6 +37,14 @@ public class ContentController {
         return Response.ok().entity(loadAllCities).build();
     }
 
+    @Path("/categories")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response loadCategories() {
+        String responseJson = new ContentService().loadCategories();
+        return Response.ok().entity(responseJson).build();
+    }
+
     @Path("/brands")
     @GET
     @Produces(MediaType.APPLICATION_JSON)

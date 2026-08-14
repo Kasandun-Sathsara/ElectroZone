@@ -41,6 +41,19 @@ public class ContentService {
         return AppUtil.GSON.toJson(responseObject);
     }
 
+    public String loadCategories() {
+        JsonObject responseObject = new JsonObject();
+        try (Session hibernateSession = HibernateUtil.getSessionFactory().openSession()) {
+            List<Category> categories = hibernateSession.createQuery("FROM Category c ORDER BY c.name ASC", Category.class).getResultList();
+            responseObject.add("categories", AppUtil.GSON.toJsonTree(categories));
+            responseObject.addProperty("status", true);
+        } catch (Exception e) {
+            responseObject.addProperty("status", false);
+            responseObject.addProperty("message", "Error loading categories: " + e.getMessage());
+        }
+        return AppUtil.GSON.toJson(responseObject);
+    }
+
     public String loadDealsProducts() {
         JsonObject responseObject = new JsonObject();
         Session hibernateSession = HibernateUtil.getSessionFactory().openSession();

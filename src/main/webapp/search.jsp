@@ -17,44 +17,7 @@
 <body>
 
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg bg-white py-3 border-bottom sticky-top shadow-sm">
-        <div class="container d-flex justify-content-between align-items-center">
-            
-            <!-- Brand -->
-            <a class="navbar-brand d-flex align-items-center m-0 me-5" href="index.jsp">
-                <div class="brand-icon me-2 d-flex align-items-center justify-content-center shadow-sm" style="width: 32px; height: 32px; border-radius: 8px;">
-                    <i class="bi bi-lightning-fill text-white fs-5"></i>
-                </div>
-                <span class="fw-bold fs-4 tracking-tight text-dark">ElectroZone</span>
-            </a>
-
-            <!-- Mobile Toggle -->
-            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <!-- Links & Actions -->
-            <div class="collapse navbar-collapse" id="navbarContent">
-                <ul class="navbar-nav mx-auto mb-2 mb-lg-0 fw-medium">
-                    <li class="nav-item mx-3"><a class="nav-link text-muted hover-dark" href="#">Products</a></li>
-                    <li class="nav-item mx-3"><a class="nav-link text-muted hover-dark" href="deals.jsp">Deals</a></li>
-                    <li class="nav-item mx-3"><a class="nav-link text-muted hover-dark" href="#">Support</a></li>
-                </ul>
-                
-                <div class="d-flex align-items-center gap-3 mt-3 mt-lg-0">
-                    <a href="cart.jsp" class="btn btn-primary d-flex align-items-center gap-2 px-3 py-2 rounded-3 fw-medium">
-                        <i class="bi bi-cart3"></i> Cart
-                    </a>
-                    <a href="login.jsp" class="btn btn-light rounded-circle p-2 d-flex align-items-center justify-content-center border" style="width: 42px; height: 42px;">
-                        <i class="bi bi-person text-muted fs-5"></i>
-                    </a>
-                    <div class="rounded-circle overflow-hidden bg-light border border-2 border-white shadow-sm" style="width: 42px; height: 42px;">
-                        <img src="https://ui-avatars.com/api/?name=User&background=random" alt="Avatar" class="img-fluid">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </nav>
+    <jsp:include page="include/header.jsp"/>
 
     <!-- Main Content -->
     <main class="container pb-5">

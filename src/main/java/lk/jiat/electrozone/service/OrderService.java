@@ -10,7 +10,8 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import java.util.List;
-
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 public class OrderService {
     public Order createPendingOrder(User user, Session hibernateSession) {
         Status pendingStatus = hibernateSession.createNamedQuery("Status.findByValue", Status.class)
@@ -103,6 +104,73 @@ public class OrderService {
                 throw new RuntimeException("Failed to reject order: " + oId);
             }
         }
+    }
+
+    public String getUserOrders(HttpServletRequest request) {
+        JsonObject responseObject = new JsonObject();
+        boolean status = false;
+        String message = "";
+        
+        HttpSession httpSession = request.getSession(false);
+        if (httpSession != null && httpSession.getAttribute("user") != null) {
+            User user = (User) httpSession.getAttribute("user");
+            
+            try (Session hibernateSession = HibernateUtil.getSessionFactory().openSession()) {
+                List<Order> orders = hibernateSession.createQuery("FROM Order o WHERE o.user=:user ORDER BY o.createdAt DESC", Order.class)
+                        .setParameter("user", user)
+                        .getResultList();
+                        
+                com.google.gson.JsonArray ordersArray = new com.google.gson.JsonArray();
+                java.time.format.DateTimeFormatter formatter = java.time.format.DateTimeFormatter.ofPattern("MMM dd, yyyy");
+                
+                for (Order order : orders) {
+                    JsonObject orderObj = new JsonObject();
+                    orderObj.addProperty("id", order.getId());
+                    orderObj.addProperty("status", order.getStatus().getValue());
+                    orderObj.addProperty("createdAt", order.getCreatedAt().format(formatter));
+                    
+                    double total = 0;
+                    com.google.gson.JsonArray itemsArray = new com.google.gson.JsonArray();
+                    
+                    for (OrderItem item : order.getOrderItems()) {
+                        JsonObject itemObj = new JsonObject();
+                        itemObj.addProperty("productTitle", item.getStock().getProduct().getTitle());
+                        itemObj.addProperty("qty", item.getQty());
+                        itemObj.addProperty("price", item.getStock().getPrice());
+                        
+                        total += (item.getQty() * item.getStock().getPrice());
+                        
+                        List<ProductImage> pImages = hibernateSession.createQuery("FROM ProductImage p WHERE p.product=:product", ProductImage.class)
+                                .setParameter("product", item.getStock().getProduct())
+                                .setMaxResults(1)
+                                .getResultList();
+                        if (!pImages.isEmpty()) {
+                            itemObj.addProperty("image", pImages.get(0).getImageUrl());
+                        } else {
+                            itemObj.addProperty("image", "assets/img/default-product.png");
+                        }
+                        itemsArray.add(itemObj);
+                    }
+                    
+                    orderObj.addProperty("total", total);
+                    orderObj.add("items", itemsArray);
+                    ordersArray.add(orderObj);
+                }
+                
+                responseObject.add("orders", ordersArray);
+                status = true;
+            } catch (Exception e) {
+                message = "Failed to load orders: " + e.getMessage();
+                e.printStackTrace();
+            }
+        } else {
+            responseObject.addProperty("status_code", 401);
+            message = "Please login first";
+        }
+        
+        responseObject.addProperty("status", status);
+        responseObject.addProperty("message", message);
+        return AppUtil.GSON.toJson(responseObject);
     }
 
     public String verifyOrderDetails(String orderId){

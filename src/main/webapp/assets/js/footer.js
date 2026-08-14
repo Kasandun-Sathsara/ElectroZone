@@ -155,7 +155,7 @@ class FooterContent extends HTMLElement {
             </h3>
             <div class="group-btn">
                 <a href="cart.jsp" class="axil-btn btn-bg-primary viewcart-btn">View Cart</a>
-                <a href="checkout.jsp" class="axil-btn btn-bg-secondary checkout-btn">Checkout</a>
+                <a id="side-checkout-btn" href="checkout.jsp" class="axil-btn btn-bg-secondary checkout-btn">Checkout</a>
             </div>
         </div>
     </div>

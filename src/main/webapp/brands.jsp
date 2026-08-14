@@ -17,60 +17,7 @@
 <body class="bg-light">
 
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg bg-white py-3 border-bottom sticky-top">
-        <div class="container">
-            <!-- Brand -->
-            <a class="navbar-brand d-flex align-items-center" href="index.jsp">
-                <div class="brand-icon me-2 d-flex align-items-center justify-content-center shadow-sm">
-                    <i class="bi bi-lightning-fill text-white"></i>
-                </div>
-                <span class="fw-bold fs-4 tracking-tight text-dark">ElectroZone</span>
-            </a>
-
-            <!-- Mobile Toggle -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <!-- Navbar Content -->
-            <div class="collapse navbar-collapse" id="navbarContent">
-                <!-- Search Bar -->
-                <div class="search-wrapper mx-lg-4 flex-grow-1 position-relative d-none d-lg-block" style="max-width: 400px;">
-                    <i class="bi bi-search" style="position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #6c757d;"></i>
-                    <input type="text" class="form-control rounded-pill search-input w-100 bg-light border-0 ps-5" placeholder="Search for laptops, phones...">
-                </div>
-
-                <!-- Navigation Links -->
-                <ul class="navbar-nav mb-2 mb-lg-0 fw-medium">
-                    <li class="nav-item mx-2">
-                        <a class="nav-link text-dark" href="deals.jsp">Deals</a>
-                    </li>
-                    <li class="nav-item mx-2">
-                        <a class="nav-link text-dark" href="new-arrivals.jsp">New Arrivals</a>
-                    </li>
-                    <li class="nav-item mx-2">
-                        <a class="nav-link text-dark" href="brands.jsp">Brands</a>
-                    </li>
-                </ul>
-
-                <!-- Icons -->
-                <div class="d-flex align-items-center ms-lg-auto mt-3 mt-lg-0">
-                    <a href="#" class="text-dark position-relative me-3">
-                        <i class="bi bi-heart fs-5"></i>
-                    </a>
-                    <a href="#" class="text-dark position-relative me-3">
-                        <i class="bi bi-cart3 fs-5"></i>
-                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary" style="font-size: 0.6rem;">
-                            3
-                        </span>
-                    </a>
-                    <a href="login.jsp" class="btn rounded-circle p-0 d-flex align-items-center justify-content-center border-0 overflow-hidden" style="width: 40px; height: 40px;">
-                        <img src="https://ui-avatars.com/api/?name=User&background=random" alt="User" class="img-fluid">
-                    </a>
-                </div>
-            </div>
-        </div>
-    </nav>
+    <jsp:include page="include/header.jsp"/>
 
     <!-- Breadcrumb -->
     <div class="container mt-4 mb-2">

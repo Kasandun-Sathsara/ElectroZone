@@ -32,6 +32,11 @@ async function loadUserProfile() {
         if (response.ok) {
             const data = await response.json();
             if (data.user) {
+                // Update Profile Card
+                document.getElementById("displayFullName").textContent = (data.user.firstName || "") + " " + (data.user.lastName || "");
+                document.getElementById("displayEmail").textContent = data.user.email || "N/A";
+                document.getElementById("displayJoinedDate").textContent = data.user.sinceAt || "Unknown";
+
                 document.getElementById("firstName").value = data.user.firstName || "";
                 document.getElementById("lastName").value = data.user.lastName || "";
                 document.getElementById("lineOne").value = data.user.lineOne || "";
@@ -102,14 +107,4 @@ async function updateProfile() {
     }
 }
 
-function logout() {
-    Notiflix.Confirm.show(
-        'Logout',
-        'Are you sure you want to logout?',
-        'Yes',
-        'No',
-        function okCb() {
-            window.location.href = "api/users/logout";
-        }
-    );
-}
+

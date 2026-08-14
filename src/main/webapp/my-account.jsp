@@ -17,37 +17,7 @@
 <body>
 
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg bg-white py-3 border-bottom sticky-top shadow-sm">
-        <div class="container d-flex justify-content-between align-items-center">
-            <!-- Brand -->
-            <a class="navbar-brand d-flex align-items-center m-0 me-4" href="index.jsp">
-                <div class="brand-icon me-2 d-flex align-items-center justify-content-center shadow-sm" style="width: 32px; height: 32px; border-radius: 8px;">
-                    <i class="bi bi-lightning-fill text-white fs-5"></i>
-                </div>
-                <span class="fw-bold fs-4 tracking-tight text-dark">ElectroZone</span>
-            </a>
-            <!-- Mobile Toggle -->
-            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <!-- Links & Actions -->
-            <div class="collapse navbar-collapse" id="navbarContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0 fw-medium">
-                    <li class="nav-item mx-2"><a class="nav-link text-dark" href="index.jsp">Home</a></li>
-                    <li class="nav-item mx-2"><a class="nav-link text-muted hover-dark" href="search.jsp">Products</a></li>
-                    <li class="nav-item mx-2"><a class="nav-link text-muted hover-dark" href="deals.jsp">Deals</a></li>
-                </ul>
-                <div class="d-flex align-items-center gap-4 mt-3 mt-lg-0">
-                    <a href="cart.jsp" class="text-dark position-relative d-flex align-items-center justify-content-center hover-primary">
-                        <i class="bi bi-cart3 fs-5"></i>
-                    </a>
-                    <a href="my-account.jsp" class="text-dark hover-primary d-flex align-items-center gap-1 text-decoration-none">
-                        <i class="bi bi-person-circle fs-5"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </nav>
+    <jsp:include page="include/header.jsp"/>
 
     <!-- Main Content -->
     <main class="container py-5">
@@ -75,6 +45,20 @@
                 <div class="mb-4">
                     <h1 class="fw-bolder display-6 mb-1 text-dark">My Profile</h1>
                     <p class="text-muted fs-6 mb-0">Manage your personal information, address, and security.</p>
+                </div>
+
+                <!-- Profile Summary Card -->
+                <div class="card border-0 shadow-sm rounded-4 p-4 mb-4 text-white" style="background: linear-gradient(135deg, #0284c7 0%, #38bdf8 100%);">
+                    <div class="d-flex align-items-center gap-4">
+                        <div class="d-flex align-items-center justify-content-center bg-white text-primary rounded-circle shadow-sm" style="width: 80px; height: 80px; flex-shrink: 0;">
+                            <i class="bi bi-person-fill fs-1"></i>
+                        </div>
+                        <div>
+                            <h3 class="fw-bold mb-1" id="displayFullName">Loading...</h3>
+                            <p class="mb-1 text-white-50"><i class="bi bi-envelope-fill me-2"></i><span id="displayEmail" class="text-white">Loading...</span></p>
+                            <p class="mb-0 text-white-50 fs-7"><i class="bi bi-calendar3 me-2"></i>Member Since <span id="displayJoinedDate" class="fw-semibold text-white">Loading...</span></p>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="card border-0 shadow-sm rounded-4 p-4 mb-5 bg-white">
@@ -152,5 +136,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/notiflix-aio-3.2.8.min.js"></script>
     <script src="assets/js/my-account.js"></script>
+    <script src="assets/js/cart.js"></script>
 </body>
 </html>

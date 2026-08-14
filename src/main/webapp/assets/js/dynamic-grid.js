@@ -214,56 +214,56 @@ function renderDynamicProducts() {
         const title = product.title;
         const price = product.price;
         const image = product.images && product.images.length > 0 ? product.images[0] : "https://placehold.co/400x400/1e1e1e/FFF?text=Product";
-        const badge = window.location.pathname.includes("deals.jsp") ? <span class="badge bg-danger rounded-pill px-2 py-1 fs-8">-HOT DEAL</span> :
-                      window.location.pathname.includes("new-arrivals.jsp") ? <span class="badge bg-success rounded-pill px-2 py-1 fs-8">NEW</span> : "";
+        const badge = window.location.pathname.includes("deals.jsp") ? `<span class="badge bg-danger rounded-pill px-2 py-1 fs-8">-HOT DEAL</span>` :
+                      window.location.pathname.includes("new-arrivals.jsp") ? `<span class="badge bg-success rounded-pill px-2 py-1 fs-8">NEW</span>` : "";
 
         if (currentView === 'grid') {
-            container.innerHTML += 
+            container.innerHTML += `
                 <div class="col">
                     <div class="card h-100 border-0 shadow-sm product-card position-relative bg-white rounded-4 overflow-hidden">
                         <div class="position-absolute top-0 start-0 m-3 z-1">
-                             + badge + 
+                             ${badge}
                         </div>
                         <button class="btn btn-light bg-white rounded-circle position-absolute top-0 end-0 m-3 z-1 p-0 d-flex align-items-center justify-content-center text-muted shadow-sm" style="width:32px; height:32px;">
                             <i class="bi bi-heart-fill"></i>
                         </button>
-                        <a href="single-product.jsp?productId= + id + " class="p-3 pb-0 text-center bg-light m-2 rounded-4 d-block text-decoration-none">
-                            <img src=" + image + " class="card-img-top img-fluid mix-blend-multiply" alt=" + title + " style="max-height: 160px; width: auto; object-fit: contain;">
+                        <a href="single-product.jsp?productId=${id}" class="p-3 pb-0 text-center bg-light m-2 rounded-4 d-block text-decoration-none">
+                            <img src="${image}" class="card-img-top img-fluid mix-blend-multiply" alt="${title}" style="max-height: 160px; width: auto; object-fit: contain;">
                         </a>
                         <div class="card-body d-flex flex-column px-3 pt-3 pb-4">
                             <div class="d-flex align-items-center mb-2">
                                 <i class="bi bi-star-fill text-warning fs-8 me-1"></i>
                                 <span class="fw-bold fs-8 me-1">4.5</span>
                             </div>
-                            <h6 class="card-title fs-6 mb-2 fw-semibold product-title"> + title + </h6>
+                            <h6 class="card-title fs-6 mb-2 fw-semibold product-title">${title}</h6>
                             <div class="mt-auto">
                                 <div class="d-flex align-items-end gap-2 mb-3">
-                                    <span class="text-dark fw-bold fs-5">Rs.  + new Intl.NumberFormat("en-US", {minimumFractionDigits: 2}).format(price) + </span>
+                                    <span class="text-dark fw-bold fs-5">Rs. ${new Intl.NumberFormat("en-US", {minimumFractionDigits: 2}).format(price)}</span>
                                 </div>
-                                <button onclick="addToCart( + id + , 1);" class="btn btn-outline-light text-dark border w-100 rounded-3 py-2 fw-medium fs-7 d-flex align-items-center justify-content-center gap-2 hover-bg-light">
+                                <button onclick="addToCart(${id}, 1);" class="btn btn-outline-light text-dark border w-100 rounded-3 py-2 fw-medium fs-7 d-flex align-items-center justify-content-center gap-2 hover-bg-light">
                                     <i class="bi bi-cart-plus"></i> Add to Cart
                                 </button>
                             </div>
                         </div>
                     </div>
-                </div>;
+                </div>`;
         } else {
             // List View Layout
-            container.innerHTML += 
+            container.innerHTML += `
                 <div class="col">
                     <div class="card border-0 shadow-sm product-card position-relative bg-white rounded-4 overflow-hidden">
                         <div class="row g-0">
                             <div class="col-md-3 bg-light m-2 rounded-4 d-flex align-items-center justify-content-center" style="position:relative;">
-                                <div class="position-absolute top-0 start-0 m-2 z-1"> + badge + </div>
-                                <a href="single-product.jsp?productId= + id + " class="d-block text-decoration-none p-2">
-                                    <img src=" + image + " class="img-fluid mix-blend-multiply" alt=" + title + " style="max-height: 140px; width: auto; object-fit: contain;">
+                                <div class="position-absolute top-0 start-0 m-2 z-1">${badge}</div>
+                                <a href="single-product.jsp?productId=${id}" class="d-block text-decoration-none p-2">
+                                    <img src="${image}" class="img-fluid mix-blend-multiply" alt="${title}" style="max-height: 140px; width: auto; object-fit: contain;">
                                 </a>
                             </div>
                             <div class="col-md-9">
                                 <div class="card-body d-flex flex-column h-100 justify-content-center">
                                     <div class="d-flex justify-content-between align-items-start">
                                         <div>
-                                            <h5 class="card-title fw-semibold product-title"> + title + </h5>
+                                            <h5 class="card-title fw-semibold product-title">${title}</h5>
                                             <div class="d-flex align-items-center mb-2">
                                                 <i class="bi bi-star-fill text-warning fs-8 me-1"></i>
                                                 <span class="fw-bold fs-8 me-1">4.5</span>
@@ -274,8 +274,8 @@ function renderDynamicProducts() {
                                         </button>
                                     </div>
                                     <div class="d-flex align-items-center justify-content-between mt-3">
-                                        <span class="text-dark fw-bold fs-4">Rs.  + new Intl.NumberFormat("en-US", {minimumFractionDigits: 2}).format(price) + </span>
-                                        <button onclick="addToCart( + id + , 1);" class="btn btn-outline-light text-dark border rounded-3 px-4 py-2 fw-medium d-flex align-items-center gap-2 hover-bg-light">
+                                        <span class="text-dark fw-bold fs-4">Rs. ${new Intl.NumberFormat("en-US", {minimumFractionDigits: 2}).format(price)}</span>
+                                        <button onclick="addToCart(${id}, 1);" class="btn btn-outline-light text-dark border rounded-3 px-4 py-2 fw-medium d-flex align-items-center gap-2 hover-bg-light">
                                             <i class="bi bi-cart-plus"></i> Add to Cart
                                         </button>
                                     </div>
@@ -283,7 +283,7 @@ function renderDynamicProducts() {
                             </div>
                         </div>
                     </div>
-                </div>;
+                </div>`;
         }
     });
 }

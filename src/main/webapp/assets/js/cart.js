@@ -1,3 +1,5 @@
+window.addEventListener("load", loadCartItems);
+
 async function addToCart(stockId, qty) {
     try {
         Notiflix.Loading.pulse("Wait...", {
@@ -34,37 +36,26 @@ async function addToCart(stockId, qty) {
 
 async function loadCartItems() {
     try {
-        Notiflix.Loading.pulse("Wait...", {
-            clickToClose: false,
-            svgColor: '#0284c7'
-        });
-
         const response = await fetch("api/carts/all-carts");
         if (response.ok) {
             const data = await response.json();
+            let cartCountBadge = document.getElementById("cart-count");
             if (data.status) {
-                console.log(data);
-                Notiflix.Notify.success(data.message, {
-                    position: 'center-top'
-                });
+                let totalQty = 0;
+                data.cartItems.forEach(cart => totalQty += parseInt(cart.qty));
+                if (cartCountBadge) cartCountBadge.innerHTML = totalQty;
+
                 renderingMainPanel(data.cartItems);
                 renderingSidePanel(data.cartItems);
             } else {
-                Notiflix.Notify.info(data.message, {
-                    position: 'center-top'
-                });
+                // Cart is empty
+                if (cartCountBadge) cartCountBadge.innerHTML = "0";
+                renderingMainPanel([]);
+                renderingSidePanel([]);
             }
-        } else {
-            Notiflix.Notify.failure("Cart items loading failed!", {
-                position: 'center-top'
-            });
-        }
+        } 
     } catch (e) {
-        Notiflix.Notify.failure(e.message, {
-            position: 'center-top'
-        });
-    } finally {
-        Notiflix.Loading.remove();
+        console.error("Cart load error:", e);
     }
 }
 
@@ -122,6 +113,19 @@ function renderingMainPanel(cartItems) {
         
         let finalEl = document.getElementById("order-final-amount");
         if(finalEl) finalEl.innerHTML = "LKR " + new Intl.NumberFormat("en-US", {minimumFractionDigits: 2}).format(total);
+
+        let checkoutBtn = document.getElementById("checkout-btn");
+        if (checkoutBtn) {
+            if (cartItems.length === 0) {
+                checkoutBtn.classList.add("disabled");
+                checkoutBtn.style.pointerEvents = "none";
+                checkoutBtn.style.opacity = "0.5";
+            } else {
+                checkoutBtn.classList.remove("disabled");
+                checkoutBtn.style.pointerEvents = "auto";
+                checkoutBtn.style.opacity = "1";
+            }
+        }
     }
 }
 
@@ -158,6 +162,19 @@ function renderingSidePanel(cartItems) {
             {minimumFractionDigits: 2})
             .format(total);
         document.getElementById("cart-count").innerHTML = totalQty;
+
+        let sideCheckoutBtn = document.getElementById("side-checkout-btn");
+        if (sideCheckoutBtn) {
+            if (cartItems.length === 0) {
+                sideCheckoutBtn.classList.add("disabled");
+                sideCheckoutBtn.style.pointerEvents = "none";
+                sideCheckoutBtn.style.opacity = "0.5";
+            } else {
+                sideCheckoutBtn.classList.remove("disabled");
+                sideCheckoutBtn.style.pointerEvents = "auto";
+                sideCheckoutBtn.style.opacity = "1";
+            }
+        }
     }
 }
 
@@ -196,4 +213,18 @@ async function removeCartItem(cartId) {
     } finally {
         Notiflix.Loading.remove();
     }
+}
+
+function logout() {
+    Notiflix.Confirm.show(
+        'Logout',
+        'Are you sure you want to logout?',
+        'Yes',
+        'No',
+        function okCb() {
+            fetch("api/users/logout").then(() => {
+                window.location.href = "login.jsp";
+            });
+        }
+    );
 }

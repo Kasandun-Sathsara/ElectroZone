@@ -17,57 +17,7 @@
 <body class="bg-light">
 
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg bg-white py-3 border-bottom sticky-top">
-        <div class="container">
-            <!-- Brand -->
-            <a class="navbar-brand d-flex align-items-center" href="index.jsp">
-                <div class="brand-icon me-2 d-flex align-items-center justify-content-center shadow-sm">
-                    <i class="bi bi-lightning-fill text-white"></i>
-                </div>
-                <span class="fw-bold fs-4 tracking-tight text-dark">ElectroZone</span>
-            </a>
-
-            <!-- Mobile Toggle -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <!-- Navbar Content -->
-            <div class="collapse navbar-collapse" id="navbarContent">
-                <!-- Search Bar -->
-                <div class="search-wrapper mx-lg-4 flex-grow-1 position-relative d-none d-lg-block" style="max-width: 500px;">
-                    <i class="bi bi-search" style="position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #6c757d;"></i>
-                    <input type="text" class="form-control rounded-pill search-input w-100 bg-light border-0 ps-5" placeholder="Search for smartphones, laptops...">
-                </div>
-
-                <!-- Navigation Links -->
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 fw-medium align-items-center">
-                    <li class="nav-item mx-2">
-                        <a class="nav-link text-dark" href="products.jsp">Smartphones</a>
-                    </li>
-                    <li class="nav-item mx-2">
-                        <a class="nav-link text-dark" href="#">Laptops</a>
-                    </li>
-                    <li class="nav-item mx-2">
-                        <a class="nav-link text-dark" href="#">Gadgets</a>
-                    </li>
-                    <li class="nav-item mx-2 ms-lg-4">
-                        <a href="login.jsp" class="text-dark fs-5 text-decoration-none">
-                            <i class="bi bi-person-fill"></i>
-                        </a>
-                    </li>
-                    <li class="nav-item mx-2">
-                        <a href="#" class="text-primary position-relative d-flex align-items-center justify-content-center bg-primary bg-opacity-10 rounded-circle" style="width: 42px; height: 42px;">
-                            <i class="bi bi-cart3 fs-5"></i>
-                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary" style="font-size: 0.65rem;">
-                                2
-                            </span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <jsp:include page="include/header.jsp"/>
 
     <!-- Main Content -->
     <main class="container my-5">
@@ -139,7 +89,7 @@
                         <span class="text-dark fw-bolder fs-4" id="order-final-amount">LKR 0.00</span>
                     </div>
 
-                    <a href="checkout.jsp" class="btn btn-primary w-100 py-3 rounded-3 fw-bold fs-6 mb-4 d-flex justify-content-center align-items-center gap-2 shadow-sm text-white text-decoration-none">
+                    <a id="checkout-btn" href="checkout.jsp" class="btn btn-primary w-100 py-3 rounded-3 fw-bold fs-6 mb-4 d-flex justify-content-center align-items-center gap-2 shadow-sm text-white text-decoration-none">
                         Proceed to Checkout <i class="bi bi-arrow-right"></i>
                     </a>
 

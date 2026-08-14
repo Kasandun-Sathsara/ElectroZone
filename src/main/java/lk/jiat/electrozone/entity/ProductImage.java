@@ -3,7 +3,7 @@ package lk.jiat.ElectroZone.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "product_images")
+@Table(name = "product_image_entities")
 public class ProductImage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -81,7 +81,9 @@ public class SingleProductService {
             productDTO.setQty(stock.getQty());
             productDTO.setBrandName(stock.getProduct().getModel().getBrand().getName());
             productDTO.setModelName(stock.getProduct().getModel().getName());
-            productDTO.setQualityValue(stock.getProduct().getQuality().getValue());
+            
+            productDTO.setQualityValue(stock.getProduct().getQuality() != null ? stock.getProduct().getQuality().getValue() : "N/A");
+            
             productDTO.setImages(stock.getProduct().getImages());
             productDTO.setColorValue(stock.getProduct().getColor().getValue());
             productDTO.setStorageValue(stock.getProduct().getStorage().getValue());

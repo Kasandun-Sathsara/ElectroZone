@@ -15,7 +15,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class FileUploadService {
-    private static final String UPLOAD_DIRECTORY_NAME = "/uploads";
+    private static final String UPLOAD_DIRECTORY_NAME = "/assets/img";
     private final ServletContext context;
 
     public FileUploadService(ServletContext context) {
@@ -27,29 +27,31 @@ public class FileUploadService {
     }
 
     private FileItem writeFile(String pathName, InputStream inputStream, ContentDisposition contentDisposition) {
-        Path uploadPath = Paths.get(context.getRealPath(pathName));
+        Path deployPath = Paths.get(context.getRealPath(pathName));
+        Path sourcePath = Paths.get("e:/Github/ElectroZone/src/main/webapp" + pathName);
+        
         String extension = FilenameUtils.getExtension(contentDisposition.getFileName());
-        String fileName = System.currentTimeMillis() + "." + extension;
-
-        if (!Files.exists(uploadPath)) {
-            try {
-                System.out.println("Upload path not found. Creating Directory: \"" + uploadPath + "\"");
-                Files.createDirectories(uploadPath);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
+        String fileName = java.util.UUID.randomUUID().toString() + "." + extension;
 
         try {
-            int read;
-            byte[] bytes = new byte[1024];
-            OutputStream outputStream = new FileOutputStream(uploadPath + "/" + fileName);
-            while ((read = inputStream.read(bytes)) != -1) {
-                outputStream.write(bytes, 0, read);
+            if (!Files.exists(deployPath)) Files.createDirectories(deployPath);
+            if (!Files.exists(sourcePath)) Files.createDirectories(sourcePath);
+            
+            byte[] bytes = inputStream.readAllBytes();
+            
+            // Write to deployment folder (for instant viewing)
+            try (OutputStream os1 = new FileOutputStream(deployPath + "/" + fileName)) {
+                os1.write(bytes);
+                os1.flush();
             }
-            outputStream.flush();
-            outputStream.close();
+            
+            // Write to source folder (for persistence across restarts)
+            try (OutputStream os2 = new FileOutputStream(sourcePath + "/" + fileName)) {
+                os2.write(bytes);
+                os2.flush();
+            }
         } catch (IOException e) {
+            e.printStackTrace();
             throw new WebApplicationException("Error while file uploading! Try Again...");
         }
 

@@ -69,6 +69,7 @@ public class ProfileService {
         userDTO.setId(user.getId());
         userDTO.setFirstName(user.getFirstName());
         userDTO.setLastName(user.getLastName());
+        userDTO.setEmail(user.getEmail());
         userDTO.setPassword(user.getPassword());
 
         Session hibernateSession = HibernateUtil.getSessionFactory().openSession();
@@ -94,11 +95,17 @@ public class ProfileService {
         }
 
         LocalDateTime createdAt = user.getCreatedAt();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MMMM");
-        String sinceAt = createdAt.format(formatter);
-        userDTO.setSinceAt(sinceAt);
+        if (createdAt != null) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MMMM");
+            String sinceAt = createdAt.format(formatter);
+            userDTO.setSinceAt(sinceAt);
+        } else {
+            userDTO.setSinceAt("Unknown");
+        }
 
         responseObject.add("user", AppUtil.GSON.toJsonTree(userDTO));
+        status = true;
+        message = "Profile loaded successfully";
         /// user-profile-data-loading-end
         hibernateSession.close();
         responseObject.addProperty("status", status);

@@ -39,11 +39,15 @@ public class Product extends BaseEntity {
     @JoinColumn(name = "seller_id")
     private Seller seller;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
+    private Category category;
+
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Stock> stocks = new HashSet<>();
 
     @Column(name="images")
-    @CollectionTable(name = "product_images",joinColumns = @JoinColumn(name = "pr_id"))
+    @CollectionTable(name = "product_images_list",joinColumns = @JoinColumn(name = "pr_id"))
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> images;
 
@@ -122,5 +126,13 @@ public class Product extends BaseEntity {
 
     public void setSeller(Seller seller) {
         this.seller = seller;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }

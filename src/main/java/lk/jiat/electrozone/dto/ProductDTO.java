@@ -5,6 +5,8 @@ import java.util.List;
 
 public class ProductDTO implements Serializable {
     private int productId;
+    private long categoryId;
+    private String categoryName;
     private int brandId;
     private String brandName;
     private int modelId;
@@ -62,6 +64,22 @@ public class ProductDTO implements Serializable {
 
     public void setProductId(int productId) {
         this.productId = productId;
+    }
+
+    public long getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(long categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 
     public int getBrandId() {

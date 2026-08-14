@@ -109,7 +109,7 @@
                     <button class="btn-outline-custom">
                         <i class="bi bi-download"></i> Export
                     </button>
-                    <button class="btn-primary-custom">
+                    <button class="btn-primary-custom" data-bs-toggle="modal" data-bs-target="#addProductModal">
                         <i class="bi bi-plus-lg"></i> Add Product
                     </button>
                 </div>
@@ -119,22 +119,25 @@
             <div class="filter-card">
                 <div class="filter-search">
                     <i class="bi bi-search"></i>
-                    <input type="text" placeholder="Search by name, SKU or brand...">
+                    <input type="text" id="searchInput" placeholder="Search by name, SKU or brand...">
                 </div>
                 
                 <div class="d-flex align-items-center gap-2">
                     <i class="bi bi-filter text-muted fs-5"></i>
-                    <select class="filter-select">
-                        <option>All Categories</option>
-                        <option>Laptops</option>
-                        <option>Wearables</option>
+                    <select class="filter-select" id="categoryFilter">
+                        <option value="all">All Categories</option>
                     </select>
                 </div>
 
-                <div class="filter-tags-group">
-                    <span class="filter-tag">Stock: Low (3)</span>
-                    <span class="filter-tag">Status: Active</span>
-                    <span class="filter-tag">Price: High to Low</span>
+                <div class="d-flex align-items-center gap-2 ms-auto">
+                    <i class="bi bi-sort-down text-muted fs-5"></i>
+                    <select class="filter-select" id="sortFilter">
+                        <option value="newest">Newest</option>
+                        <option value="price_asc">Price: Low to High</option>
+                        <option value="price_desc">Price: High to Low</option>
+                        <option value="stock_low">Stock: Low to High</option>
+                        <option value="stock_high">Stock: High to Low</option>
+                    </select>
                 </div>
             </div>
 
@@ -181,8 +184,95 @@
         </main>
     </div>
 
+    <!-- Add Product Modal -->
+    <div class="modal fade" id="addProductModal" data-bs-focus="false" aria-labelledby="addProductModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addProductModalLabel">Add New Product</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addProductForm">
+                        <div class="row g-3">
+                            <div class="col-md-12">
+                                <label for="productTitle" class="form-label">Product Title</label>
+                                <input type="text" class="form-control" id="productTitle" name="title" required>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="productCategory" class="form-label">Category</label>
+                                <div class="input-group">
+                                    <select class="form-select" id="productCategory" name="categoryId" required>
+                                        <option value="" disabled selected>Select Category</option>
+                                    </select>
+                                    <button class="btn btn-outline-secondary" type="button" onclick="addNewCategory()">+</button>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="productBrand" class="form-label">Brand</label>
+                                <div class="input-group">
+                                    <select class="form-select" id="productBrand" name="brandId" onchange="loadModelsForBrand()" required>
+                                        <option value="" disabled selected>Select Brand</option>
+                                    </select>
+                                    <button class="btn btn-outline-secondary" type="button" onclick="addNewBrand()">+</button>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="productModel" class="form-label">Model</label>
+                                <div class="input-group">
+                                    <select class="form-select" id="productModel" name="modelId" required>
+                                        <option value="" disabled selected>Select Model</option>
+                                    </select>
+                                    <button class="btn btn-outline-secondary" type="button" onclick="addNewModel()">+</button>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="productStorage" class="form-label">Storage</label>
+                                <div class="input-group">
+                                    <select class="form-select" id="productStorage" name="storageId" required>
+                                        <option value="" disabled selected>Select Storage</option>
+                                    </select>
+                                    <button class="btn btn-outline-secondary" type="button" onclick="addNewStorage()">+</button>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="productColor" class="form-label">Color</label>
+                                <div class="input-group">
+                                    <select class="form-select" id="productColor" name="colorId" required>
+                                        <option value="" disabled selected>Select Color</option>
+                                    </select>
+                                    <button class="btn btn-outline-secondary" type="button" onclick="addNewColor()">+</button>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="productPrice" class="form-label">Price (LKR)</label>
+                                <input type="number" class="form-control" id="productPrice" name="price" step="0.01" min="0" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="productQty" class="form-label">Quantity</label>
+                                <input type="number" class="form-control" id="productQty" name="qty" min="1" required>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="productDescription" class="form-label">Description</label>
+                                <textarea class="form-control" id="productDescription" name="description" rows="3" required></textarea>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="productImages" class="form-label">Product Images</label>
+                                <input type="file" class="form-control" id="productImages" name="images[]" multiple accept="image/*" required>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="addAdminProduct()">Save Product</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../assets/js/notiflix-aio-3.2.8.min.js"></script>
-    <script src="../assets/js/admin-products.js"></script>
+    <script src="../assets/js/admin-products.js?v=2"></script>
 </body>
 </html>

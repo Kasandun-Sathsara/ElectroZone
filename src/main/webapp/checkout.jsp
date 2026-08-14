@@ -18,31 +18,7 @@
 <body class="checkout-page-body">
 
     <!-- Minimalist Navbar -->
-    <nav class="navbar navbar-expand-lg bg-white py-3 border-bottom sticky-top">
-        <div class="container d-flex justify-content-between align-items-center">
-            <!-- Brand -->
-            <a class="navbar-brand d-flex align-items-center m-0" href="index.jsp">
-                <div class="brand-icon me-2 d-flex align-items-center justify-content-center shadow-sm" style="width: 28px; height: 28px; border-radius: 6px;">
-                    <i class="bi bi-lightning-fill text-white fs-6"></i>
-                </div>
-                <span class="fw-bold fs-5 tracking-tight text-dark">ElectroZone</span>
-            </a>
-
-            <!-- Breadcrumbs -->
-            <div class="d-none d-md-flex align-items-center fs-7">
-                <a href="cart.jsp" class="text-primary text-decoration-none fw-medium">Cart</a>
-                <i class="bi bi-chevron-right text-muted mx-2" style="font-size: 0.7rem;"></i>
-                <span class="text-primary fw-bold">Checkout</span>
-                <i class="bi bi-chevron-right text-muted mx-2" style="font-size: 0.7rem;"></i>
-                <span class="text-muted fw-medium">Confirmation</span>
-            </div>
-
-            <!-- Secure Badge -->
-            <div class="bg-light rounded-pill px-3 py-2 d-flex align-items-center text-dark fs-8 fw-medium border">
-                <i class="bi bi-lock-fill text-primary me-2"></i> Secure Checkout
-            </div>
-        </div>
-    </nav>
+    <jsp:include page="include/header.jsp"/>
 
     <!-- Main Content -->
     <main class="container my-5">
