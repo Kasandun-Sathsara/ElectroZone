@@ -57,7 +57,7 @@
                     <i class="bi bi-box-seam"></i> Products
                 </div>
             </a>
-            <a href="#" class="sidebar-nav-link">
+            <a href="orders.jsp" class="sidebar-nav-link">
                 <div class="sidebar-nav-link-content">
                     <i class="bi bi-cart3"></i> Orders
                 </div>

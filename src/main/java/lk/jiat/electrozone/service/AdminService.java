@@ -1,5 +1,6 @@
 package lk.jiat.ElectroZone.service;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import lk.jiat.ElectroZone.dto.AdminDashboardResponseDTO;
 import lk.jiat.ElectroZone.dto.InvoiceDTO;
@@ -177,6 +178,63 @@ public class AdminService {
             e.printStackTrace();
             responseObject.addProperty("status", false);
             responseObject.addProperty("message", "Failed to delete product");
+        }
+        return AppUtil.GSON.toJson(responseObject);
+    }
+
+    public String getAllCustomers() {
+        JsonObject responseObject = new JsonObject();
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            List<User> users = session.createQuery("FROM User u WHERE u.role.name = 'USER' ORDER BY u.id DESC", User.class).getResultList();
+            JsonArray customersArray = new JsonArray();
+            for (User u : users) {
+                JsonObject obj = new JsonObject();
+                obj.addProperty("id", u.getId());
+                obj.addProperty("fullName", u.getFullName());
+                obj.addProperty("email", u.getEmail());
+                obj.addProperty("mobile", u.getMobile());
+                obj.addProperty("sinceAt", u.getCreatedAt() != null ? u.getCreatedAt().toString() : "Unknown");
+                obj.addProperty("status", u.getStatus() != null ? u.getStatus().getValue() : "UNKNOWN");
+                customersArray.add(obj);
+            }
+            responseObject.addProperty("status", true);
+            responseObject.add("customers", customersArray);
+        } catch (Exception e) {
+            e.printStackTrace();
+            responseObject.addProperty("status", false);
+            responseObject.addProperty("message", "Failed to load customers");
+        }
+        return AppUtil.GSON.toJson(responseObject);
+    }
+
+    public String updateCustomerStatus(int id, String statusName) {
+        JsonObject responseObject = new JsonObject();
+        Transaction transaction = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            transaction = session.beginTransaction();
+            User user = session.find(User.class, id);
+            if (user != null) {
+                Status userStatus = session.createQuery("FROM Status s WHERE s.value=:name", Status.class)
+                                           .setParameter("name", statusName).uniqueResult();
+                if (userStatus != null) {
+                    user.setStatus(userStatus);
+                    session.merge(user);
+                    transaction.commit();
+                    responseObject.addProperty("status", true);
+                    responseObject.addProperty("message", "Customer status updated successfully");
+                } else {
+                    responseObject.addProperty("status", false);
+                    responseObject.addProperty("message", "Invalid customer status");
+                }
+            } else {
+                responseObject.addProperty("status", false);
+                responseObject.addProperty("message", "Customer not found");
+            }
+        } catch (Exception e) {
+            if (transaction != null) transaction.rollback();
+            e.printStackTrace();
+            responseObject.addProperty("status", false);
+            responseObject.addProperty("message", "Failed to update customer status");
         }
         return AppUtil.GSON.toJson(responseObject);
     }
@@ -490,6 +548,7 @@ public class AdminService {
         responseObject.addProperty("message", message);
         return AppUtil.GSON.toJson(responseObject);
     }
+    
     
     public String addNewCategory(String name) {
         com.google.gson.JsonObject responseObject = new com.google.gson.JsonObject();

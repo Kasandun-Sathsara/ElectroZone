@@ -113,24 +113,21 @@
 
             <!-- Filter Bar -->
             <div class="filter-card">
-                <div class="filter-search">
+                <div class="filter-search w-100 mb-2 mb-md-0 me-md-3">
                     <i class="bi bi-search"></i>
-                    <input type="text" placeholder="Search by name, SKU or brand...">
+                    <input type="text" id="order-search-input" placeholder="Search by Customer Name or Invoice No..." onkeyup="filterOrders()">
                 </div>
                 
                 <div class="d-flex align-items-center gap-2">
                     <i class="bi bi-filter text-muted fs-5"></i>
-                    <select class="filter-select">
-                        <option>All Categories</option>
-                        <option>Laptops</option>
-                        <option>Wearables</option>
+                    <select class="filter-select" id="order-status-filter" onchange="filterOrders()">
+                        <option value="">All Statuses</option>
+                        <option value="PENDING">Pending</option>
+                        <option value="PACKING">Packing</option>
+                        <option value="COMPLETED">Completed</option>
+                        <option value="DELIVERED">Delivered</option>
+                        <option value="CANCELED">Canceled</option>
                     </select>
-                </div>
-
-                <div class="filter-tags-group">
-                    <span class="filter-tag">Stock: Low (3)</span>
-                    <span class="filter-tag">Status: Active</span>
-                    <span class="filter-tag">Price: High to Low</span>
                 </div>
             </div>
 

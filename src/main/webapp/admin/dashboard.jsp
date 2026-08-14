@@ -38,7 +38,7 @@
                 <a href="products.jsp" class="sidebar-link">
                     <i class="bi bi-box-seam"></i> Products
                 </a>
-                <a href="#" class="sidebar-link">
+                <a href="orders.jsp" class="sidebar-link">
                     <i class="bi bi-cart3"></i> Orders
                 </a>
                 <a href="customers.jsp" class="sidebar-link">

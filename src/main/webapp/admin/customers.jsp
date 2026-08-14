@@ -38,8 +38,8 @@
                 <a href="products.jsp" class="sidebar-link">
                     <i class="bi bi-box-seam-fill"></i> Products
                 </a>
-                <a href="#" class="sidebar-link">
-                    <i class="bi bi-bag-fill"></i> Orders
+                <a href="orders.jsp" class="sidebar-link">
+                    <i class="bi bi-cart3"></i> Orders
                 </a>
                 <a href="customers.jsp" class="sidebar-link active">
                     <i class="bi bi-people-fill"></i> Customers
@@ -138,22 +138,19 @@
                 <div class="filter-group-left">
                     <div class="search-input-wrapper">
                         <i class="bi bi-search"></i>
-                        <input type="text" placeholder="Search by name, email, or phone...">
+                        <input type="text" id="customer-search-input" placeholder="Search by name, email, or phone..." onkeyup="filterCustomers()">
                     </div>
                     
-                    <select class="form-select filter-select shadow-sm">
-                        <option>Status: All</option>
-                        <option>Status: Active</option>
-                        <option>Status: Blocked</option>
+                    <select class="form-select filter-select shadow-sm" id="customer-status-filter" onchange="filterCustomers()">
+                        <option value="">Status: All</option>
+                        <option value="ACTIVE">Status: Active</option>
+                        <option value="BLOCKED">Status: Blocked</option>
                     </select>
                 </div>
                 
                 <div class="action-group-right">
                     <button class="btn-outline-custom">
                         <i class="bi bi-download"></i> Export
-                    </button>
-                    <button class="btn-primary-custom">
-                        <i class="bi bi-plus-lg"></i> Add Customer
                     </button>
                 </div>
                 
@@ -173,156 +170,8 @@
                                 <th>Actions</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <!-- Row 1 -->
-                            <tr>
-                                <td>
-                                    <img src="https://ui-avatars.com/api/?name=Alex+Johnson&background=1e293b&color=fff" alt="Profile" class="customer-profile-img">
-                                </td>
-                                <td>
-                                    <p class="customer-name">Alex Johnson</p>
-                                    <p class="customer-id">ID: #CUS-00921</p>
-                                </td>
-                                <td>
-                                    <div class="contact-line">
-                                        <i class="bi bi-envelope-fill"></i> alex.j@example.com
-                                    </div>
-                                    <div class="contact-line">
-                                        <i class="bi bi-telephone-fill"></i> +1 (555) 010-9988
-                                    </div>
-                                </td>
-                                <td class="join-date">Oct 24, 2023</td>
-                                <td>
-                                    <span class="status-pill pill-active"><span class="dot"></span> Active</span>
-                                </td>
-                                <td>
-                                    <div class="action-icons">
-                                        <button class="action-icon-btn"><i class="bi bi-eye-fill"></i></button>
-                                        <button class="action-icon-btn"><i class="bi bi-pencil-fill"></i></button>
-                                        <button class="action-icon-btn"><i class="bi bi-slash-circle-fill"></i></button>
-                                    </div>
-                                </td>
-                            </tr>
-
-                            <!-- Row 2 -->
-                            <tr>
-                                <td>
-                                    <img src="https://ui-avatars.com/api/?name=Maria+Garcia&background=ea580c&color=fff" alt="Profile" class="customer-profile-img">
-                                </td>
-                                <td>
-                                    <p class="customer-name">Maria Garcia</p>
-                                    <p class="customer-id">ID: #CUS-00922</p>
-                                </td>
-                                <td>
-                                    <div class="contact-line">
-                                        <i class="bi bi-envelope-fill"></i> m.garcia@email.com
-                                    </div>
-                                    <div class="contact-line">
-                                        <i class="bi bi-telephone-fill"></i> +1 (555) 012-3456
-                                    </div>
-                                </td>
-                                <td class="join-date">Sep 15, 2023</td>
-                                <td>
-                                    <span class="status-pill pill-blocked"><span class="dot"></span> Blocked</span>
-                                </td>
-                                <td>
-                                    <div class="action-icons">
-                                        <button class="action-icon-btn"><i class="bi bi-eye-fill"></i></button>
-                                        <button class="action-icon-btn"><i class="bi bi-pencil-fill"></i></button>
-                                        <button class="action-icon-btn unblock"><i class="bi bi-check-circle-fill"></i></button>
-                                    </div>
-                                </td>
-                            </tr>
-
-                            <!-- Row 3 -->
-                            <tr>
-                                <td>
-                                    <img src="https://ui-avatars.com/api/?name=David+Smith&background=d97706&color=fff" alt="Profile" class="customer-profile-img">
-                                </td>
-                                <td>
-                                    <p class="customer-name">David Smith</p>
-                                    <p class="customer-id">ID: #CUS-00923</p>
-                                </td>
-                                <td>
-                                    <div class="contact-line">
-                                        <i class="bi bi-envelope-fill"></i> d.smith@test.com
-                                    </div>
-                                    <div class="contact-line">
-                                        <i class="bi bi-telephone-fill"></i> +1 (555) 123-4567
-                                    </div>
-                                </td>
-                                <td class="join-date">Aug 30, 2023</td>
-                                <td>
-                                    <span class="status-pill pill-active"><span class="dot"></span> Active</span>
-                                </td>
-                                <td>
-                                    <div class="action-icons">
-                                        <button class="action-icon-btn"><i class="bi bi-eye-fill"></i></button>
-                                        <button class="action-icon-btn"><i class="bi bi-pencil-fill"></i></button>
-                                        <button class="action-icon-btn"><i class="bi bi-slash-circle-fill"></i></button>
-                                    </div>
-                                </td>
-                            </tr>
-
-                            <!-- Row 4 -->
-                            <tr>
-                                <td>
-                                    <img src="https://ui-avatars.com/api/?name=Emily+Davis&background=fb923c&color=fff" alt="Profile" class="customer-profile-img">
-                                </td>
-                                <td>
-                                    <p class="customer-name">Emily Davis</p>
-                                    <p class="customer-id">ID: #CUS-00924</p>
-                                </td>
-                                <td>
-                                    <div class="contact-line">
-                                        <i class="bi bi-envelope-fill"></i> emily.d@site.com
-                                    </div>
-                                    <div class="contact-line">
-                                        <i class="bi bi-telephone-fill"></i> +1 (555) 987-6543
-                                    </div>
-                                </td>
-                                <td class="join-date">Aug 12, 2023</td>
-                                <td>
-                                    <span class="status-pill pill-active"><span class="dot"></span> Active</span>
-                                </td>
-                                <td>
-                                    <div class="action-icons">
-                                        <button class="action-icon-btn"><i class="bi bi-eye-fill"></i></button>
-                                        <button class="action-icon-btn"><i class="bi bi-pencil-fill"></i></button>
-                                        <button class="action-icon-btn"><i class="bi bi-slash-circle-fill"></i></button>
-                                    </div>
-                                </td>
-                            </tr>
-
-                            <!-- Row 5 -->
-                            <tr>
-                                <td>
-                                    <img src="https://ui-avatars.com/api/?name=Chris+Wilson&background=0f172a&color=fff" alt="Profile" class="customer-profile-img">
-                                </td>
-                                <td>
-                                    <p class="customer-name">Chris Wilson</p>
-                                    <p class="customer-id">ID: #CUS-00925</p>
-                                </td>
-                                <td>
-                                    <div class="contact-line">
-                                        <i class="bi bi-envelope-fill"></i> chris.w@mail.com
-                                    </div>
-                                    <div class="contact-line">
-                                        <i class="bi bi-telephone-fill"></i> +1 (555) 456-7890
-                                    </div>
-                                </td>
-                                <td class="join-date">Jul 05, 2023</td>
-                                <td>
-                                    <span class="status-pill pill-active"><span class="dot"></span> Active</span>
-                                </td>
-                                <td>
-                                    <div class="action-icons">
-                                        <button class="action-icon-btn"><i class="bi bi-eye-fill"></i></button>
-                                        <button class="action-icon-btn"><i class="bi bi-pencil-fill"></i></button>
-                                        <button class="action-icon-btn"><i class="bi bi-slash-circle-fill"></i></button>
-                                    </div>
-                                </td>
-                            </tr>
+                        <tbody id="admin-customers-tbody">
+                            <!-- Customers will be loaded dynamically -->
                         </tbody>
                     </table>
                 </div>
@@ -330,16 +179,7 @@
                 <!-- Table Footer / Pagination -->
                 <div class="table-footer flex-column flex-sm-row gap-3">
                     <div class="showing-text">
-                        Showing <strong>1</strong> to <strong>5</strong> of <strong>97</strong> results
-                    </div>
-                    <div class="pagination-controls">
-                        <a href="#" class="page-btn disabled" aria-label="Previous"><i class="bi bi-chevron-left"></i></a>
-                        <a href="#" class="page-btn active">1</a>
-                        <a href="#" class="page-btn">2</a>
-                        <a href="#" class="page-btn">3</a>
-                        <span class="page-dots">...</span>
-                        <a href="#" class="page-btn" style="width: auto; padding: 0 0.5rem;">20</a>
-                        <a href="#" class="page-btn" aria-label="Next"><i class="bi bi-chevron-right"></i></a>
+                        Showing <strong>All</strong> customers
                     </div>
                 </div>
             </div>
@@ -353,5 +193,7 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/js/notiflix-3.2.6.min.js"></script>
+    <script src="../assets/js/admin-customers.js"></script>
 </body>
 </html>

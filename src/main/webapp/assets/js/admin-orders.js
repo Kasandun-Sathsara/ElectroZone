@@ -2,6 +2,8 @@ window.addEventListener("load", () => {
     loadOrders();
 });
 
+let allOrders = [];
+
 function loadOrders() {
     Notiflix.Loading.pulse("Loading Orders...");
     fetch("../api/admin/orders/all")
@@ -15,7 +17,8 @@ function loadOrders() {
         .then(data => {
             Notiflix.Loading.remove();
             if (data.status) {
-                populateOrdersTable(data.orders);
+                allOrders = data.orders;
+                filterOrders();
             } else {
                 Notiflix.Notify.failure(data.message);
             }
@@ -24,6 +27,26 @@ function loadOrders() {
             Notiflix.Loading.remove();
             console.error(err);
         });
+}
+
+function filterOrders() {
+    const searchText = document.getElementById("order-search-input").value.toLowerCase();
+    const statusFilter = document.getElementById("order-status-filter").value;
+    
+    let filteredOrders = allOrders;
+    
+    if (searchText) {
+        filteredOrders = filteredOrders.filter(o => 
+            o.invoiceNo.toLowerCase().includes(searchText) || 
+            o.buyerName.toLowerCase().includes(searchText)
+        );
+    }
+    
+    if (statusFilter) {
+        filteredOrders = filteredOrders.filter(o => o.invoiceStatus === statusFilter);
+    }
+    
+    populateOrdersTable(filteredOrders);
 }
 
 function populateOrdersTable(orders) {
@@ -38,9 +61,8 @@ function populateOrdersTable(orders) {
     orders.forEach(order => {
         let statusPillClass = "pill-pending";
         if(order.invoiceStatus === "COMPLETED" || order.invoiceStatus === "DELIVERED") statusPillClass = "pill-delivered";
-        else if(order.invoiceStatus === "SHIPPED") statusPillClass = "pill-shipped";
-        else if(order.invoiceStatus === "PROCESSING") statusPillClass = "pill-processing";
-        else if(order.invoiceStatus === "CANCELLED") statusPillClass = "pill-cancelled";
+        else if(order.invoiceStatus === "PACKING") statusPillClass = "pill-processing";
+        else if(order.invoiceStatus === "CANCELED") statusPillClass = "pill-cancelled";
         
         let date = order.invoiceDate.substring(0, 10);
         let amount = "LKR " + new Intl.NumberFormat("en-US", {minimumFractionDigits: 2}).format(order.shippingCharges);
@@ -56,10 +78,10 @@ function populateOrdersTable(orders) {
                 <td>
                     <select class="form-select form-select-sm d-inline-block w-auto" onchange="updateOrderStatus(${rawId}, this.value)">
                         <option value="" selected disabled>Change Status</option>
-                        <option value="PROCESSING">Processing</option>
-                        <option value="SHIPPED">Shipped</option>
+                        <option value="PACKING">Packing</option>
+                        <option value="COMPLETED">Completed</option>
                         <option value="DELIVERED">Delivered</option>
-                        <option value="CANCELLED">Cancelled</option>
+                        <option value="CANCELED">Canceled</option>
                     </select>
                 </td>
             </tr>
