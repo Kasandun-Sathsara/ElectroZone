@@ -36,7 +36,7 @@ async function addToCart(stockId, qty) {
 
 async function loadCartItems() {
     try {
-        const response = await fetch("api/carts/all-carts");
+        const response = await fetch("api/carts/all-carts", { cache: "no-store" });
         if (response.ok) {
             const data = await response.json();
             let cartCountBadge = document.getElementById("cart-count");

@@ -267,7 +267,7 @@
         });
     </script>
     <script src="assets/js/notiflix-aio-3.2.8.min.js"></script>
-    <script src="assets/js/cart.js"></script>
+    <script src="assets/js/cart.js?v=2"></script>
     <script src="assets/js/index.js"></script>
 </body>
 

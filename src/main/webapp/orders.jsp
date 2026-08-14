@@ -75,6 +75,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/notiflix-aio-3.2.8.min.js"></script>
     <script src="assets/js/orders.js"></script>
-<script src="assets/js/cart.js"></script>
+<script src="assets/js/cart.js?v=2"></script>
 </body>
 </html>
