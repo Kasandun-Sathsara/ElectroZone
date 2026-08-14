@@ -142,7 +142,36 @@ function populateProductsTable(products) {
 }
 
 function editProduct(id) {
-    Notiflix.Notify.info("Edit product " + id + " clicked (Feature pending)");
+    const p = allProductsList.find(x => x.productId === id);
+    if (!p) return;
+
+    // Load options first if empty
+    if (!document.getElementById('editProductBrand').hasChildNodes() || document.getElementById('editProductBrand').options.length <= 1) {
+        loadOptionsForProductModal().then(async () => {
+            await populateEditModal(p);
+        });
+    } else {
+        populateEditModal(p);
+    }
+}
+
+async function populateEditModal(p) {
+    document.getElementById("editProductId").value = p.productId;
+    document.getElementById("editProductTitle").value = p.title;
+    document.getElementById("editProductDescription").value = p.description;
+    document.getElementById("editProductCategory").value = p.categoryId;
+    document.getElementById("editProductBrand").value = p.brandId;
+    
+    await loadModelsForBrandEdit();
+    
+    document.getElementById("editProductModel").value = p.modelId;
+    document.getElementById("editProductStorage").value = p.storageId;
+    document.getElementById("editProductColor").value = p.colorId;
+    document.getElementById("editProductPrice").value = p.price;
+    document.getElementById("editProductQty").value = p.qty;
+
+    var editModal = new bootstrap.Modal(document.getElementById('editProductModal'));
+    editModal.show();
 }
 
 function deleteProduct(id) {
@@ -198,19 +227,23 @@ async function loadOptionsForProductModal() {
         if(catRes.ok) {
             const data = await catRes.json();
             renderDropdowns(document.getElementById("productCategory"), data.categories, 'name');
+            renderDropdowns(document.getElementById("editProductCategory"), data.categories, 'name');
         }
 
         const brandRes = await fetch("../api/data/brands");
         if(brandRes.ok) {
             const data = await brandRes.json();
             renderDropdowns(document.getElementById("productBrand"), data.brands, 'name');
+            renderDropdowns(document.getElementById("editProductBrand"), data.brands, 'name');
         }
 
         const specRes = await fetch("../api/data/specifications");
         if(specRes.ok) {
             const data = await specRes.json();
             renderDropdowns(document.getElementById("productStorage"), data.storages, 'value');
+            renderDropdowns(document.getElementById("editProductStorage"), data.storages, 'value');
             renderDropdowns(document.getElementById("productColor"), data.colors, 'value');
+            renderDropdowns(document.getElementById("editProductColor"), data.colors, 'value');
         }
     } catch(e) {
         console.error(e);
@@ -230,6 +263,25 @@ function renderDropdowns(selector, list, suffix) {
 async function loadModelsForBrand() {
     const brandId = document.getElementById("productBrand").value;
     const modelSelect = document.getElementById("productModel");
+    modelSelect.innerHTML = '<option value="0" disabled selected>Select Model</option>';
+    if(brandId == 0) return;
+
+    try {
+        const res = await fetch(`../api/data/${brandId}/models`);
+        if(res.ok) {
+            const data = await res.json();
+            if (data.status && data.models) {
+                renderDropdowns(modelSelect, data.models, 'name');
+            }
+        }
+    } catch(e) {
+        console.error(e);
+    }
+}
+
+async function loadModelsForBrandEdit() {
+    const brandId = document.getElementById("editProductBrand").value;
+    const modelSelect = document.getElementById("editProductModel");
     modelSelect.innerHTML = '<option value="0" disabled selected>Select Model</option>';
     if(brandId == 0) return;
 
@@ -300,6 +352,75 @@ async function addAdminProduct() {
         if(data.status) {
             Notiflix.Notify.success(data.message);
             var modal = bootstrap.Modal.getInstance(document.getElementById('addProductModal'));
+            modal.hide();
+            form.reset();
+            loadProducts(); // reload table
+        } else {
+            Notiflix.Notify.failure(data.message);
+        }
+    } catch(e) {
+        Notiflix.Loading.remove();
+        Notiflix.Notify.failure("An error occurred");
+        console.error(e);
+    }
+}
+
+async function updateAdminProduct() {
+    const form = document.getElementById("editProductForm");
+    if(!form.checkValidity()) {
+        form.reportValidity();
+        return;
+    }
+
+    const productId = document.getElementById("editProductId").value;
+    const title = document.getElementById("editProductTitle").value;
+    const categoryId = document.getElementById("editProductCategory").value;
+    const brandId = document.getElementById("editProductBrand").value;
+    const modelId = document.getElementById("editProductModel").value;
+    const storageId = document.getElementById("editProductStorage").value;
+    const colorId = document.getElementById("editProductColor").value;
+    const price = document.getElementById("editProductPrice").value;
+    const qty = document.getElementById("editProductQty").value;
+    const description = document.getElementById("editProductDescription").value;
+    const imagesInput = document.getElementById("editProductImages");
+
+    if (imagesInput.files.length > 4) {
+        Notiflix.Notify.failure("You can only upload up to 4 new images.");
+        return;
+    }
+
+    const productDataObj = {
+        productId: parseInt(productId),
+        title: title,
+        categoryId: parseInt(categoryId),
+        brandId: parseInt(brandId),
+        modelId: parseInt(modelId),
+        storageId: parseInt(storageId),
+        colorId: parseInt(colorId),
+        qualityId: 0,
+        price: parseFloat(price),
+        qty: parseInt(qty),
+        description: description
+    };
+
+    const formData = new FormData();
+    formData.append("product", JSON.stringify(productDataObj));
+    for (let i = 0; i < imagesInput.files.length; i++) {
+        formData.append("images[]", imagesInput.files[i]);
+    }
+
+    Notiflix.Loading.pulse("Updating product...");
+
+    try {
+        const response = await fetch("../api/admin/products/update-product", {
+            method: "POST",
+            body: formData
+        });
+        const data = await response.json();
+        Notiflix.Loading.remove();
+        if(data.status) {
+            Notiflix.Notify.success(data.message);
+            var modal = bootstrap.Modal.getInstance(document.getElementById('editProductModal'));
             modal.hide();
             form.reset();
             loadProducts(); // reload table

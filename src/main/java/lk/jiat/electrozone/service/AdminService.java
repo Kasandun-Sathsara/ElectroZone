@@ -417,6 +417,120 @@ public class AdminService {
         return AppUtil.GSON.toJson(responseObject);
     }
 
+    public String updateProductAdmin(ProductDTO productDTO, List<BodyPart> imageParts, ServletContext context) {
+        JsonObject responseObject = new JsonObject();
+        boolean status = false;
+        String message = "";
+        
+        if (productDTO.getProductId() <= 0) {
+            message = "Invalid product ID.";
+        } else if (productDTO.getCategoryId() <= 0) {
+            message = "Invalid category.";
+        } else if (productDTO.getBrandId() <= 0) {
+            message = "Invalid brand type.";
+        } else if (productDTO.getModelId() <= 0) {
+            message = "Invalid model type.";
+        } else if (productDTO.getTitle() == null || productDTO.getTitle().isBlank()) {
+            message = "Product title is required!";
+        } else if (productDTO.getDescription() == null || productDTO.getDescription().isBlank()) {
+            message = "Product description is required!";
+        } else if (productDTO.getStorageId() <= 0) {
+            message = "Invalid storage type.";
+        } else if (productDTO.getColorId() <= 0) {
+            message = "Invalid color type.";
+        } else if (productDTO.getPrice() <= 0) {
+            message = "Price must be greater than 0.";
+        } else if (productDTO.getQty() < 0) {
+            message = "Quantity cannot be negative.";
+        } else {
+            Session hibernateSession = HibernateUtil.getSessionFactory().openSession();
+            Product product = hibernateSession.find(Product.class, productDTO.getProductId());
+            
+            if (product != null) {
+                Category category = hibernateSession.find(Category.class, productDTO.getCategoryId());
+                Model model = hibernateSession.find(Model.class, productDTO.getModelId());
+                Storage storage = hibernateSession.find(Storage.class, productDTO.getStorageId());
+                Color color = hibernateSession.find(Color.class, productDTO.getColorId());
+                
+                if (category != null && model != null && storage != null && color != null) {
+                    product.setTitle(productDTO.getTitle());
+                    product.setDescription(productDTO.getDescription());
+                    product.setCategory(category);
+                    product.setModel(model);
+                    product.setStorage(storage);
+                    product.setColor(color);
+                    
+                    Transaction transaction = hibernateSession.beginTransaction();
+                    try {
+                        hibernateSession.merge(product);
+                        
+                        // Update stock
+                        List<Stock> stocks = hibernateSession.createQuery("FROM Stock s WHERE s.product=:product ORDER BY s.id DESC", Stock.class)
+                                .setParameter("product", product).getResultList();
+                        
+                        if (!stocks.isEmpty()) {
+                            Stock stock = stocks.get(0);
+                            stock.setPrice(productDTO.getPrice());
+                            stock.setQty(productDTO.getQty());
+                            hibernateSession.merge(stock);
+                        } else {
+                            // If no stock exists, create one
+                            Stock stock = new Stock();
+                            stock.setProduct(product);
+                            stock.setPrice(productDTO.getPrice());
+                            stock.setQty(productDTO.getQty());
+                            
+                            Discount defaultDiscount = hibernateSession.createQuery("FROM Discount d WHERE d.couponCode='DEFAULT'", Discount.class)
+                                    .getResultStream().findFirst().orElse(null);
+                            if (defaultDiscount != null) {
+                                stock.setDiscount(defaultDiscount);
+                            }
+                            
+                            Status approvedStatus = hibernateSession.createNamedQuery("Status.findByValue", Status.class)
+                                    .setParameter("value", String.valueOf(Status.Type.APPROVED))
+                                    .getSingleResult();
+                            stock.setStatus(approvedStatus);
+                            
+                            hibernateSession.persist(stock);
+                        }
+                        
+                        // Handle new image uploads (append)
+                        FileUploadService fileUploadService = new FileUploadService(context);
+                        if (imageParts != null && !imageParts.isEmpty()) {
+                            for (BodyPart part : imageParts) {
+                                InputStream inputStream = part.getEntityAs(InputStream.class);
+                                ContentDisposition contentDisposition = part.getContentDisposition();
+                                FileUploadService.FileItem fileItem = fileUploadService.uploadFile("product_uploads", inputStream, contentDisposition);
+                                
+                                boolean isPrimary = product.getImages().isEmpty();
+                                ProductImage pi = new ProductImage(product, fileItem.getFilePath(), isPrimary);
+                                hibernateSession.persist(pi);
+                                product.getImages().add(fileItem.getFilePath());
+                            }
+                        }
+                        
+                        transaction.commit();
+                        status = true;
+                        message = "Product updated successfully";
+                    } catch (Exception e) {
+                        transaction.rollback();
+                        e.printStackTrace();
+                        message = "Failed to update product: " + e.getMessage();
+                    }
+                } else {
+                    message = "Invalid product attributes provided.";
+                }
+            } else {
+                message = "Product not found.";
+            }
+            hibernateSession.close();
+        }
+        
+        responseObject.addProperty("status", status);
+        responseObject.addProperty("message", message);
+        return AppUtil.GSON.toJson(responseObject);
+    }
+
     public String addNewBrand(String name) {
         JsonObject responseObject = new JsonObject();
         boolean status = false;

@@ -68,6 +68,33 @@ public class AdminProductController {
     }
 
     @IsAdmin
+    @Path("/update-product")
+    @POST
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateAdminProduct(
+            @FormDataParam("product") String productJson,
+            @FormDataParam("images[]") FormDataBodyPart dummyBodyPart,
+            @Context ServletContext context,
+            @Context HttpServletRequest request) {
+        
+        ProductDTO productDTO = AppUtil.GSON.fromJson(productJson, ProductDTO.class);
+        
+        List<BodyPart> imageParts = new ArrayList<>();
+        if (dummyBodyPart != null && dummyBodyPart.getParent() != null) {
+            imageParts = dummyBodyPart.getParent().getBodyParts().stream()
+                .filter(part -> {
+                    String cdName = part.getContentDisposition().getParameters().get("name");
+                    return "images[]".equals(cdName) && part.getContentDisposition().getFileName() != null && !part.getContentDisposition().getFileName().isEmpty();
+                })
+                .collect(Collectors.toList());
+        }
+        
+        String responseJson = adminService.updateProductAdmin(productDTO, imageParts, context);
+        return Response.ok().entity(responseJson).build();
+    }
+
+    @IsAdmin
     @Path("/add-brand")
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
