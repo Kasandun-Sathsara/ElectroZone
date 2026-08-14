@@ -56,12 +56,11 @@ public class FileUploadService {
         }
 
         String appUrl = Env.get("app.url");
-        String relativePath = pathName + "/" + fileName;
+        String relativePath = (pathName.startsWith("/") ? pathName.substring(1) : pathName) + "/" + fileName;
         String url = context.getContextPath() + "/" + relativePath;
-        // We will just store the path relative to the app root, e.g. uploads/...
         String path = relativePath; 
         
-        String fullUrl = appUrl + url;
+        String fullUrl = appUrl + "/" + relativePath;
 
         return new FileItem(fileName, contentDisposition.getFileName(), path, url, fullUrl);
     }

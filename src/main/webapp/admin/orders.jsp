@@ -71,11 +71,6 @@
             <div class="sidebar-group-label mt-4">Management</div>
             <a href="#" class="sidebar-nav-link">
                 <div class="sidebar-nav-link-content">
-                    <i class="bi bi-bar-chart"></i> Analytics
-                </div>
-            </a>
-            <a href="#" class="sidebar-nav-link">
-                <div class="sidebar-nav-link-content">
                     <i class="bi bi-gear"></i> Settings
                 </div>
             </a>

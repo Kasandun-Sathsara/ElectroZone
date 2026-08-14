@@ -90,7 +90,19 @@ function populateProductsTable(products) {
     }
     
     products.forEach(p => {
-        let img = (p.images && p.images.length > 0) ? "../" + p.images[0] : "https://placehold.co/100x100/e2e8f0/475569?text=Product";
+        let rawImg = (p.images && p.images.length > 0) ? p.images[0] : "";
+        let img = "https://placehold.co/100x100/e2e8f0/475569?text=No+Image";
+        
+        if (rawImg && typeof rawImg === 'string' && rawImg.trim() !== '') {
+            rawImg = rawImg.trim();
+            if (rawImg.startsWith("http://") || rawImg.startsWith("https://")) {
+                img = rawImg;
+            } else {
+                if (rawImg.startsWith("/")) rawImg = rawImg.substring(1);
+                img = "../" + rawImg;
+            }
+        }
+
         let stockClass = p.qty > 10 ? "normal" : (p.qty > 0 ? "low" : "out");
         let stockText = p.qty > 10 ? p.qty + " in stock" : (p.qty > 0 ? "Low Stock ("+p.qty+")" : "Out of Stock");
         let price = "LKR " + new Intl.NumberFormat("en-US", {minimumFractionDigits: 2}).format(p.price);
@@ -98,7 +110,6 @@ function populateProductsTable(products) {
         let statusPillClass = p.qty > 0 ? "pill-active" : "pill-inactive";
         let statusText = p.qty > 0 ? "Active" : "Inactive";
         
-        let borderStyle = (p.images && p.images.length > 0) ? "border: 2px solid red;" : "";
         tbody.innerHTML += `
             <tr>
                 <td class="checkbox-cell">
@@ -107,7 +118,7 @@ function populateProductsTable(products) {
                 <td>
                     <div class="product-cell">
                         <div class="admin-product-img-wrapper" style="background-color: #f1f5f9;">
-                            <img src="${img}" alt="Product" style="object-fit: contain; width: 100%; height: 100%;">
+                            <img src="${img}" alt="${p.title}" onerror="this.onerror=null; this.src='https://placehold.co/100x100/e2e8f0/475569?text=No+Photo';" style="object-fit: contain; width: 100%; height: 100%;">
                         </div>
                         <div class="product-info">
                             <p class="product-name text-truncate" style="max-width: 200px;" title="${p.title}">${p.title}</p>
@@ -194,7 +205,9 @@ function deleteProduct(id) {
                     Notiflix.Loading.remove();
                     if(data.status) {
                         Notiflix.Notify.success(data.message);
-                        loadProducts(); // reload
+                        allProductsList = allProductsList.filter(p => p.productId !== id && p.productId != id);
+                        applyFilters();
+                        loadProducts(); // re-sync with DB
                     } else {
                         Notiflix.Notify.failure(data.message);
                     }

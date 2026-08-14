@@ -67,6 +67,15 @@ public class MailServiceProvider {
     }
 
     public void sendMail(Mailable mailable) {
-        boolean offer = blockingQueue.offer(mailable);
+        try {
+            if (executor == null || executor.isShutdown()) {
+                start();
+            }
+            executor.execute(mailable);
+            System.out.println("Mail task queued to executor successfully.");
+        } catch (Exception e) {
+            System.err.println("Executor failed to queue mail, running in background thread fallback: " + e.getMessage());
+            new Thread(mailable).start();
+        }
     }
 }

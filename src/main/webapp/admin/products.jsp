@@ -72,11 +72,6 @@
             <div class="sidebar-group-label mt-4">Management</div>
             <a href="#" class="sidebar-nav-link">
                 <div class="sidebar-nav-link-content">
-                    <i class="bi bi-bar-chart"></i> Analytics
-                </div>
-            </a>
-            <a href="#" class="sidebar-nav-link">
-                <div class="sidebar-nav-link-content">
                     <i class="bi bi-gear"></i> Settings
                 </div>
             </a>
@@ -347,6 +342,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../assets/js/notiflix-aio-3.2.8.min.js"></script>
-    <script src="../assets/js/admin-products.js?v=2"></script>
+    <script src="../assets/js/admin-products.js?v=7"></script>
 </body>
 </html>

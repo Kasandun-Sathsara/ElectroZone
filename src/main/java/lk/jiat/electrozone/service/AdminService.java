@@ -134,18 +134,28 @@ public class AdminService {
                 dto.setQty(totalQty);
                 dto.setPrice(minPrice);
                 dto.setStockDTOList(stockDTOList);
+                List<String> images = new ArrayList<>();
                 if (p.getImages() != null && !p.getImages().isEmpty()) {
-                    List<String> images = new ArrayList<>();
-                    images.add(p.getImages().get(0));
-                    dto.setImages(images);
-                } else {
-                    List<lk.jiat.ElectroZone.entity.ProductImage> pImages = session.createQuery("FROM ProductImage p WHERE p.product=:product", lk.jiat.ElectroZone.entity.ProductImage.class).setParameter("product", p).getResultList();
-                    if(!pImages.isEmpty()) {
-                        List<String> images = new ArrayList<>();
-                        images.add(pImages.get(0).getImageUrl());
-                        dto.setImages(images);
+                    for (String img : p.getImages()) {
+                        if (img != null && !img.trim().isEmpty()) {
+                            String clean = img.trim();
+                            if (clean.startsWith("/")) clean = clean.substring(1);
+                            images.add(clean);
+                        }
                     }
                 }
+                if (images.isEmpty()) {
+                    List<lk.jiat.ElectroZone.entity.ProductImage> pImages = session.createQuery("FROM ProductImage p WHERE p.product=:product", lk.jiat.ElectroZone.entity.ProductImage.class).setParameter("product", p).getResultList();
+                    for (lk.jiat.ElectroZone.entity.ProductImage pi : pImages) {
+                        if (pi.getImageUrl() != null && !pi.getImageUrl().trim().isEmpty()) {
+                            String clean = pi.getImageUrl().trim();
+                            if (clean.startsWith("/")) clean = clean.substring(1);
+                            images.add(clean);
+                        }
+                    }
+                }
+
+                dto.setImages(images);
                 dtos.add(dto);
             }
             responseObject.addProperty("status", true);
@@ -163,10 +173,46 @@ public class AdminService {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            Product product = session.find(Product.class, id);
-            if (product != null) {
-                session.remove(product);
-                transaction.commit();
+            
+            // Disable foreign key checks for clean cascading delete
+            session.createNativeQuery("SET FOREIGN_KEY_CHECKS = 0").executeUpdate();
+
+            try {
+                session.createNativeQuery("DELETE FROM wishlist WHERE product_id = " + id).executeUpdate();
+            } catch (Exception ignored) {}
+
+            try {
+                session.createNativeQuery("DELETE FROM product_images_list WHERE pr_id = " + id).executeUpdate();
+            } catch (Exception ignored) {}
+
+            try {
+                session.createNativeQuery("DELETE FROM product_images WHERE pr_id = " + id).executeUpdate();
+            } catch (Exception ignored) {}
+
+            try {
+                session.createNativeQuery("DELETE FROM product_image_entities WHERE product_id = " + id).executeUpdate();
+            } catch (Exception ignored) {}
+
+            try {
+                session.createNativeQuery("DELETE FROM cart WHERE stock_id IN (SELECT id FROM stock WHERE product_id = " + id + ")").executeUpdate();
+            } catch (Exception ignored) {}
+
+            try {
+                session.createNativeQuery("DELETE FROM order_items WHERE stock_id IN (SELECT id FROM stock WHERE product_id = " + id + ")").executeUpdate();
+            } catch (Exception ignored) {}
+
+            try {
+                session.createNativeQuery("DELETE FROM stock WHERE product_id = " + id).executeUpdate();
+            } catch (Exception ignored) {}
+
+            int deletedRows = session.createNativeQuery("DELETE FROM product WHERE id = " + id).executeUpdate();
+
+            // Re-enable foreign key checks
+            session.createNativeQuery("SET FOREIGN_KEY_CHECKS = 1").executeUpdate();
+
+            transaction.commit();
+
+            if (deletedRows > 0) {
                 responseObject.addProperty("status", true);
                 responseObject.addProperty("message", "Product deleted successfully");
             } else {
@@ -174,10 +220,12 @@ public class AdminService {
                 responseObject.addProperty("message", "Product not found");
             }
         } catch (Exception e) {
-            if(transaction != null) transaction.rollback();
+            if (transaction != null && transaction.isActive()) {
+                transaction.rollback();
+            }
             e.printStackTrace();
             responseObject.addProperty("status", false);
-            responseObject.addProperty("message", "Failed to delete product");
+            responseObject.addProperty("message", "Failed to delete product: " + e.getMessage());
         }
         return AppUtil.GSON.toJson(responseObject);
     }

@@ -80,4 +80,44 @@ public class SeedController {
             session.close();
         }
     }
+
+    @GET
+    @Path("/clear-products")
+    public Response clearAllProducts() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        try {
+            session.createNativeQuery("SET FOREIGN_KEY_CHECKS = 0").executeUpdate();
+            
+            String[] tables = {
+                "wishlist",
+                "product_images_list",
+                "product_images",
+                "product_image_entities",
+                "cart",
+                "order_items",
+                "stock",
+                "product"
+            };
+            
+            for (String t : tables) {
+                try {
+                    session.createNativeQuery("TRUNCATE TABLE " + t).executeUpdate();
+                } catch (Exception ignored) {
+                    try {
+                        session.createNativeQuery("DELETE FROM " + t).executeUpdate();
+                    } catch (Exception ignored2) {}
+                }
+            }
+            
+            session.createNativeQuery("SET FOREIGN_KEY_CHECKS = 1").executeUpdate();
+            transaction.commit();
+            return Response.ok("All products and related data cleared successfully").build();
+        } catch (Exception e) {
+            if (transaction != null) transaction.rollback();
+            return Response.serverError().entity(e.getMessage()).build();
+        } finally {
+            session.close();
+        }
+    }
 }

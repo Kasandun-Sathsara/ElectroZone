@@ -44,9 +44,6 @@
                 <a href="customers.jsp" class="sidebar-link active">
                     <i class="bi bi-people-fill"></i> Customers
                 </a>
-                <a href="#" class="sidebar-link">
-                    <i class="bi bi-bar-chart-fill"></i> Analytics
-                </a>
 
                 <div class="sidebar-divider"></div>
                 
