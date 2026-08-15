@@ -6,24 +6,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ElectroZone - Home</title>
-    <!-- Bootstrap 5 CSS -->
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
+    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    <!-- Google Fonts -->
+    
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- Custom CSS -->
+    
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 
-    <!-- Navbar -->
+    
     <jsp:include page="include/header.jsp"/>
 
-    <!-- Main Content -->
+    
     <main class="container my-4">
         
-        <!-- Hero Section -->
+        
         <section class="hero-section mb-5" style="background-image: url('assets/img/hero_bg_1777403135954.png');">
             <div class="p-5 p-md-5 hero-content text-white">
                 <div class="col-md-7 col-lg-6 p-3 p-md-4">
@@ -45,7 +45,7 @@
             </div>
         </section>
 
-        <!-- Browse by Category -->
+        
         <section class="mb-5">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h3 class="fw-bold mb-0">Browse by Category</h3>
@@ -115,7 +115,7 @@
             </div>
         </section>
 
-        <!-- Best Sellers -->
+        
         <section class="mb-5 pb-3">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h3 class="fw-bold mb-0">Best Sellers</h3>
@@ -123,11 +123,11 @@
             </div>
 
             <div class="row g-4" id="best-sellers-container">
-                <!-- Products will be dynamically loaded here by index.js -->
+                
             </div>
         </section>
 
-        <!-- Twin Banners -->
+        
         <section class="row g-4 mb-5 pb-3">
             <div class="col-md-6">
                 <div class="promo-banner promo-banner-vr">
@@ -146,7 +146,7 @@
                         <p class="text-muted mb-4 pe-md-4">Next-gen performance is here.</p>
                         <a href="#" class="text-decoration-none fw-bold link-primary">Shop Collection <i class="bi bi-arrow-right ms-1"></i></a>
                     </div>
-                    <!-- Fallback icon instead of image -->
+                    
                     <div class="position-absolute end-0 top-50 translate-middle-y pe-4" style="z-index: 1;">
                         <i class="bi bi-controller text-dark opacity-25" style="font-size: 14rem;"></i>
                     </div>
@@ -154,7 +154,7 @@
             </div>
         </section>
 
-        <!-- Newsletter -->
+        
         <section class="mb-5">
             <div class="newsletter-section">
                 <div class="row align-items-center">
@@ -178,16 +178,16 @@
 
     </main>
 
-    <!-- Footer -->
+    
     <footer class="bg-white mt-auto pt-5">
         <div class="container footer-top">
             <div class="row g-4">
                 <div class="col-lg-4 pe-lg-5">
-                    <div class="brand mb-4 d-flex align-items-center">
-                        <div class="brand-icon me-2 d-flex align-items-center justify-content-center shadow-sm" style="width: 32px; height: 32px; border-radius: 8px;">
+                    <div class="brand mb-4 d-flex align-items-center gap-2">
+                        <div class="brand-icon d-flex align-items-center justify-content-center shadow-sm" style="width: 34px; height: 34px; background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); border-radius: 9px;">
                             <i class="bi bi-lightning-fill text-white fs-6"></i>
                         </div>
-                        <h4 class="mb-0 fw-bold tracking-tight text-dark">ElectroZone</h4>
+                        <h4 class="mb-0 fw-bold tracking-tight text-dark">Electro<span class="text-primary">Zone</span></h4>
                     </div>
                     <p class="text-muted fs-7 mb-4">
                         Your one-stop destination for the latest electronics and gadgets. We bring the future to your doorstep with premium quality and unbeatable prices.

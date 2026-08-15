@@ -5,7 +5,7 @@ window.addEventListener("load", async () => {
     });
     try {
         await loadDeals();
-        // await loadAllBrands(); // if you want to implement dynamic categories later
+
     } finally {
         Notiflix.Loading.remove();
     }
@@ -38,14 +38,27 @@ function renderingDeals(productList) {
     }
     productList.forEach((product) => {
         let imageSrc = product.images && product.images.length > 0 ? product.images[0] : 'assets/img/default-product.png';
+        let isOutOfStock = (product.qty <= 0);
+        let badgeHtml = isOutOfStock 
+            ? `<span class="product-badge bg-danger text-white position-absolute top-0 start-0 m-2 px-2 py-1 rounded fw-bold" style="font-size: 0.75rem; z-index: 10;">OUT OF STOCK</span>`
+            : `<span class="product-badge bg-primary text-white position-absolute top-0 start-0 m-2 px-2 py-1 rounded" style="font-size: 0.75rem; z-index: 10;">DEAL</span>`;
+        
+        let cartBtnHtml = isOutOfStock
+            ? `<button class="btn btn-outline-secondary rounded-circle disabled" disabled title="Out of Stock" style="width: 40px; height: 40px; padding: 0; display: flex; align-items: center; justify-content: center; opacity: 0.4; cursor: not-allowed;">
+                    <i class="bi bi-slash-circle fs-5"></i>
+               </button>`
+            : `<button class="btn btn-outline-primary rounded-circle" onclick="addToCart(${product.stockId},1);" style="width: 40px; height: 40px; padding: 0; display: flex; align-items: center; justify-content: center;">
+                    <i class="bi bi-cart-plus fs-5"></i>
+               </button>`;
+
         container.innerHTML += `
             <div class="col-sm-6 col-lg-3">
-                <div class="product-card h-100 bg-white shadow-sm border border-light">
+                <div class="product-card h-100 bg-white shadow-sm border border-light position-relative">
                     <div class="product-img-wrapper" style="position: relative; overflow: hidden; height: 200px; display: flex; align-items: center; justify-content: center; padding: 10px;">
-                        <span class="product-badge bg-primary text-white position-absolute top-0 start-0 m-2 px-2 py-1 rounded" style="font-size: 0.75rem; z-index: 10;">DEAL</span>
-                        <button class="like-btn position-absolute top-0 end-0 m-2 border-0 bg-transparent" onclick="addToWishlist(${product.stockId})" style="z-index: 10;"><i class="bi bi-heart-fill text-muted"></i></button>
+                        ${badgeHtml}
+                        <button class="like-btn position-absolute top-0 end-0 m-2 border-0 bg-transparent" onclick="addToWishlist(${product.stockId})" title="Add to Wishlist" style="z-index: 10;"><i class="bi bi-heart-fill text-danger fs-5"></i></button>
                         <a href="single-product.jsp?productId=${product.stockId}" class="w-100 h-100 d-flex align-items-center justify-content-center">
-                            <img src="${imageSrc}" alt="${product.title}" class="img-fluid" style="max-height: 100%; max-width: 100%; object-fit: contain;">
+                            <img src="${imageSrc}" alt="${product.title}" class="img-fluid" style="max-height: 100%; max-width: 100%; object-fit: contain; ${isOutOfStock ? 'opacity: 0.6;' : ''}">
                         </a>
                     </div>
                     <div class="p-3 d-flex flex-column" style="height: calc(100% - 200px);">
@@ -60,9 +73,7 @@ function renderingDeals(productList) {
                             <div>
                                 <div class="fw-bold fs-5 text-dark">LKR ${new Intl.NumberFormat("en-US", {minimumFractionDigits: 2}).format(product.price)}</div>
                             </div>
-                            <button class="btn btn-outline-primary rounded-circle" onclick="addToCart(${product.stockId},1);" style="width: 40px; height: 40px; padding: 0; display: flex; align-items: center; justify-content: center;">
-                                <i class="bi bi-cart-plus fs-5"></i>
-                            </button>
+                            ${cartBtnHtml}
                         </div>
                     </div>
                 </div>

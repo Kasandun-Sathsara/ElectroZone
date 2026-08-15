@@ -18,9 +18,8 @@ import org.glassfish.jersey.media.multipart.FormDataParam;
 
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.List;
-
-
+import java.util.List;
+
 @Path("/products")
 public class ProductController {
 
@@ -73,8 +72,7 @@ public class ProductController {
         ProductDTO productDTO = AppUtil.GSON.fromJson(productJson, ProductDTO.class);
         String responseJson = new ProductService().addNewProduct(productDTO, request);
         return Response.ok().entity(responseJson).build();
-    }
-
-
+    }
+
 }
 

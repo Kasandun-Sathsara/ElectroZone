@@ -117,9 +117,8 @@ async function saveProduct() {
     let colorSelect = document.getElementById("color");
     let conditionSelect = document.getElementById("condition");
     let price = document.getElementById("price");
-    let qty = document.getElementById("qty");
-
-
+    let qty = document.getElementById("qty");
+
     const productDataObj = {
         brandId: brandSelect.value,
         modelId: modelSelect.value,

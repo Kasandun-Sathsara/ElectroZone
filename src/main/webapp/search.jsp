@@ -5,24 +5,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ElectroZone - Search</title>
-    <!-- Bootstrap 5 CSS -->
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
+    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    <!-- Google Fonts -->
+    
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- Custom CSS -->
+    
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 
-    <!-- Navbar -->
+    
     <jsp:include page="include/header.jsp"/>
 
-    <!-- Main Content -->
+    
     <main class="container pb-5">
         
-        <!-- Hero Search Section -->
+        
         <section class="search-hero">
             <h1 class="display-5 fw-bolder text-dark mb-2">Find Your Gear</h1>
             <p class="text-muted fs-5 mb-4">Search across thousands of electronics with precision.</p>
@@ -38,7 +38,7 @@
             </div>
         </section>
 
-        <!-- Filter Bar -->
+        
         <div class="card filter-bar-card bg-white p-3 mb-4 shadow-sm">
             <div class="row g-3 border-bottom pb-3 mb-3">
                 <div class="col-md-4 col-lg">
@@ -67,7 +67,7 @@
                 </div>
             </div>
             
-            <!-- Active Filters -->
+            
             <div class="d-flex flex-wrap justify-content-between align-items-center">
                 <div class="d-flex align-items-center gap-2 flex-wrap" id="active-filters-list">
                     <span class="text-muted fs-8 fw-medium me-2">Active Filters:</span>
@@ -76,7 +76,7 @@
             </div>
         </div>
 
-        <!-- Results Header -->
+        
         <div class="d-flex flex-wrap justify-content-between align-items-end mb-4">
             <h5 class="fw-bold text-dark mb-0 d-flex align-items-end gap-2">
                 <span id="result-count-number">0</span> Results Found <span id="result-search-term" class="text-muted fs-6 fw-normal"></span>
@@ -100,12 +100,12 @@
             </div>
         </div>
 
-        <!-- Product List -->
+        
         <div class="d-flex flex-column gap-4" id="search-results-container">
-            <!-- Results injected via search.js -->
+            
         </div>
 
-        <!-- Pagination -->
+        
         <div class="d-flex justify-content-center mt-5 mb-3">
             <nav aria-label="Search results pages">
                 <ul class="pagination gap-2">
@@ -136,7 +136,7 @@
 
     </main>
 
-    <!-- Footer -->
+    
     <footer class="bg-white border-top py-4 mt-auto">
         <div class="container text-center">
             <p class="text-muted fs-7 mb-0">&copy; 2024 ElectroZone. All rights reserved.</p>

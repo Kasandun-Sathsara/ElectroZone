@@ -5,21 +5,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ElectroZone - Your Cart</title>
-    <!-- Bootstrap 5 CSS -->
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
+    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    <!-- Google Fonts -->
+    
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- Custom CSS -->
+    
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body class="bg-light">
 
-    <!-- Navbar -->
+    
     <jsp:include page="include/header.jsp"/>
 
-    <!-- Main Content -->
+    
     <main class="container my-5">
         
         <div class="mb-4">
@@ -32,10 +32,10 @@
 
         <div class="row g-4">
             
-            <!-- Cart Items Area -->
+            
             <div class="col-lg-8">
                 
-                <!-- Header Row -->
+                
                 <div class="d-none d-md-flex text-muted fs-7 fw-medium mb-3 px-3">
                     <div class="col-md-5">Product</div>
                     <div class="col-md-3 text-center">Price</div>
@@ -44,7 +44,7 @@
                 </div>
 
                 <div id="cart-item-container">
-                    <!-- Cart Items will be injected here by cart.js -->
+                    
                 </div>
 
                 <div class="mt-4">
@@ -55,7 +55,7 @@
 
             </div>
 
-            <!-- Order Summary Sidebar -->
+            
             <div class="col-lg-4">
                 <div class="card border-0 shadow-sm rounded-4 p-4 sticky-top" style="top: 100px;">
                     <h5 class="fw-bold mb-4">Order Summary</h5>
@@ -111,7 +111,7 @@
         </div>
     </main>
 
-    <!-- Simplified Footer -->
+    
     <footer class="bg-light border-top py-4 mt-auto">
         <div class="container text-center">
             <p class="text-muted fs-7 mb-0">&copy; 2024 ElectroZone. All rights reserved.</p>

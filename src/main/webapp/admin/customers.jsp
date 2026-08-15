@@ -5,29 +5,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ElectroZone - Manage Customers</title>
-    <!-- Bootstrap 5 CSS -->
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
+    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    <!-- Google Fonts -->
+    
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- Custom CSS -->
+    
     <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body class="admin-page-body">
 
     <div class="admin-layout">
         
-        <!-- Light Sidebar -->
+        
         <aside class="admin-sidebar">
             
             <a href="../index.jsp" class="sidebar-brand">
-                <div class="sidebar-brand-icon shadow-sm">
-                    <i class="bi bi-lightning-fill"></i>
+                <div class="sidebar-brand-icon shadow-sm" style="background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                    <i class="bi bi-lightning-fill text-white fs-5"></i>
                 </div>
-                <div class="sidebar-brand-text">
-                    <span class="sidebar-brand-title">ElectroZone</span>
-                    <span class="sidebar-brand-subtitle">Admin Console</span>
+                <div class="sidebar-brand-text ms-2">
+                    <span class="sidebar-brand-title fw-bold text-dark fs-5">Electro<span class="text-primary">Zone</span></span>
+                    <span class="sidebar-brand-subtitle text-muted small d-block" style="font-size: 0.75rem;">Admin Console</span>
                 </div>
             </a>
 
@@ -67,10 +67,10 @@
             
         </aside>
 
-        <!-- Main Content -->
+        
         <main class="admin-main">
             
-            <!-- Page Header -->
+            
             <header class="admin-header">
                 <h1 class="admin-page-title">Manage Customers</h1>
                 
@@ -85,10 +85,10 @@
                 </div>
             </header>
 
-            <!-- Stats Row -->
+            
             <div class="row g-4">
                 
-                <!-- Stat 1 -->
+                
                 <div class="col-md-4">
                     <div class="stat-card shadow-sm">
                         <div class="stat-content">
@@ -101,7 +101,7 @@
                     </div>
                 </div>
 
-                <!-- Stat 2 -->
+                
                 <div class="col-md-4">
                     <div class="stat-card shadow-sm">
                         <div class="stat-content">
@@ -114,7 +114,7 @@
                     </div>
                 </div>
 
-                <!-- Stat 3 -->
+                
                 <div class="col-md-4">
                     <div class="stat-card shadow-sm">
                         <div class="stat-content">
@@ -129,7 +129,7 @@
 
             </div>
 
-            <!-- Filter & Action Bar -->
+            
             <div class="filter-action-bar">
                 
                 <div class="filter-group-left">
@@ -153,7 +153,7 @@
                 
             </div>
 
-            <!-- Data Table Card -->
+            
             <div class="table-card shadow-sm">
                 <div class="table-responsive">
                     <table class="admin-table">
@@ -168,12 +168,12 @@
                             </tr>
                         </thead>
                         <tbody id="admin-customers-tbody">
-                            <!-- Customers will be loaded dynamically -->
+                            
                         </tbody>
                     </table>
                 </div>
                 
-                <!-- Table Footer / Pagination -->
+                
                 <div class="table-footer flex-column flex-sm-row gap-3">
                     <div class="showing-text">
                         Showing <strong>All</strong> customers
@@ -181,7 +181,7 @@
                 </div>
             </div>
 
-            <!-- Page Footer -->
+            
             <div class="page-footer">
                 &copy; 2024 ElectroZone Inc. All rights reserved.
             </div>

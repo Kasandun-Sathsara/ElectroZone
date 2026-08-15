@@ -5,21 +5,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ElectroZone - Smartphones & Accessories</title>
-    <!-- Bootstrap 5 CSS -->
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
+    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    <!-- Google Fonts -->
+    
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- Custom CSS -->
+    
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body class="bg-light">
 
-    <!-- Navbar -->
+    
     <jsp:include page="include/header.jsp"/>
 
-    <!-- Breadcrumb -->
+    
     <div class="container mt-4 mb-2">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb fs-7">
@@ -29,14 +29,14 @@
         </nav>
     </div>
 
-    <!-- Main Content -->
+    
     <main class="container mb-5">
         <div class="row">
             
-            <!-- Product Grid Area -->
+            
             <div class="col-lg-12">
                 
-                <!-- Top Bar -->
+                
                 <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-3">
                     <h2 class="fw-bold fs-4 mb-0" id="page-title">All Products</h2>
                     
@@ -60,16 +60,16 @@
                     </div>
                 </div>
 
-                <!-- Active Filters -->
+                
                 <div class="d-flex flex-wrap align-items-center gap-2 mb-4" id="active-filters-container">
-                    <!-- Populated by JS -->
+                    
                 </div>
 
-                <!-- Grid -->
+                
                 <div id="dynamic-product-container" class="row row-cols-1 row-cols-sm-2 row-cols-xl-4 g-4">
                 </div>
 
-                <!-- Pagination -->
+                
                 <div class="d-flex justify-content-center mt-5 mb-3">
                     <nav aria-label="Page navigation">
                         <ul class="pagination pagination-sm gap-2">
@@ -102,16 +102,16 @@
         </div>
     </main>
 
-    <!-- Footer -->
+    
     <footer class="bg-white border-top pt-5 pb-3">
         <div class="container mb-4">
             <div class="row gy-4">
                 <div class="col-lg-4 pe-lg-5">
-                    <a class="d-flex align-items-center mb-3 text-decoration-none" href="#">
-                        <div class="brand-icon me-2 d-flex align-items-center justify-content-center shadow-sm">
-                            <i class="bi bi-lightning-fill text-white"></i>
+                    <a class="d-flex align-items-center gap-2 mb-3 text-decoration-none" href="index.jsp">
+                        <div class="brand-icon d-flex align-items-center justify-content-center shadow-sm" style="width: 34px; height: 34px; background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); border-radius: 9px;">
+                            <i class="bi bi-lightning-fill text-white fs-6"></i>
                         </div>
-                        <span class="fw-bold fs-4 tracking-tight text-dark">ElectroZone</span>
+                        <span class="fw-bold fs-4 tracking-tight text-dark mb-0">Electro<span class="text-primary">Zone</span></span>
                     </a>
                     <p class="text-muted fs-7 mb-4">
                         Your one-stop destination for the latest in tech, gadgets, and accessories. Premium quality at unbeatable prices.

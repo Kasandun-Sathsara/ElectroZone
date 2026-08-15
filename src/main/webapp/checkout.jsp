@@ -6,21 +6,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ElectroZone - Checkout</title>
-    <!-- Bootstrap 5 CSS -->
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
+    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    <!-- Google Fonts -->
+    
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- Custom CSS -->
+    
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body class="checkout-page-body">
 
-    <!-- Minimalist Navbar -->
+    
     <jsp:include page="include/header.jsp"/>
 
-    <!-- Main Content -->
+    
     <main class="container my-5">
         
         <div class="mb-4">
@@ -30,7 +30,7 @@
 
         <form action="checkout" method="post" class="row g-5">
             
-            <!-- Left Column: Forms -->
+            
             <div class="col-lg-7">
                 
                     <div class="d-flex justify-content-between align-items-center mb-4">
@@ -114,7 +114,7 @@
                     </div>
                 </div>
 
-                    <!-- Remove dummy payment method blocks and only show PayHere -->
+                    
                     <div class="payment-box active mb-3">
                         <label class="payment-option mb-0">
                             <input type="radio" name="paymentMethod" class="custom-radio-input" checked>
@@ -130,16 +130,16 @@
 
             </div>
 
-            <!-- Right Column: Order Summary Sidebar -->
+            
             <div class="col-lg-5">
                 <div class="card border-0 shadow-sm rounded-4 p-4 sticky-top" style="top: 100px;">
                     <h5 class="fw-bold mb-4">Order Summary</h5>
                     
                     <div id="checkout-order-items">
-                        <!-- Items injected via checkout.js -->
+                        
                     </div>
 
-                    <!-- Totals -->
+                    
                     <div class="d-flex justify-content-between mb-2">
                         <span class="text-muted fs-7">Subtotal</span>
                         <span class="text-dark fw-medium fs-7" id="checkout-subtotal">LKR 0.00</span>
@@ -169,7 +169,7 @@
 
         </div>
 
-    <!-- Footer -->
+    
     <footer class="bg-white border-top py-4 mt-auto">
         <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center">
             <p class="text-muted fs-8 mb-3 mb-md-0">&copy; 2024 ElectroZone Inc.</p>
@@ -184,11 +184,11 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/notiflix-aio-3.2.8.min.js"></script>
-    <!-- PayHere Script -->
+    
     <script type="text/javascript" src="https://www.payhere.lk/lib/payhere.js"></script>
     <script src="assets/js/checkout.js?v=3"></script>
     <script>
-        // Load cities
+
         fetch("api/data/cities")
         .then(response => response.json())
         .then(data => {

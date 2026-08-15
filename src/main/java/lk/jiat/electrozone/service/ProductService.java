@@ -166,7 +166,6 @@ public class ProductService {
         boolean status = false;
         String message = "";
 
-        /// product-inserting-part-start
         if (productDTO.getBrandId() <= 0) {
             message = "Invalid brand type. Please select a correct brand!";
         } else if (productDTO.getModelId() <= 0) {
@@ -264,9 +263,8 @@ public class ProductService {
                 }
                 hibernateSession.close();
             }
-        }
-        /// product-inserting-part-end
-
+        }
+
         responseObject.addProperty("status", status);
         responseObject.addProperty("message", message);
         return AppUtil.GSON.toJson(responseObject);

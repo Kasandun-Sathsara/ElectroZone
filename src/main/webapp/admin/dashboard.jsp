@@ -5,29 +5,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ElectroZone - Admin Dashboard</title>
-    <!-- Bootstrap 5 CSS -->
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
+    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    <!-- Google Fonts -->
+    
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- Custom CSS (Scoped for Admin) -->
-    <!-- Custom CSS -->
+    
+    
     <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body class="admin-page-body">
 
     <div class="admin-layout">
         
-        <!-- Sidebar -->
+        
         <aside class="admin-sidebar">
             <a href="../index.jsp" class="sidebar-brand">
-                <div class="sidebar-brand-icon">
-                    <i class="bi bi-lightning-fill"></i>
+                <div class="sidebar-brand-icon shadow-sm" style="background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                    <i class="bi bi-lightning-fill text-white fs-5"></i>
                 </div>
-                <div class="sidebar-brand-text">
-                    <span class="sidebar-brand-title">ElectroZone</span>
-                    <span class="sidebar-brand-subtitle">Admin Panel</span>
+                <div class="sidebar-brand-text ms-2">
+                    <span class="sidebar-brand-title fw-bold text-dark fs-5">Electro<span class="text-primary">Zone</span></span>
+                    <span class="sidebar-brand-subtitle text-muted small d-block" style="font-size: 0.75rem;">Admin Panel</span>
                 </div>
             </a>
 
@@ -61,10 +61,10 @@
             </div>
         </aside>
 
-        <!-- Main Content -->
+        
         <main class="admin-main">
             
-            <!-- Header -->
+            
             <header class="admin-header">
                 <h1 class="admin-page-title">Dashboard Overview</h1>
                 
@@ -79,7 +79,7 @@
                 </div>
             </header>
 
-            <!-- Stats Row -->
+            
             <div class="row g-4 mb-4">
                 
                 <div class="col-sm-6 col-xl-3">
@@ -144,10 +144,10 @@
 
             </div>
 
-            <!-- Bottom Row -->
+            
             <div class="row g-4 mb-4">
                 
-                <!-- Recent Orders -->
+                
                 <div class="col-xl-8">
                     <div class="admin-card">
                         <div class="admin-card-header">
@@ -167,14 +167,14 @@
                                     </tr>
                                 </thead>
                                 <tbody id="recent-orders-tbody">
-                                    <!-- Populated by JS -->
+                                    
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
 
-                <!-- Low Stock Alerts -->
+                
                 <div class="col-xl-4">
                     <div class="admin-card d-flex flex-column">
                         <div class="admin-card-header">
@@ -183,7 +183,7 @@
                         </div>
                         
                         <div class="flex-grow-1" id="low-stock-container">
-                            <!-- Populated by JS -->
+                            
                         </div>
 
                         <button class="btn-restock">

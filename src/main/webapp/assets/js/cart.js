@@ -48,7 +48,7 @@ async function loadCartItems() {
                 renderingMainPanel(data.cartItems);
                 renderingSidePanel(data.cartItems);
             } else {
-                // Cart is empty
+
                 if (cartCountBadge) cartCountBadge.innerHTML = "0";
                 renderingMainPanel([]);
                 renderingSidePanel([]);

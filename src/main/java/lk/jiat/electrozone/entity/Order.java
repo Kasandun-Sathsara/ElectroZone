@@ -35,9 +35,8 @@ public class Order extends BaseEntity {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-
+    }
+
     public Status getStatus() {
         return status;
     }

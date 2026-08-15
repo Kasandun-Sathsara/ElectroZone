@@ -8,9 +8,8 @@ import java.io.Serializable;
 public class Cart implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-
-
+    private int id;
+
     @Column(nullable = false)
     private int qty;
 

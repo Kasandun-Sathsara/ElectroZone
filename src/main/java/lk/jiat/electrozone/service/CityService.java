@@ -13,13 +13,11 @@ public class CityService {
     public String loadAllCities() {
         JsonObject responseObject = new JsonObject();
 
-        /// city-loading-part-start
         Session hibernateSession = HibernateUtil.getSessionFactory().openSession();
         List<City> cityList = hibernateSession.createQuery("FROM City c", City.class).getResultList();
         responseObject.add("cities", AppUtil.GSON.toJsonTree(cityList));
-        hibernateSession.close();
-        /// city-loading-part-end
-
+        hibernateSession.close();
+
         return AppUtil.GSON.toJson(responseObject);
     }
 }

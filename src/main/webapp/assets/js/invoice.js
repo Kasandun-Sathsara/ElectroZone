@@ -21,8 +21,7 @@ async function fetchAndRenderInvoice() {
 
         if (data.status && data.invoiceData) {
             const inv = data.invoiceData;
-            
-            // Populate header
+
             const invNoEl = document.getElementById("invoice-no");
             if (invNoEl) {
                 invNoEl.textContent = inv.invoiceNo ? (inv.invoiceNo.startsWith("#") ? inv.invoiceNo : "#" + inv.invoiceNo) : "#" + orderId;
@@ -36,7 +35,6 @@ async function fetchAndRenderInvoice() {
                 invStatusEl.textContent = inv.invoiceStatus || "PAID";
             }
 
-            // Populate customer info
             const bName = document.getElementById("buyer-name");
             if (bName) bName.textContent = inv.buyerName || "Customer";
 
@@ -52,7 +50,6 @@ async function fetchAndRenderInvoice() {
             const bEmail = document.getElementById("buyer-email");
             if (bEmail) bEmail.textContent = inv.email || "";
 
-            // Populate items
             const tbody = document.getElementById("item-tbody");
             if (tbody) {
                 tbody.innerHTML = "";
@@ -76,7 +73,6 @@ async function fetchAndRenderInvoice() {
                     tbody.innerHTML = '<tr><td colspan="5" class="text-center text-muted py-3">No items found for this order.</td></tr>';
                 }
 
-                // Populate totals
                 const shipping = inv.shippingCharges || 0;
                 const grandTotal = subtotal + shipping;
 

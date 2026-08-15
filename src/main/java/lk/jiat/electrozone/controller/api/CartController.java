@@ -1,6 +1,5 @@
-package lk.jiat.ElectroZone.controller.api;
-
-
+package lk.jiat.ElectroZone.controller.api;
+
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Context;

@@ -1,1 +1,0 @@
-<%= application.getRealPath("/assets/img") %>

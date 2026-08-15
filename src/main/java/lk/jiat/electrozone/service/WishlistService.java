@@ -32,8 +32,7 @@ public class WishlistService {
                 
                 if (stock != null) {
                     Product product = stock.getProduct();
-                    
-                    // Check if already in wishlist
+
                     List<Wishlist> existing = hibernateSession.createQuery("FROM Wishlist w WHERE w.user=:user AND w.product=:product", Wishlist.class)
                             .setParameter("user", sessionUser)
                             .setParameter("product", product)
@@ -91,8 +90,7 @@ public class WishlistService {
                 WishlistDTO dto = new WishlistDTO();
                 dto.setId(w.getId());
                 dto.setProductTitle(w.getProduct().getTitle());
-                
-                // Get one stock to display price
+
                 List<Stock> stocks = hibernateSession.createQuery("FROM Stock s WHERE s.product=:product AND s.qty > 0 ORDER BY s.price ASC", Stock.class)
                         .setParameter("product", w.getProduct())
                         .setMaxResults(1)
@@ -106,7 +104,6 @@ public class WishlistService {
                     dto.setCurrentPrice(0);
                 }
 
-                // images
                 List<String> imagePaths = new ArrayList<>();
                 List<ProductImage> pImages = hibernateSession.createQuery("FROM ProductImage p WHERE p.product=:product", ProductImage.class)
                         .setParameter("product", w.getProduct())

@@ -49,9 +49,8 @@ public class Product extends BaseEntity {
     @Column(name="images")
     @CollectionTable(name = "product_images_list",joinColumns = @JoinColumn(name = "pr_id"))
     @ElementCollection(fetch = FetchType.EAGER)
-    private List<String> images;
-
-
+    private List<String> images;
+
     public List<String> getImages() {
         return images;
     }

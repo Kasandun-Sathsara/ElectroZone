@@ -38,7 +38,7 @@ public class CheckoutService {
                 if (address == null) {
                     message = "Address not found. Please check again!";
                 } else {
-                    // Order pending method call here
+
                     Order pendingOrder = orderService.createPendingOrder(dbUser, hibernateSession);
                     PayHereDTO paymentDetails = createPaymentDetails(hibernateSession, pendingOrder);
                     responseObject.add("paymentDetails",AppUtil.GSON.toJsonTree(paymentDetails));
@@ -70,7 +70,7 @@ public class CheckoutService {
                                 .setParameter("user", dbUser)
                                 .setParameter("primary", true)
                                 .getSingleResultOrNull();
-                        if (existingPrimary != null) { // primary address already exists.
+                        if (existingPrimary != null) { 
                             existingPrimary.setPrimary(false);
                             hibernateSession.merge(existingPrimary);
                         }
@@ -83,7 +83,7 @@ public class CheckoutService {
                         address.setCity(city);
                         address.setUser(dbUser);
                         hibernateSession.persist(address);
-                        // Order pending method call here
+
                         Order pendingOrder = orderService.createPendingOrder(dbUser, hibernateSession);
                         PayHereDTO paymentDetails = createPaymentDetails(hibernateSession, pendingOrder);
                         responseObject.add("paymentDetails",AppUtil.GSON.toJsonTree(paymentDetails));
@@ -156,13 +156,13 @@ public class CheckoutService {
                         amount += outOfCity.getPrice();
                     }
                 } else {
-                    amount += withinCity.getPrice(); // fallback
+                    amount += withinCity.getPrice(); 
                 }
             } else {
-                amount += withinCity.getPrice(); // fallback
+                amount += withinCity.getPrice(); 
             }
         }
-//
+
         String hashValue = PayHereUtil.generateHash(orderId, amount);
         PayHereDTO payHereDTO = new PayHereDTO();
         payHereDTO.setSandbox(true);
@@ -234,9 +234,8 @@ public class CheckoutService {
                 responseObject.add("deliveryTypes", AppUtil.GSON.toJsonTree(deliveryTypeDTOList));
             }
             hibernateSession.close();
-        }
-
-
+        }
+
         responseObject.addProperty("status", status);
         responseObject.addProperty("message", message);
         return AppUtil.GSON.toJson(responseObject);

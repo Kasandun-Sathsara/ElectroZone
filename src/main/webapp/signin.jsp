@@ -7,14 +7,14 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>ElectroZone - Create Account</title>
-        <!-- Bootstrap 5 CSS -->
+        
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-        <!-- Bootstrap Icons -->
+        
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-        <!-- Google Fonts -->
+        
         <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
             rel="stylesheet">
-        <!-- Custom CSS -->
+        
         <link rel="stylesheet" href="assets/css/style.css">
     </head>
 
@@ -22,31 +22,32 @@
 
         <div class="container-fluid vh-100 p-0">
             <div class="row g-0 h-100">
-                <!-- Left Panel (Hidden on extra small devices) -->
+                
                 <div
                     class="col-md-6 col-lg-6 d-none d-md-flex flex-column justify-content-center left-panel position-relative">
                     <div class="content-wrapper p-4 p-xl-5 z-2">
-                        <!-- Brand -->
-                        <div class="brand mb-5 d-flex align-items-center">
-                            <div class="brand-icon me-3 d-flex align-items-center justify-content-center shadow-sm">
+                        
+                        <div class="brand mb-5 d-flex align-items-center gap-2">
+                            <div class="brand-icon d-flex align-items-center justify-content-center shadow-sm" style="width: 44px; height: 44px; background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); border-radius: 12px;">
                                 <i class="bi bi-lightning-fill text-white fs-4"></i>
                             </div>
+                            <h2 class="mb-0 fw-bold tracking-tight text-white">Electro<span class="text-electric">Zone</span></h2>
                         </div>
 
-                        <!-- Main Text -->
+                        
                         <h1 class="display-4 fw-bolder mb-3 lh-sm mt-4">
                             Future of Tech<br>
                             Starts Here.
                         </h1>
 
-                        <!-- Sub Description -->
+                        
                         <p class="text-light-muted mb-5 fs-5 pe-lg-5 fw-normal mt-4">
                             Join ElectroZone today. Access exclusive deals,<br>
                             track your orders in real-time, and experience<br>
                             the next generation of electronics shopping.
                         </p>
 
-                        <!-- Members Joined -->
+                        
                         <div class="members-joined d-flex align-items-center mt-5 pt-4">
                             <div class="avatar-group me-3 d-flex">
                                 <img src="https://ui-avatars.com/api/?name=O+D&background=e2e8f0&color=4a5568&rounded=true&size=40"
@@ -69,15 +70,23 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Gradient Overlay / Decors -->
+                    
                     <div class="glow-bg"></div>
                 </div>
 
-                <!-- Right Panel (Sign Up Form) -->
+                
                 <div
-                    class="col-md-6 col-lg-6 col-12 d-flex flex-column align-items-center justify-content-center right-panel position-relative pt-5 pt-md-0 bg-white">
+                    class="col-md-6 col-lg-6 col-12 d-flex flex-column align-items-center justify-content-center right-panel position-relative py-5 bg-white min-vh-100">
                     <div class="login-wrapper w-100 px-4 px-sm-5 custom-max-width">
-                        <div class="mb-4 text-center text-md-start mt-4">
+                        
+                        <div class="d-flex d-md-none align-items-center justify-content-center gap-2 mb-4">
+                            <div class="brand-icon d-flex align-items-center justify-content-center shadow-sm" style="width: 40px; height: 40px; background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); border-radius: 10px;">
+                                <i class="bi bi-lightning-fill text-white fs-5"></i>
+                            </div>
+                            <span class="fw-bold fs-3 tracking-tight text-dark mb-0">Electro<span class="text-primary">Zone</span></span>
+                        </div>
+
+                        <div class="mb-4 text-center text-md-start">
                             <h2 class="fw-bolder mb-2 text-dark fs-1">Create Account</h2>
                             <p class="text-muted fs-6">Enter your details to get started.</p>
                             <c:if test="${not empty error}">
@@ -88,7 +97,7 @@
                         </div>
 
                         <form onsubmit="event.preventDefault(); signUp();">
-                            <!-- Name Inputs -->
+                            
                             <div class="row g-3 mb-3">
                                 <div class="col-md-6">
                                     <label for="firstName" class="form-label fw-bold fs-7 text-dark mb-1">First Name</label>
@@ -108,7 +117,7 @@
                                 </div>
                             </div>
 
-                            <!-- Email Input -->
+                            
                             <div class="mb-3">
                                 <label for="email" class="form-label fw-bold fs-7 text-dark mb-1">Email Address</label>
                                 <div class="form-group position-relative input-wrapper">
@@ -118,7 +127,7 @@
                                 </div>
                             </div>
 
-                            <!-- Password Input -->
+                            
                             <div class="mb-3">
                                 <label for="password" class="form-label fw-bold fs-7 text-dark mb-1">Password</label>
                                 <div class="form-group position-relative input-wrapper">
@@ -132,7 +141,7 @@
                                 <div class="form-text fs-8 mt-1 text-muted">Must be at least 8 characters.</div>
                             </div>
 
-                            <!-- Checkbox Options -->
+                            
                             <div class="mb-4 mt-4">
                                 <div class="form-check d-flex align-items-center gap-2">
                                     <input class="form-check-input custom-checkbox mt-0 bg-light" type="checkbox"
@@ -144,19 +153,19 @@
                                 </div>
                             </div>
 
-                            <!-- Sign Up Button -->
+                            
                             <button type="submit"
                                 class="btn btn-primary btn-lg w-100 mb-4 rounded-3 fw-bold shadow-sm btn-signin text-white">Create
                                 Account</button>
 
-                            <!-- Divider -->
+                            
                             <div class="divider d-flex align-items-center mb-4 mt-2">
                                 <hr class="flex-grow-1 border-secondary opacity-25">
                                 <span class="mx-3 text-muted fs-7 fw-medium">Or register with</span>
                                 <hr class="flex-grow-1 border-secondary opacity-25">
                             </div>
 
-                            <!-- Google & Apple Sign In Options -->
+                            
                             <div class="row g-3 mb-4">
                                 <div class="col-6">
                                     <button type="button"
@@ -173,7 +182,7 @@
                                 </div>
                             </div>
 
-                            <!-- Sign In link -->
+                            
                             <div class="text-center mt-2 mb-4">
                                 <p class="text-muted fs-7 fw-medium">Already have an account? <a href="login.jsp"
                                         class="text-decoration-none fw-bold link-primary ms-1">Sign In</a></p>
@@ -181,7 +190,7 @@
                         </form>
                     </div>
 
-                    <!-- Footer -->
+                    
                     <div class="position-absolute bottom-0 w-100 text-center pb-4 text-muted fs-8 fw-medium">
                         &copy; 2023 ElectroZone Inc. All rights reserved.
                     </div>
@@ -193,7 +202,7 @@
         <script src="assets/js/notiflix-aio-3.2.8.min.js"></script>
         <script src="assets/js/sign-up.js"></script>
         <script>
-            // Password toggle
+
             const togglePassword = document.querySelector('#togglePassword');
             const password = document.querySelector('#password');
 

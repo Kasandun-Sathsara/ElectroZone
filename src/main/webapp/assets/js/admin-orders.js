@@ -66,7 +66,7 @@ function populateOrdersTable(orders) {
         
         let date = order.invoiceDate.substring(0, 10);
         let amount = "LKR " + new Intl.NumberFormat("en-US", {minimumFractionDigits: 2}).format(order.shippingCharges);
-        let rawId = order.email; // we stuffed raw ID here for update API
+        let rawId = order.email; 
         
         tbody.innerHTML += `
             <tr>
@@ -114,7 +114,7 @@ function updateOrderStatus(id, newStatus) {
                 Notiflix.Loading.remove();
                 if(data.status) {
                     Notiflix.Notify.success(data.message);
-                    loadOrders(); // reload
+                    loadOrders(); 
                 } else {
                     Notiflix.Notify.failure(data.message);
                 }
@@ -125,7 +125,7 @@ function updateOrderStatus(id, newStatus) {
             });
         },
         function cancelCb() {
-            loadOrders(); // reset select
+            loadOrders(); 
         },
     );
 }

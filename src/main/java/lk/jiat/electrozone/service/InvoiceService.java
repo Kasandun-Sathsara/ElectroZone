@@ -29,13 +29,12 @@ public class InvoiceService {
 
         try {
             int oId = Integer.parseInt(orderId.replaceAll(Validator.NON_DIGIT_PATTERN, ""));
-            
-            // Auto-complete order if pending
+
             try {
                 OrderService orderService = new OrderService();
                 orderService.completeOrder(orderId);
             } catch (Exception e) {
-                // If it was already completed or failed, ignore
+
                 System.out.println("Auto-complete in InvoiceService notice: " + e.getMessage());
             }
 
@@ -54,7 +53,6 @@ public class InvoiceService {
                         invoiceDTO.setBuyerName(user.getFirstName() + " " + (user.getLastName() != null ? user.getLastName() : ""));
                         invoiceDTO.setEmail(user.getEmail());
 
-                        // Safe Address Lookup for User
                         List<Address> userAddresses = hibernateSession.createQuery(
                                 "FROM Address a WHERE a.user=:user ORDER BY a.isPrimary DESC", Address.class)
                                 .setParameter("user", user)
@@ -77,7 +75,6 @@ public class InvoiceService {
                     }
                     invoiceDTO.setCountryName("Sri Lanka");
 
-                    // Safe Delivery Types Lookup
                     double withinCityPrice = 300.0;
                     double outOfCityPrice = 500.0;
                     try {
@@ -118,7 +115,6 @@ public class InvoiceService {
                         itemDTO.setItemPrice(price);
                         itemDTOS.add(itemDTO);
 
-                        // Safe shipping calculation per item
                         try {
                             if (orderItem.getSeller() != null && orderItem.getSeller().getUser() != null) {
                                 User seller = orderItem.getSeller().getUser();

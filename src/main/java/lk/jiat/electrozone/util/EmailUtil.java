@@ -5,8 +5,7 @@ import jakarta.mail.internet.*;
 import java.util.Properties;
 
 public class EmailUtil {
-    
-    // Replace with real SMTP details when deploying
+
     private static final String SMTP_HOST = "smtp.example.com";
     private static final String SMTP_PORT = "587";
     private static final String SMTP_USER = "your-email@example.com";

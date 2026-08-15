@@ -173,8 +173,7 @@ public class AdminService {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            
-            // Disable foreign key checks for clean cascading delete
+
             session.createNativeQuery("SET FOREIGN_KEY_CHECKS = 0").executeUpdate();
 
             try {
@@ -207,7 +206,6 @@ public class AdminService {
 
             int deletedRows = session.createNativeQuery("DELETE FROM product WHERE id = " + id).executeUpdate();
 
-            // Re-enable foreign key checks
             session.createNativeQuery("SET FOREIGN_KEY_CHECKS = 1").executeUpdate();
 
             transaction.commit();
@@ -397,7 +395,7 @@ public class AdminService {
                 product.setStorage(storage);
                 product.setQuality(null);
                 product.setColor(color);
-                product.setSeller(null); // Added by Admin
+                product.setSeller(null); 
                 product.setImages(new ArrayList<>());
                 
                 Stock stock = new Stock();
@@ -415,7 +413,7 @@ public class AdminService {
                         defaultDiscount.setCouponCode("DEFAULT");
                         defaultDiscount.setValue(0.0);
                         defaultDiscount.setStartedAt(new java.util.Date());
-                        // expire in 10 years
+
                         defaultDiscount.setExpiredAt(new java.util.Date(System.currentTimeMillis() + 10L * 365 * 24 * 60 * 60 * 1000));
                         hibernateSession.persist(defaultDiscount);
                     }
@@ -429,8 +427,7 @@ public class AdminService {
 
                     hibernateSession.persist(product);
                     hibernateSession.persist(stock);
-                    
-                    // Handle file uploads
+
                     FileUploadService fileUploadService = new FileUploadService(context);
                     if (imageParts != null) {
                         for (BodyPart part : imageParts) {
@@ -445,7 +442,7 @@ public class AdminService {
                         }
                     }
                     
-                    hibernateSession.merge(product); // Update images list
+                    hibernateSession.merge(product); 
                     transaction.commit();
                     status = true;
                     message = "Product added successfully";
@@ -511,8 +508,7 @@ public class AdminService {
                     Transaction transaction = hibernateSession.beginTransaction();
                     try {
                         hibernateSession.merge(product);
-                        
-                        // Update stock
+
                         List<Stock> stocks = hibernateSession.createQuery("FROM Stock s WHERE s.product=:product ORDER BY s.id DESC", Stock.class)
                                 .setParameter("product", product).getResultList();
                         
@@ -522,7 +518,7 @@ public class AdminService {
                             stock.setQty(productDTO.getQty());
                             hibernateSession.merge(stock);
                         } else {
-                            // If no stock exists, create one
+
                             Stock stock = new Stock();
                             stock.setProduct(product);
                             stock.setPrice(productDTO.getPrice());
@@ -541,8 +537,7 @@ public class AdminService {
                             
                             hibernateSession.persist(stock);
                         }
-                        
-                        // Handle new image uploads (append)
+
                         FileUploadService fileUploadService = new FileUploadService(context);
                         if (imageParts != null && !imageParts.isEmpty()) {
                             for (BodyPart part : imageParts) {

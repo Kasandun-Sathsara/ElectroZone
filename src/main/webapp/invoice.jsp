@@ -5,13 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ElectroZone - Order Invoice</title>
-    <!-- Bootstrap 5 CSS -->
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
+    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    <!-- Google Fonts -->
+    
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- Custom CSS -->
+    
     <link rel="stylesheet" href="assets/css/style.css">
     <style>
         body {
@@ -82,13 +82,13 @@
 </head>
 <body style="min-height: 100vh; display: flex; flex-direction: column;">
 
-    <!-- Navbar -->
+    
     <jsp:include page="include/header.jsp"/>
 
-    <!-- Main Content -->
+    
     <main class="container my-4 flex-grow-1">
 
-        <!-- Success Banner -->
+        
         <div class="success-alert-box d-flex align-items-center gap-3 no-print">
             <i class="bi bi-check-circle-fill text-success fs-3"></i>
             <div>
@@ -97,14 +97,16 @@
             </div>
         </div>
 
-        <!-- Invoice Card -->
+        
         <div class="invoice-card-wrapper">
-            <!-- Header Section -->
+            
             <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-start pb-4 mb-4 border-bottom">
                 <div class="mb-3 mb-sm-0">
                     <div class="d-flex align-items-center gap-2 mb-2">
-                        <i class="bi bi-lightning-charge-fill fs-2 text-primary"></i>
-                        <span class="fw-bolder fs-3 text-dark">ElectroZone</span>
+                        <div class="d-flex align-items-center justify-content-center shadow-sm" style="width: 36px; height: 36px; background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); border-radius: 10px;">
+                            <i class="bi bi-lightning-fill text-white fs-5"></i>
+                        </div>
+                        <span class="fw-bolder fs-3 text-dark">Electro<span class="text-primary">Zone</span></span>
                     </div>
                     <p class="text-muted mb-0 small">Tax Invoice / Official Bill of Supply</p>
                 </div>
@@ -116,7 +118,7 @@
                 </div>
             </div>
 
-            <!-- Customer & Merchant Details -->
+            
             <div class="row g-4 mb-4">
                 <div class="col-sm-6">
                     <div class="p-3 bg-light rounded-3 h-100 border">
@@ -138,7 +140,7 @@
                 </div>
             </div>
 
-            <!-- Items Table -->
+            
             <div class="table-responsive mb-4">
                 <table class="table invoice-items-table">
                     <thead>
@@ -161,7 +163,7 @@
                 </table>
             </div>
 
-            <!-- Totals Section -->
+            
             <div class="row justify-content-end mb-4">
                 <div class="col-md-6 col-lg-5">
                     <div class="order-summary-box">
@@ -182,7 +184,7 @@
                 </div>
             </div>
 
-            <!-- Action Buttons -->
+            
             <div class="d-flex flex-wrap justify-content-between align-items-center pt-3 border-top no-print gap-2">
                 <a href="index.jsp" class="btn btn-outline-secondary rounded-pill px-4 btn-sm">
                     <i class="bi bi-arrow-left me-1"></i> Continue Shopping
@@ -204,14 +206,14 @@
 
     </main>
 
-    <!-- Footer -->
+    
     <footer class="bg-white border-top py-3 mt-auto no-print">
         <div class="container text-center text-muted small">
             &copy; 2026 ElectroZone (PVT) LTD. All Rights Reserved.
         </div>
     </footer>
 
-    <!-- Scripts -->
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/notiflix-aio-3.2.8.min.js"></script>
     <script src="assets/js/invoice.js?v=7"></script>

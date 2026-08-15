@@ -52,7 +52,7 @@ public class PayHereUtil {
             byte[] digest = md.digest(input.getBytes(StandardCharsets.UTF_8));
             StringBuilder sb = new StringBuilder();
             for (byte b : digest) {
-                sb.append(String.format("%02x", b)); // print byte value as 2 hex digit
+                sb.append(String.format("%02x", b)); 
             }
             return sb.toString();
         } catch (NoSuchAlgorithmException e) {

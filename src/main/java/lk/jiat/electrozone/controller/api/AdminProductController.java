@@ -51,8 +51,7 @@ public class AdminProductController {
             @Context HttpServletRequest request) {
         
         ProductDTO productDTO = AppUtil.GSON.fromJson(productJson, ProductDTO.class);
-        
-        // Extract just the image parts
+
         List<BodyPart> imageParts = new ArrayList<>();
         if (dummyBodyPart != null && dummyBodyPart.getParent() != null) {
             imageParts = dummyBodyPart.getParent().getBodyParts().stream()

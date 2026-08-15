@@ -5,24 +5,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ElectroZone - My Wishlist</title>
-    <!-- Bootstrap 5 CSS -->
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
+    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    <!-- Google Fonts -->
+    
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- Custom CSS -->
+    
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 
-    <!-- Navbar -->
+    
     <jsp:include page="include/header.jsp"/>
 
-    <!-- Main Content -->
+    
     <main class="container py-5">
         <div class="row g-5">
-            <!-- Left Sidebar -->
+            
             <aside class="col-lg-3 d-none d-lg-block">
                 <nav class="sticky-top" style="top: 100px;">
                     <a href="my-account.jsp" class="account-sidebar-link">
@@ -40,9 +40,9 @@
                 </nav>
             </aside>
 
-            <!-- Main Wishlist Area -->
+            
             <div class="col-lg-9">
-                <!-- Header -->
+                
                 <div class="wishlist-header d-flex flex-column flex-md-row justify-content-between align-items-md-end mb-4 border-bottom pb-3">
                     <div>
                         <h1 class="fw-bolder display-6 mb-1 text-dark">My Wishlist</h1>
@@ -53,9 +53,9 @@
                     </button>
                 </div>
 
-                <!-- Wishlist Grid -->
+                
                 <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4 mb-5" id="wishlist-container">
-                    <!-- Items will be injected here by wishlist.js -->
+                    
                 </div>
             </div>
         </div>

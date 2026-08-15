@@ -49,7 +49,6 @@ async function loadSingleProduct() {
                 setText("brand-name", product.brandName);
                 setText("model-name", product.modelName);
                 setText("product-quality", product.qualityValue);
-                setText("product-stock", product.qty);
                 setText("product-storage", product.storageValue);
                 setText("product-description", product.description);
 
@@ -60,13 +59,73 @@ async function loadSingleProduct() {
                     colorBg.style.backgroundColor = product.colorValue;
                 }
 
+                const stockWrapper = document.getElementById("stock-status-wrapper");
                 const addToCartBtn = document.getElementById("add-to-cart-main");
-                if (addToCartBtn) {
-                    addToCartBtn.addEventListener("click", async (evt) => {
-                        evt.preventDefault();
-                        const qtyInput = document.getElementById("add-to-cart-qty");
-                        await addToCart(product.stockId, qtyInput ? qtyInput.value : 1);
-                    });
+                const buyNowBtn = document.getElementById("buy-now-btn");
+                const qtyContainer = document.getElementById("qty-selector-container");
+                const wishlistBtn = document.getElementById("single-wishlist-btn");
+                const wishlistText = document.getElementById("wishlist-btn-text");
+
+                if (wishlistBtn) {
+                    wishlistBtn.onclick = () => addToWishlist(product.stockId);
+                }
+
+                if (product.qty <= 0) {
+
+                    if (stockWrapper) {
+                        stockWrapper.className = "text-danger fw-bold fs-7";
+                        stockWrapper.innerHTML = `<span class="badge bg-danger px-3 py-2 fs-7 fw-bold"><i class="bi bi-x-circle-fill me-1"></i> Out of Stock</span>`;
+                    }
+                    if (qtyContainer) {
+                        qtyContainer.style.display = "none";
+                    }
+                    if (addToCartBtn) {
+                        addToCartBtn.disabled = true;
+                        addToCartBtn.classList.add("disabled", "btn-secondary");
+                        addToCartBtn.classList.remove("btn-primary");
+                        addToCartBtn.style.pointerEvents = "none";
+                        addToCartBtn.style.cursor = "not-allowed";
+                        addToCartBtn.innerHTML = `<i class="bi bi-slash-circle fs-5"></i> Out of Stock`;
+                    }
+                    if (buyNowBtn) {
+                        buyNowBtn.style.display = "none";
+                    }
+                    if (wishlistBtn) {
+                        wishlistBtn.className = "btn btn-danger btn-lg flex-grow-1 shadow-sm d-flex align-items-center justify-content-center gap-2";
+                        if (wishlistText) {
+                            wishlistText.classList.remove("d-none");
+                        }
+                    }
+                } else {
+
+                    if (stockWrapper) {
+                        stockWrapper.className = "text-success fw-bold fs-7";
+                        stockWrapper.innerHTML = `<i class="bi bi-check-circle-fill me-1"></i> In Stock (${product.qty})`;
+                    }
+                    if (qtyContainer) {
+                        qtyContainer.style.display = "flex";
+                    }
+                    if (addToCartBtn) {
+                        addToCartBtn.disabled = false;
+                        addToCartBtn.classList.remove("disabled", "btn-secondary");
+                        addToCartBtn.classList.add("btn-primary");
+                        addToCartBtn.style.pointerEvents = "auto";
+                        addToCartBtn.style.cursor = "pointer";
+                        addToCartBtn.innerHTML = `<i class="bi bi-cart-plus fs-5"></i> <span id="add-to-cart-text">Add to Cart</span>`;
+                        addToCartBtn.onclick = async (evt) => {
+                            evt.preventDefault();
+                            const qtyInput = document.getElementById("add-to-cart-qty");
+                            await addToCart(product.stockId, qtyInput ? parseInt(qtyInput.value) || 1 : 1);
+                        };
+                    }
+                    if (buyNowBtn) {
+                        buyNowBtn.style.display = "block";
+                        buyNowBtn.onclick = async () => {
+                            const qtyInput = document.getElementById("add-to-cart-qty");
+                            await addToCart(product.stockId, qtyInput ? parseInt(qtyInput.value) || 1 : 1);
+                            window.location.href = "cart.jsp";
+                        };
+                    }
                 }
             } else {
                 Notiflix.Notify.failure(data.message, { position: 'center-top' });
@@ -78,6 +137,22 @@ async function loadSingleProduct() {
         Notiflix.Notify.failure(e.message, { position: 'center-top' });
     }
 }
+
+window.increaseQty = function() {
+    const qtyInput = document.getElementById("add-to-cart-qty");
+    if(qtyInput) {
+        let val = parseInt(qtyInput.value) || 1;
+        qtyInput.value = val + 1;
+    }
+};
+
+window.decreaseQty = function() {
+    const qtyInput = document.getElementById("add-to-cart-qty");
+    if(qtyInput) {
+        let val = parseInt(qtyInput.value) || 1;
+        if(val > 1) qtyInput.value = val - 1;
+    }
+};
 
 window.changeMainImage = function(element, src) {
     document.querySelectorAll('.gallery-thumbnail').forEach(el => el.classList.remove('active'));

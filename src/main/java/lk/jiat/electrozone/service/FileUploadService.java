@@ -38,14 +38,12 @@ public class FileUploadService {
             if (!Files.exists(sourcePath)) Files.createDirectories(sourcePath);
             
             byte[] bytes = inputStream.readAllBytes();
-            
-            // Write to deployment folder (for instant viewing)
+
             try (OutputStream os1 = new FileOutputStream(deployPath + "/" + fileName)) {
                 os1.write(bytes);
                 os1.flush();
             }
-            
-            // Write to source folder (for persistence across restarts)
+
             try (OutputStream os2 = new FileOutputStream(sourcePath + "/" + fileName)) {
                 os2.write(bytes);
                 os2.flush();

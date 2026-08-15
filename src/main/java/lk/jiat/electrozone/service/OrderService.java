@@ -50,7 +50,7 @@ public class OrderService {
                 if (order == null) {
                     throw new RuntimeException("Order not found for Order ID: " + oId);
                 }
-                // update stock quantity
+
                 List<OrderItem> orderItems = order.getOrderItems();
                 if (orderItems != null && !orderItems.isEmpty()) {
                     for (OrderItem orderItem : orderItems) {
@@ -64,14 +64,12 @@ public class OrderService {
                     }
                 }
 
-                // update order status
                 Status completedStatus = hibernateSession.createNamedQuery("Status.findByValue", Status.class)
                         .setParameter("value", String.valueOf(Status.Type.COMPLETED))
                         .getSingleResult();
                 order.setStatus(completedStatus);
                 hibernateSession.merge(order);
 
-                // remove cart items
                 List<Cart> cartList = hibernateSession.createQuery("FROM Cart c WHERE c.user=:user", Cart.class)
                         .setParameter("user", order.getUser())
                         .getResultList();
@@ -81,14 +79,12 @@ public class OrderService {
 
                 transaction.commit();
 
-                // Send beautiful Invoice email after transaction commit
                 try {
                     User user = order.getUser();
                     if (user != null && user.getEmail() != null) {
                         String recipientEmail = user.getEmail();
                         String buyerName = (user.getFirstName() != null ? user.getFirstName() : "") + " " + (user.getLastName() != null ? user.getLastName() : "");
-                        
-                        // Fetch customer address safely
+
                         String buyerAddress = "Customer Address";
                         String cityName = "Sri Lanka";
                         try {
@@ -105,7 +101,6 @@ public class OrderService {
                             System.out.println("Could not resolve address for email: " + e.getMessage());
                         }
 
-                        // Delivery cost
                         double withinCityPrice = 300.0;
                         double outOfCityPrice = 500.0;
                         try {
@@ -131,7 +126,6 @@ public class OrderService {
                             double lineTotal = uPrice * qty;
                             subtotal += lineTotal;
 
-                            // Estimate shipping per item
                             try {
                                 if (item.getSeller() != null && item.getSeller().getUser() != null) {
                                     List<Address> sAddresses = hibernateSession.createQuery(
@@ -165,12 +159,12 @@ public class OrderService {
 
                         String emailHtml = 
                             "<div style='font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif; max-width: 650px; margin: 0 auto; background-color: #ffffff; border-radius: 12px; overflow: hidden; border: 1px solid #e2e8f0; box-shadow: 0 4px 15px rgba(0,0,0,0.05);'>" +
-                            // Header
+
                             "<div style='background: linear-gradient(135deg, #2563eb, #1d4ed8); padding: 28px 32px; text-align: center; color: #ffffff;'>" +
                                 "<h1 style='margin: 0; font-size: 24px; font-weight: 800; letter-spacing: -0.5px;'>ElectroZone</h1>" +
                                 "<p style='margin: 6px 0 0 0; color: #bfdbfe; font-size: 14px;'>Official Payment Receipt & Tax Invoice</p>" +
                             "</div>" +
-                            // Body Container
+
                             "<div style='padding: 30px;'>" +
                                 "<div style='display: flex; justify-content: space-between; margin-bottom: 24px; border-bottom: 2px solid #f1f5f9; padding-bottom: 16px;'>" +
                                     "<table style='width: 100%;'><tr>" +
@@ -188,7 +182,7 @@ public class OrderService {
                                         "</td>" +
                                     "</tr></table>" +
                                 "</div>" +
-                                // Customer & Merchant Grid
+
                                 "<table style='width: 100%; margin-bottom: 24px; background: #f8fafc; border-radius: 8px; padding: 16px; border: 1px solid #e2e8f0;'>" +
                                     "<tr>" +
                                         "<td style='width: 50%; vertical-align: top; padding: 10px;'>" +
@@ -207,7 +201,7 @@ public class OrderService {
                                         "</td>" +
                                     "</tr>" +
                                 "</table>" +
-                                // Item Table
+
                                 "<table style='width: 100%; border-collapse: collapse; margin-bottom: 20px;'>" +
                                     "<thead>" +
                                         "<tr style='background-color: #f1f5f9;'>" +
@@ -222,7 +216,7 @@ public class OrderService {
                                         itemsHtml.toString() +
                                     "</tbody>" +
                                 "</table>" +
-                                // Summary Box
+
                                 "<div style='background: #f8fafc; border-radius: 8px; padding: 16px 20px; max-width: 280px; margin-left: auto; border: 1px solid #e2e8f0; margin-bottom: 24px;'>" +
                                     "<table style='width: 100%;'>" +
                                         "<tr>" +
@@ -240,18 +234,17 @@ public class OrderService {
                                         "</tr>" +
                                     "</table>" +
                                 "</div>" +
-                                // Call to action
+
                                 "<div style='text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #f1f5f9;'>" +
                                     "<a href='" + invoiceUrl + "' style='background-color: #2563eb; color: #ffffff; text-decoration: none; padding: 12px 28px; font-size: 14px; font-weight: 700; border-radius: 50px; display: inline-block;'>View / Print Full Invoice Online</a>" +
                                 "</div>" +
                             "</div>" +
-                            // Footer
+
                             "<div style='background-color: #f8fafc; padding: 16px; text-align: center; border-top: 1px solid #e2e8f0; color: #94a3b8; font-size: 12px;'>" +
                                 "Thank you for choosing ElectroZone! | Colombo 03, Sri Lanka" +
                             "</div>" +
                         "</div>";
 
-                        // Send using MailServiceProvider Mailable queue
                         String mailSubject = "Invoice #000" + oId + " - Payment Confirmation | ElectroZone";
                         lk.jiat.ElectroZone.mail.InvoiceMail invoiceMail = new lk.jiat.ElectroZone.mail.InvoiceMail(recipientEmail, mailSubject, emailHtml);
                         lk.jiat.ElectroZone.provider.MailServiceProvider.getInstance().sendMail(invoiceMail);

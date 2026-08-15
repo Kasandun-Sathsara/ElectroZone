@@ -32,7 +32,7 @@ async function loadUserProfile() {
         if (response.ok) {
             const data = await response.json();
             if (data.user) {
-                // Update Profile Card
+
                 document.getElementById("displayFullName").textContent = (data.user.firstName || "") + " " + (data.user.lastName || "");
                 document.getElementById("displayEmail").textContent = data.user.email || "N/A";
                 document.getElementById("displayJoinedDate").textContent = data.user.sinceAt || "Unknown";
@@ -88,7 +88,7 @@ async function updateProfile() {
             const data = await response.json();
             if (data.status) {
                 Notiflix.Notify.success(data.message, { position: 'center-top' });
-                // clear passwords
+
                 document.getElementById("password").value = "";
                 document.getElementById("newPassword").value = "";
                 document.getElementById("confirmPassword").value = "";
@@ -105,6 +105,5 @@ async function updateProfile() {
     } finally {
         Notiflix.Loading.remove();
     }
-}
-
-
+}
+

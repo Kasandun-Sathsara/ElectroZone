@@ -91,9 +91,8 @@ function populateCustomersTable(customers) {
         let actionBtnClass = isBlocked ? "unblock" : "";
         let actionBtnIcon = isBlocked ? "bi-check-circle-fill" : "bi-slash-circle-fill";
         let newStatusToSet = isBlocked ? "ACTIVE" : "BLOCKED";
-        
-        // Random avatar based on name
-        let avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(customer.fullName)}&background=1e293b&color=fff`;
+
+        let avatarUrl = `https:
         let date = customer.sinceAt ? customer.sinceAt.substring(0, 10) : "N/A";
         
         tbody.innerHTML += `
@@ -154,7 +153,7 @@ function updateCustomerStatus(id, newStatus) {
                 Notiflix.Loading.remove();
                 if(data.status) {
                     Notiflix.Notify.success(data.message);
-                    loadCustomers(); // reload
+                    loadCustomers(); 
                 } else {
                     Notiflix.Notify.failure(data.message);
                 }

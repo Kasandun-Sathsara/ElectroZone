@@ -2,8 +2,7 @@ let allProductsList = [];
 
 window.addEventListener("load", async () => {
     loadProducts();
-    
-    // Load categories for filter
+
     try {
         const catRes = await fetch("../api/data/categories");
         if(catRes.ok) {
@@ -20,7 +19,6 @@ window.addEventListener("load", async () => {
         console.error(e);
     }
 
-    // Attach event listeners for search and sort
     document.getElementById("searchInput").addEventListener("input", applyFilters);
     document.getElementById("categoryFilter").addEventListener("change", applyFilters);
     document.getElementById("sortFilter").addEventListener("change", applyFilters);
@@ -73,7 +71,7 @@ function applyFilters() {
     } else if(sortVal === "stock_high") {
         filtered.sort((a, b) => b.qty - a.qty);
     } else {
-        // newest (assuming higher productId means newer)
+
         filtered.sort((a, b) => b.productId - a.productId);
     }
 
@@ -91,11 +89,11 @@ function populateProductsTable(products) {
     
     products.forEach(p => {
         let rawImg = (p.images && p.images.length > 0) ? p.images[0] : "";
-        let img = "https://placehold.co/100x100/e2e8f0/475569?text=No+Image";
+        let img = "https:
         
         if (rawImg && typeof rawImg === 'string' && rawImg.trim() !== '') {
             rawImg = rawImg.trim();
-            if (rawImg.startsWith("http://") || rawImg.startsWith("https://")) {
+            if (rawImg.startsWith("http:
                 img = rawImg;
             } else {
                 if (rawImg.startsWith("/")) rawImg = rawImg.substring(1);
@@ -118,7 +116,7 @@ function populateProductsTable(products) {
                 <td>
                     <div class="product-cell">
                         <div class="admin-product-img-wrapper" style="background-color: #f1f5f9;">
-                            <img src="${img}" alt="${p.title}" onerror="this.onerror=null; this.src='https://placehold.co/100x100/e2e8f0/475569?text=No+Photo';" style="object-fit: contain; width: 100%; height: 100%;">
+                            <img src="${img}" alt="${p.title}" onerror="this.onerror=null; this.src='https:
                         </div>
                         <div class="product-info">
                             <p class="product-name text-truncate" style="max-width: 200px;" title="${p.title}">${p.title}</p>
@@ -156,7 +154,6 @@ function editProduct(id) {
     const p = allProductsList.find(x => x.productId === id);
     if (!p) return;
 
-    // Load options first if empty
     if (!document.getElementById('editProductBrand').hasChildNodes() || document.getElementById('editProductBrand').options.length <= 1) {
         loadOptionsForProductModal().then(async () => {
             await populateEditModal(p);
@@ -207,7 +204,7 @@ function deleteProduct(id) {
                         Notiflix.Notify.success(data.message);
                         allProductsList = allProductsList.filter(p => p.productId !== id && p.productId != id);
                         applyFilters();
-                        loadProducts(); // re-sync with DB
+                        loadProducts(); 
                     } else {
                         Notiflix.Notify.failure(data.message);
                     }
@@ -222,7 +219,6 @@ function deleteProduct(id) {
     );
 }
 
-// Add Product Modal Logic
 document.addEventListener('DOMContentLoaded', () => {
     const addProductModal = document.getElementById('addProductModal');
     if(addProductModal) {
@@ -367,7 +363,7 @@ async function addAdminProduct() {
             var modal = bootstrap.Modal.getInstance(document.getElementById('addProductModal'));
             modal.hide();
             form.reset();
-            loadProducts(); // reload table
+            loadProducts(); 
         } else {
             Notiflix.Notify.failure(data.message);
         }
@@ -436,7 +432,7 @@ async function updateAdminProduct() {
             var modal = bootstrap.Modal.getInstance(document.getElementById('editProductModal'));
             modal.hide();
             form.reset();
-            loadProducts(); // reload table
+            loadProducts(); 
         } else {
             Notiflix.Notify.failure(data.message);
         }
@@ -447,7 +443,6 @@ async function updateAdminProduct() {
     }
 }
 
-// Add New Attributes Logic
 function addNewBrand() {
     Notiflix.Confirm.prompt(
         'Add New Brand',
@@ -473,7 +468,7 @@ function addNewBrand() {
                     await loadOptionsForProductModal();
                     if(data.id) {
                         document.getElementById("productBrand").value = data.id;
-                        await loadModelsForBrand(); // Load models for the new brand
+                        await loadModelsForBrand(); 
                     }
                 } else {
                     Notiflix.Notify.failure(data.message);

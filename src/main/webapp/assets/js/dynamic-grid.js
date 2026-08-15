@@ -1,6 +1,6 @@
 let globalProductList = [];
 let filteredProductList = [];
-let currentView = 'grid'; // 'grid' or 'list'
+let currentView = 'grid'; 
 let searchQuery = '';
 let activeBrands = new Set();
 let currentMaxPrice = 0;
@@ -29,14 +29,13 @@ window.addEventListener("load", async () => {
     let apiUrl = "";
     let dataKey = "";
 
-    // Determine API based on current page
     if (window.location.pathname.includes("deals.jsp")) {
         apiUrl = "api/data/deals";
         dataKey = "deals";
     } else if (window.location.pathname.includes("new-arrivals.jsp")) {
         apiUrl = "api/data/new-arrivals";
         dataKey = "newArrivals";
-    } else if (window.location.pathname.includes("brands.jsp") || window.location.pathname.includes("products.jsp")) {
+    } else if (window.location.pathname.includes("products.jsp")) {
         apiUrl = "api/advanced-search/all-data";
         dataKey = "productList";
     }
@@ -47,15 +46,14 @@ window.addEventListener("load", async () => {
             const data = await response.json();
             let productList = data[dataKey] || data.productList;
             if (productList) {
-                // Apply search filter if present
+
                 if(searchQuery) {
                     productList = productList.filter(p => p.title.toLowerCase().includes(searchQuery));
                 }
                 
                 globalProductList = productList;
                 filteredProductList = [...globalProductList];
-                
-                // Initialize Filters if on products.jsp
+
                 if (document.getElementById("brands-container")) {
                     initSidebarFilters(data.brandList, data.minPrice, data.maxPrice);
                 }
@@ -128,11 +126,8 @@ function applyFilters() {
     }
     
     filteredProductList = globalProductList.filter(p => {
-        let matchBrand = true;
-        // In this implementation, the productDTO doesn't have the brand included from API.
-        // Wait, does it? ProductDTO in AdvancedSearchService only has stockId, title, price, images!
-        // To properly filter by brand on frontend, we might need to filter just by price for now,
-        // or check if the title contains the brand. Let's do title contains for now.
+        let matchBrand = true;
+
         if (activeBrands.size > 0) {
             matchBrand = Array.from(activeBrands).some(b => p.title.toLowerCase().includes(b.toLowerCase()));
         }
@@ -229,9 +224,28 @@ function renderDynamicProducts() {
         const id = product.stockId || product.id;
         const title = product.title;
         const price = product.price;
-        const image = product.images && product.images.length > 0 ? product.images[0] : "https://placehold.co/400x400/1e1e1e/FFF?text=Product";
-        const badge = window.location.pathname.includes("deals.jsp") ? `<span class="badge bg-danger rounded-pill px-2 py-1 fs-8">-HOT DEAL</span>` :
-                      window.location.pathname.includes("new-arrivals.jsp") ? `<span class="badge bg-success rounded-pill px-2 py-1 fs-8">NEW</span>` : "";
+        const image = product.images && product.images.length > 0 ? product.images[0] : "https:
+        const isOutOfStock = (product.qty <= 0);
+        
+        let badge = isOutOfStock ? `<span class="badge bg-danger rounded-pill px-2 py-1 fs-8 fw-bold">OUT OF STOCK</span>` :
+                    window.location.pathname.includes("deals.jsp") ? `<span class="badge bg-danger rounded-pill px-2 py-1 fs-8">-HOT DEAL</span>` :
+                    window.location.pathname.includes("new-arrivals.jsp") ? `<span class="badge bg-success rounded-pill px-2 py-1 fs-8">NEW</span>` : "";
+
+        let cartBtnGrid = isOutOfStock 
+            ? `<button class="btn btn-secondary border w-100 rounded-3 py-2 fw-medium fs-7 d-flex align-items-center justify-content-center gap-2 disabled" disabled style="opacity: 0.6; cursor: not-allowed;">
+                    <i class="bi bi-slash-circle"></i> Out of Stock
+               </button>`
+            : `<button onclick="addToCart(${id}, 1);" class="btn btn-outline-light text-dark border w-100 rounded-3 py-2 fw-medium fs-7 d-flex align-items-center justify-content-center gap-2 hover-bg-light">
+                    <i class="bi bi-cart-plus"></i> Add to Cart
+               </button>`;
+
+        let cartBtnList = isOutOfStock
+            ? `<button class="btn btn-secondary border px-4 py-2 rounded-3 fw-medium fs-7 d-flex align-items-center gap-2 disabled" disabled style="opacity: 0.6; cursor: not-allowed;">
+                    <i class="bi bi-slash-circle"></i> Out of Stock
+               </button>`
+            : `<button onclick="addToCart(${id}, 1);" class="btn btn-outline-light text-dark border px-4 py-2 rounded-3 fw-medium fs-7 d-flex align-items-center gap-2 hover-bg-light">
+                    <i class="bi bi-cart-plus"></i> Add to Cart
+               </button>`;
 
         if (currentView === 'grid') {
             container.innerHTML += `
@@ -240,11 +254,11 @@ function renderDynamicProducts() {
                         <div class="position-absolute top-0 start-0 m-3 z-1">
                              ${badge}
                         </div>
-                        <button class="btn btn-light bg-white rounded-circle position-absolute top-0 end-0 m-3 z-1 p-0 d-flex align-items-center justify-content-center text-muted shadow-sm" style="width:32px; height:32px;">
+                        <button onclick="addToWishlist(${id})" title="Add to Wishlist" class="btn btn-light bg-white rounded-circle position-absolute top-0 end-0 m-3 z-1 p-0 d-flex align-items-center justify-content-center text-danger shadow-sm" style="width:32px; height:32px;">
                             <i class="bi bi-heart-fill"></i>
                         </button>
                         <a href="single-product.jsp?productId=${id}" class="p-3 pb-0 text-center bg-light m-2 rounded-4 d-block text-decoration-none">
-                            <img src="${image}" class="card-img-top img-fluid mix-blend-multiply" alt="${title}" style="max-height: 160px; width: auto; object-fit: contain;">
+                            <img src="${image}" class="card-img-top img-fluid mix-blend-multiply" alt="${title}" style="max-height: 160px; width: auto; object-fit: contain; ${isOutOfStock ? 'opacity: 0.6;' : ''}">
                         </a>
                         <div class="card-body d-flex flex-column px-3 pt-3 pb-4">
                             <div class="d-flex align-items-center mb-2">
@@ -256,15 +270,13 @@ function renderDynamicProducts() {
                                 <div class="d-flex align-items-end gap-2 mb-3">
                                     <span class="text-dark fw-bold fs-5">Rs. ${new Intl.NumberFormat("en-US", {minimumFractionDigits: 2}).format(price)}</span>
                                 </div>
-                                <button onclick="addToCart(${id}, 1);" class="btn btn-outline-light text-dark border w-100 rounded-3 py-2 fw-medium fs-7 d-flex align-items-center justify-content-center gap-2 hover-bg-light">
-                                    <i class="bi bi-cart-plus"></i> Add to Cart
-                                </button>
+                                ${cartBtnGrid}
                             </div>
                         </div>
                     </div>
                 </div>`;
         } else {
-            // List View Layout
+
             container.innerHTML += `
                 <div class="col">
                     <div class="card border-0 shadow-sm product-card position-relative bg-white rounded-4 overflow-hidden">
@@ -272,7 +284,7 @@ function renderDynamicProducts() {
                             <div class="col-md-3 bg-light m-2 rounded-4 d-flex align-items-center justify-content-center" style="position:relative;">
                                 <div class="position-absolute top-0 start-0 m-2 z-1">${badge}</div>
                                 <a href="single-product.jsp?productId=${id}" class="d-block text-decoration-none p-2">
-                                    <img src="${image}" class="img-fluid mix-blend-multiply" alt="${title}" style="max-height: 140px; width: auto; object-fit: contain;">
+                                    <img src="${image}" class="img-fluid mix-blend-multiply" alt="${title}" style="max-height: 140px; width: auto; object-fit: contain; ${isOutOfStock ? 'opacity: 0.6;' : ''}">
                                 </a>
                             </div>
                             <div class="col-md-9">
@@ -285,15 +297,13 @@ function renderDynamicProducts() {
                                                 <span class="fw-bold fs-8 me-1">4.5</span>
                                             </div>
                                         </div>
-                                        <button class="btn btn-light bg-white rounded-circle p-0 d-flex align-items-center justify-content-center text-muted shadow-sm" style="width:32px; height:32px;">
+                                        <button onclick="addToWishlist(${id})" title="Add to Wishlist" class="btn btn-light bg-white rounded-circle text-danger shadow-sm p-0 d-flex align-items-center justify-content-center" style="width:32px; height:32px;">
                                             <i class="bi bi-heart-fill"></i>
                                         </button>
                                     </div>
                                     <div class="d-flex align-items-center justify-content-between mt-3">
                                         <span class="text-dark fw-bold fs-4">Rs. ${new Intl.NumberFormat("en-US", {minimumFractionDigits: 2}).format(price)}</span>
-                                        <button onclick="addToCart(${id}, 1);" class="btn btn-outline-light text-dark border rounded-3 px-4 py-2 fw-medium d-flex align-items-center gap-2 hover-bg-light">
-                                            <i class="bi bi-cart-plus"></i> Add to Cart
-                                        </button>
+                                        ${cartBtnList}
                                     </div>
                                 </div>
                             </div>

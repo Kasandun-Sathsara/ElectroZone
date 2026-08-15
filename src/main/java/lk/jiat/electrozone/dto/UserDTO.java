@@ -20,9 +20,8 @@ public class UserDTO implements Serializable {
     private String mobile;
     private String sinceAt;
     private String newPassword;
-    private String confirmPassword;
-
-
+    private String confirmPassword;
+
     public UserDTO() {
     }
 

@@ -31,7 +31,6 @@ public class UserService {
         boolean status = false;
         String message = "";
 
-        ///  login handling code | user authentication part-start
         if (userDTO.getEmail() == null) {
             message = "Email is required!";
         } else if (userDTO.getEmail().isBlank()) {
@@ -51,14 +50,14 @@ public class UserService {
             User singleUser = hibernateSession.createNamedQuery("User.getByEmail", User.class)
                     .setParameter("email", userDTO.getEmail())
                     .getSingleResultOrNull();
-            if (singleUser == null) { // not found
+            if (singleUser == null) { 
                 message = "Account not found. Please register first!";
             } else {
                 boolean passwordMatches = false;
                 try {
                     passwordMatches = org.mindrot.jbcrypt.BCrypt.checkpw(userDTO.getPassword(), singleUser.getPassword());
                 } catch (IllegalArgumentException e) {
-                    // Fallback to plain text comparison for older accounts
+
                     passwordMatches = singleUser.getPassword().equals(userDTO.getPassword());
                 }
                 if (!passwordMatches) {
@@ -78,10 +77,8 @@ public class UserService {
                 }
             }
             hibernateSession.close();
-        }
-        ///  login handling code | user authentication part-end
-
-
+        }
+
         responseObject.addProperty("status", status);
         responseObject.addProperty("message", message);
         return AppUtil.GSON.toJson(responseObject);
@@ -92,7 +89,6 @@ public class UserService {
         boolean status = false;
         String message = "";
 
-        ///  logic handling part
         if (userDTO.getEmail() == null) {
             message = "Email is required!";
         } else if (userDTO.getEmail().isBlank()) {
@@ -177,7 +173,7 @@ public class UserService {
                     .setParameter("email", userDTO.getEmail())
                     .getSingleResultOrNull();
 
-            if (singleUser != null) { // Already exists
+            if (singleUser != null) { 
                 message = "This email already exists! Please use another email";
             } else {
                 User u = new User();
@@ -201,22 +197,18 @@ public class UserService {
                     hibernateSession.persist(u);
                     transaction.commit();
 
-                    /// verification-mail-sending-start
                     VerificationMail verificationMail = new VerificationMail(u.getEmail(), verificationCode);
-                    MailServiceProvider.getInstance().sendMail(verificationMail);
-                    /// verification-mail-sending-end
-
+                    MailServiceProvider.getInstance().sendMail(verificationMail);
+
                     status = true;
                     message = "Account created successfully. Verification code has been sent to the your email. " +
-                            "Please verify it for activate your account!";
-
-
+                            "Please verify it for activate your account!";
+
                 } catch (HibernateException e) {
                     transaction.rollback();
                     message = "Account creation failed. Please try again!";
-                }
-
-
+                }
+
             }
             hibernateSession.close();
         }
@@ -241,19 +233,17 @@ public class UserService {
                     .getSingleResultOrNull();
 
             if (user == null) {
-                // Show success even if not found to prevent email enumeration, but we won't send an email
+
                 status = true;
                 message = "If this email is registered, you will receive an OTP shortly.";
             } else {
                 String otp = AppUtil.generateCode();
-                
-                // Store in session
+
                 HttpSession session = request.getSession();
                 session.setAttribute("resetEmail", user.getEmail());
                 session.setAttribute("resetOtp", otp);
-                session.setMaxInactiveInterval(10 * 60); // OTP expires in 10 minutes
+                session.setMaxInactiveInterval(10 * 60); 
 
-                // Send Email
                 String subject = "Password Reset OTP - ElectroZone";
                 String htmlBody = "<div style='font-family: Arial, sans-serif; padding: 20px; max-width: 600px; margin: 0 auto;'>" +
                         "<h2 style='color: #2563eb;'>ElectroZone Password Reset</h2>" +
@@ -296,7 +286,7 @@ public class UserService {
             if (savedOtp.equals(userDTO.getVerificationCode())) {
                 status = true;
                 message = "OTP verified successfully.";
-                session.setAttribute("otpVerified", true); // Mark as verified so they can proceed to reset
+                session.setAttribute("otpVerified", true); 
             } else {
                 message = "Invalid OTP. Please try again.";
             }
@@ -336,8 +326,7 @@ public class UserService {
                     
                     status = true;
                     message = "Password reset successfully. You can now login.";
-                    
-                    // Clear session attributes
+
                     session.removeAttribute("resetEmail");
                     session.removeAttribute("resetOtp");
                     session.removeAttribute("otpVerified");

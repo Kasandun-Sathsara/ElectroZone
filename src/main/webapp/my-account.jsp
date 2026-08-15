@@ -5,24 +5,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ElectroZone - My Account</title>
-    <!-- Bootstrap 5 CSS -->
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
+    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    <!-- Google Fonts -->
+    
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- Custom CSS -->
+    
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 
-    <!-- Navbar -->
+    
     <jsp:include page="include/header.jsp"/>
 
-    <!-- Main Content -->
+    
     <main class="container py-5">
         <div class="row g-5">
-            <!-- Left Sidebar -->
+            
             <aside class="col-lg-3 d-none d-lg-block">
                 <nav class="sticky-top" style="top: 100px;">
                     <a href="my-account.jsp" class="account-sidebar-link active">
@@ -40,14 +40,14 @@
                 </nav>
             </aside>
 
-            <!-- Main Profile Area -->
+            
             <div class="col-lg-9">
                 <div class="mb-4">
                     <h1 class="fw-bolder display-6 mb-1 text-dark">My Profile</h1>
                     <p class="text-muted fs-6 mb-0">Manage your personal information, address, and security.</p>
                 </div>
 
-                <!-- Profile Summary Card -->
+                
                 <div class="card border-0 shadow-sm rounded-4 p-4 mb-4 text-white" style="background: linear-gradient(135deg, #0284c7 0%, #38bdf8 100%);">
                     <div class="d-flex align-items-center gap-4">
                         <div class="d-flex align-items-center justify-content-center bg-white text-primary rounded-circle shadow-sm" style="width: 80px; height: 80px; flex-shrink: 0;">
@@ -126,7 +126,7 @@
         </div>
     </main>
 
-    <!-- Footer -->
+    
     <footer class="bg-white border-top py-4 mt-auto">
         <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center">
             <p class="text-muted fs-8 mb-3 mb-md-0">&copy; 2024 ElectroZone. All rights reserved.</p>

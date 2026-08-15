@@ -70,7 +70,7 @@ public class ContentService {
         JsonObject responseObject = new JsonObject();
         Session hibernateSession = HibernateUtil.getSessionFactory().openSession();
         List<ProductDTO> productDTOList = new ArrayList<>();
-        // Fetch cheapest products as 'deals'
+
         List<Stock> stockList = hibernateSession.createQuery("FROM Stock s ORDER BY s.price ASC", Stock.class)
                 .setMaxResults(ContentService.MAX_RESULT)
                 .getResultList();

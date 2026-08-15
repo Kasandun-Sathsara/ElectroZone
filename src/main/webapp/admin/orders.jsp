@@ -5,22 +5,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ElectroZone - Order Management</title>
-    <!-- Bootstrap 5 CSS -->
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
+    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    <!-- Google Fonts -->
+    
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- Custom CSS -->
+    
     <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body class="admin-page-body">
 
-    <!-- Top Navbar -->
+    
     <nav class="admin-navbar">
-        <a href="../index.jsp" class="navbar-brand-custom">
-            <i class="bi bi-lightning-fill navbar-brand-icon"></i>
-            <span class="navbar-brand-text">ElectroZone Admin</span>
+        <a href="../index.jsp" class="navbar-brand-custom d-flex align-items-center gap-2 text-decoration-none">
+            <div class="brand-icon shadow-sm" style="background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); width: 34px; height: 34px; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+                <i class="bi bi-lightning-fill text-white fs-6"></i>
+            </div>
+            <span class="navbar-brand-text fw-bold text-dark fs-5 mb-0">Electro<span class="text-primary">Zone</span> <span class="badge bg-primary-subtle text-primary border border-primary-subtle rounded-pill fs-8 ms-1">Admin</span></span>
         </a>
 
         <div class="d-flex align-items-center flex-grow-1 ms-4 justify-content-end gap-4">
@@ -43,7 +45,7 @@
 
     <div class="admin-layout">
         
-        <!-- Light Sidebar -->
+        
         <aside class="admin-sidebar-light">
             
             <div class="sidebar-group-label">Main Menu</div>
@@ -75,7 +77,7 @@
                 </div>
             </a>
 
-            <!-- Pro Plan Promo -->
+            
             <div class="pro-plan-card">
                 <div class="pro-plan-title">Pro Plan</div>
                 <div class="pro-plan-text">Your subscription renews on Nov 1st.</div>
@@ -84,7 +86,7 @@
             
         </aside>
 
-        <!-- Main Content -->
+        
         <main class="admin-main">
             
             <div class="admin-breadcrumbs">
@@ -93,7 +95,7 @@
                 <span class="breadcrumb-current">Orders</span>
             </div>
 
-            <!-- Page Header -->
+            
             <header class="page-header flex-column flex-md-row">
                 <div class="mb-3 mb-md-0">
                     <h1 class="page-title">Order Management</h1>
@@ -106,7 +108,7 @@
                 </div>
             </header>
 
-            <!-- Filter Bar -->
+            
             <div class="filter-card">
                 <div class="filter-search w-100 mb-2 mb-md-0 me-md-3">
                     <i class="bi bi-search"></i>
@@ -126,7 +128,7 @@
                 </div>
             </div>
 
-            <!-- Product Table Card -->
+            
             <div class="table-card shadow-sm mb-4">
                 <div class="table-responsive">
                     <table class="admin-table">
@@ -141,12 +143,12 @@
                             </tr>
                         </thead>
                         <tbody id="admin-orders-tbody">
-                            <!-- Populated by JS -->
+                            
                         </tbody>
                     </table>
                 </div>
                 
-                <!-- Table Footer / Pagination -->
+                
                 <div class="table-footer flex-column flex-sm-row gap-3">
                     <div class="showing-text">
                         Showing all orders

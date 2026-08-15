@@ -20,7 +20,7 @@ public class AdminWebFilter implements Filter {
         HttpSession httpSession = request.getSession(false);
         if (httpSession != null && httpSession.getAttribute("user") != null) {
             User user = (User) httpSession.getAttribute("user");
-            // Simple check: Admin email is from Env app.mail or hardcoded admin@electro.zone
+
             String adminEmail = Env.get("app.mail");
             if(adminEmail == null) adminEmail = "admin@electrozone.lk";
             
@@ -29,8 +29,7 @@ public class AdminWebFilter implements Filter {
                 return;
             }
         }
-        
-        // Not admin or not logged in, redirect to index
+
         response.sendRedirect(request.getContextPath() + "/index.jsp");
     }
 }

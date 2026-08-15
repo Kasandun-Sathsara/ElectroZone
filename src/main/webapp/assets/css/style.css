@@ -2922,5 +2922,242 @@ body { background-color: var(--bg-light); }
 .link-primary { color: var(--primary-color) !important; }
 .link-primary:hover { color: var(--primary-hover) !important; }
 
+/* ==========================================================================
+   Comprehensive Global Responsive Design Enhancements
+   ========================================================================== */
 
+/* 1. Universal Layout & Fluid Typography */
+html, body {
+    overflow-x: hidden;
+    max-width: 100vw;
+}
 
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* 2. Responsive Product Cards & Grids */
+.product-card {
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+@media (hover: hover) {
+    .product-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.15) !important;
+    }
+}
+
+/* 3. Hero & Banner Responsiveness */
+@media (max-width: 767.98px) {
+    .hero-section {
+        padding: 2.5rem 1.25rem !important;
+        text-align: center;
+    }
+    .hero-section h1 {
+        font-size: 2rem !important;
+    }
+    .hero-section p {
+        font-size: 1rem !important;
+    }
+    .hero-section .d-flex {
+        justify-content: center !important;
+    }
+}
+
+/* 4. Single Product Page Responsiveness */
+@media (max-width: 991.98px) {
+    .main-image-wrapper {
+        min-height: 280px !important;
+        height: auto !important;
+        padding: 1.5rem !important;
+    }
+    .main-image-wrapper img {
+        max-height: 250px !important;
+    }
+    .gallery-thumbnail {
+        width: 60px !important;
+        height: 60px !important;
+    }
+    #product-actions-wrapper {
+        flex-direction: column !important;
+    }
+    #product-actions-wrapper .qty-selector,
+    #product-actions-wrapper .btn {
+        width: 100% !important;
+    }
+}
+
+/* 5. Cart & Checkout Responsiveness */
+@media (max-width: 767.98px) {
+    .cart-item-card {
+        padding: 1rem !important;
+    }
+    .cart-item-row {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 1rem !important;
+    }
+    .cart-item-details {
+        width: 100% !important;
+    }
+    .cart-item-actions {
+        width: 100% !important;
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+    }
+    .checkout-step-nav {
+        flex-wrap: wrap !important;
+        gap: 0.5rem !important;
+    }
+    .checkout-summary-card {
+        margin-top: 1.5rem;
+    }
+}
+
+/* 6. User Account, Orders & Wishlist Sidebars */
+@media (max-width: 991.98px) {
+    .account-sidebar {
+        margin-bottom: 2rem;
+    }
+    .account-sidebar-links {
+        display: flex;
+        overflow-x: auto;
+        padding-bottom: 0.5rem;
+        gap: 0.5rem;
+    }
+    .account-sidebar-link {
+        white-space: nowrap;
+        padding: 0.5rem 1rem !important;
+        margin: 0 !important;
+        border-radius: 20px !important;
+        background: #f8fafc;
+    }
+    .order-status-timeline {
+        flex-direction: column;
+        align-items: flex-start !important;
+        gap: 1rem;
+    }
+}
+
+/* 7. Admin Panel Mobile & Tablet Responsiveness */
+@media (max-width: 991.98px) {
+    .admin-layout {
+        flex-direction: column !important;
+        min-height: 100vh !important;
+    }
+
+    .admin-sidebar {
+        width: 100% !important;
+        height: auto !important;
+        min-height: auto !important;
+        position: relative !important;
+        border-right: none !important;
+        border-bottom: 1px solid #e2e8f0 !important;
+        padding: 1rem !important;
+    }
+
+    .admin-sidebar .sidebar-nav {
+        display: flex !important;
+        flex-direction: row !important;
+        overflow-x: auto !important;
+        gap: 0.5rem !important;
+        margin-top: 0.75rem !important;
+        padding-bottom: 0.25rem !important;
+    }
+
+    .admin-sidebar .sidebar-link {
+        white-space: nowrap !important;
+        padding: 0.5rem 0.85rem !important;
+        margin-bottom: 0 !important;
+    }
+
+    .admin-sidebar .sidebar-footer,
+    .admin-sidebar .pro-plan-card {
+        display: none !important;
+    }
+
+    .admin-main {
+        margin-left: 0 !important;
+        width: 100% !important;
+        padding: 1.25rem !important;
+    }
+
+    .page-header {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 1rem !important;
+    }
+
+    .header-actions {
+        width: 100% !important;
+        display: flex !important;
+        gap: 0.5rem !important;
+    }
+
+    .header-actions .btn-outline-custom,
+    .header-actions .btn-primary-custom {
+        flex: 1 !important;
+        justify-content: center !important;
+    }
+
+    .filter-card,
+    .filter-action-bar {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        gap: 0.75rem !important;
+    }
+
+    .filter-search,
+    .filter-group-left,
+    .search-input-wrapper {
+        width: 100% !important;
+        min-width: 100% !important;
+    }
+
+    .table-card {
+        overflow: hidden !important;
+        border-radius: 12px !important;
+    }
+}
+
+/* 8. Table Responsiveness & Touch Optimization */
+.table-responsive {
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+}
+
+.table-responsive table {
+    min-width: 600px;
+}
+
+/* 9. Auth Screens Responsiveness */
+@media (max-width: 767.98px) {
+    .auth-card {
+        margin: 1rem !important;
+        width: calc(100% - 2rem) !important;
+    }
+    .login-wrapper {
+        padding: 1.5rem 1rem !important;
+    }
+    .custom-max-width {
+        max-width: 100% !important;
+    }
+}
+
+/* 10. Invoice Responsiveness */
+@media (max-width: 767.98px) {
+    .invoice-card-wrapper {
+        padding: 1.25rem !important;
+        margin: 1rem 0 !important;
+    }
+    .invoice-actions {
+        flex-direction: column !important;
+        width: 100% !important;
+    }
+    .invoice-actions .btn {
+        width: 100% !important;
+    }
+}

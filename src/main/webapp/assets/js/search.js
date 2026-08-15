@@ -40,8 +40,7 @@ async function loadAdvancedSearchData() {
 function populateSelect(selectId, dataList, valueProp, textProp) {
     const select = document.getElementById(selectId);
     if (!select) return;
-    
-    // Keep the first default option
+
     const firstOption = select.options[0];
     select.innerHTML = "";
     if (firstOption) select.appendChild(firstOption);
@@ -105,12 +104,10 @@ function updateProductView(data) {
     const container = document.getElementById("search-results-container");
     if (!container) return;
     container.innerHTML = "";
-    
-    // Update count
+
     const countEl = document.getElementById("result-count-number");
     if (countEl) countEl.innerText = data.allProductCount || data.productList.length;
-    
-    // Update search term text
+
     const termEl = document.getElementById("result-search-term");
     const searchInput = document.getElementById("search-input");
     if (termEl && searchInput && searchInput.value) {
@@ -118,8 +115,7 @@ function updateProductView(data) {
     } else if (termEl) {
         termEl.innerText = "";
     }
-    
-    // Update active filters UI
+
     const activeFiltersList = document.getElementById("active-filters-list");
     if (activeFiltersList) {
         activeFiltersList.innerHTML = '<span class="text-muted fs-8 fw-medium me-2">Active Filters:</span>';
@@ -146,17 +142,27 @@ function updateProductView(data) {
     data.productList.forEach(item => {
         let imageSrc = item.images && item.images.length > 0 ? item.images[0] : 'assets/img/default-product.png';
         const formattedPrice = new Intl.NumberFormat("en-US", {minimumFractionDigits: 2}).format(item.price);
+        let isOutOfStock = (item.qty <= 0);
         
+        let cartBtnHtml = isOutOfStock
+            ? `<button class="btn btn-secondary w-100 rounded-3 py-2 fw-bold shadow-sm d-flex justify-content-center align-items-center gap-2 disabled" disabled style="opacity: 0.6; cursor: not-allowed;">
+                    <i class="bi bi-slash-circle fs-5"></i> Out of Stock
+               </button>`
+            : `<button class="btn btn-primary w-100 rounded-3 py-2 fw-bold shadow-sm d-flex justify-content-center align-items-center gap-2" onclick="addToCart(${item.stockId},1)">
+                    <i class="bi bi-cart-plus fs-5"></i> Add to Cart
+               </button>`;
+
         container.innerHTML += `
-            <div class="product-list-card shadow-sm border border-light">
-                <div class="card-img-container p-4 bg-white d-flex align-items-center justify-content-center" style="cursor:pointer;" onclick="window.location='single-product.jsp?productId=${item.stockId}'">
-                    <img src="${imageSrc}" alt="${item.title}" style="max-width: 100%; max-height: 200px; object-fit: contain;">
+            <div class="product-list-card shadow-sm border border-light position-relative">
+                <div class="card-img-container p-4 bg-white d-flex align-items-center justify-content-center position-relative" style="cursor:pointer;" onclick="window.location='single-product.jsp?productId=${item.stockId}'">
+                    ${isOutOfStock ? '<span class="badge bg-danger position-absolute top-0 start-0 m-3 px-2 py-1 fw-bold fs-8 z-1">OUT OF STOCK</span>' : ''}
+                    <img src="${imageSrc}" alt="${item.title}" style="max-width: 100%; max-height: 200px; object-fit: contain; ${isOutOfStock ? 'opacity: 0.6;' : ''}">
                 </div>
                 <div class="card-body-wrapper p-4">
                     <div class="flex-grow-1 pe-lg-4">
                         <div class="d-flex justify-content-between align-items-start mb-1">
                             <h3 class="product-title-large m-0" style="font-size: 1.25rem;"><a href="single-product.jsp?productId=${item.stockId}" class="text-dark text-decoration-none">${item.title}</a></h3>
-                            <button class="btn btn-link text-muted p-0 ms-3 hover-danger" onclick="addToWishlist(${item.stockId})"><i class="bi bi-heart-fill fs-5"></i></button>
+                            <button class="btn btn-link text-danger p-0 ms-3 hover-danger" onclick="addToWishlist(${item.stockId})" title="Add to Wishlist"><i class="bi bi-heart-fill fs-5"></i></button>
                         </div>
                         
                         <div class="d-flex align-items-center mb-3">
@@ -179,9 +185,7 @@ function updateProductView(data) {
                     <div class="price-section text-end d-flex flex-column justify-content-between">
                         <div class="fw-bolder text-dark mb-1" style="font-size: 1.5rem;">LKR ${formattedPrice}</div>
                         <div class="mt-auto pt-3">
-                            <button class="btn btn-primary w-100 rounded-3 py-2 fw-bold shadow-sm d-flex justify-content-center align-items-center gap-2" onclick="addToCart(${item.stockId},1)">
-                                <i class="bi bi-cart-plus fs-5"></i> Add to Cart
-                            </button>
+                            ${cartBtnHtml}
                         </div>
                     </div>
                 </div>

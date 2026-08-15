@@ -49,7 +49,7 @@ public class UserController {
     public Response userLogin(String jsonData, @Context HttpServletRequest request) {
         UserDTO userDTO = AppUtil.GSON.fromJson(jsonData, UserDTO.class);
         String responseJson = new UserService().userLogin(userDTO, request);
-        // manage session cart and db cart
+
         new CartService().mergeUserCarts(request);
         return Response.ok().entity(responseJson).build();
     }

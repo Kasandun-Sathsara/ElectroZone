@@ -34,7 +34,7 @@ public class SingleProductService {
                 List<Model> modelList = hibernateSession.createQuery("FROM Model m WHERE m.brand=:brand", Model.class)
                         .setParameter("brand", stock.getProduct().getModel().getBrand())
                         .getResultList();
-                // sub query
+
                 List<Stock> stockList = hibernateSession.createQuery("FROM Stock s WHERE s.product.model IN :modelList AND s != :stock", Stock.class)
                         .setParameter("modelList", modelList)
                         .setParameter("stock", stock)

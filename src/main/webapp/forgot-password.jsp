@@ -6,13 +6,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ElectroZone - Forgot Password</title>
-    <!-- Bootstrap 5 CSS -->
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
+    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-    <!-- Google Fonts -->
+    
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <!-- Custom CSS -->
+    
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body class="auth-page-body">
@@ -22,12 +22,14 @@
         <div class="auth-card">
             <div class="auth-card-body">
                 
-                <a href="index.jsp" class="auth-brand">
-                    <i class="bi bi-lightning-fill auth-brand-icon"></i>
-                    <span class="auth-brand-text">ElectroZone</span>
+                <a href="index.jsp" class="auth-brand d-flex align-items-center justify-content-center gap-2 text-decoration-none mb-4">
+                    <div class="brand-icon shadow-sm" style="background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center;">
+                        <i class="bi bi-lightning-fill text-white fs-5"></i>
+                    </div>
+                    <span class="auth-brand-text fw-bold text-dark fs-4 mb-0">Electro<span class="text-primary">Zone</span></span>
                 </a>
 
-                <!-- Step 1: Request OTP -->
+                
                 <div id="step-1">
                     <h1 class="auth-title">Forgot your password?</h1>
                     <p class="auth-subtitle">Enter your email address and we'll send you an OTP to reset your password.</p>
@@ -47,7 +49,7 @@
                     </form>
                 </div>
 
-                <!-- Step 2: Verify OTP -->
+                
                 <div id="step-2" class="d-none">
                     <h1 class="auth-title">Verify OTP</h1>
                     <p class="auth-subtitle">We have sent a 6-digit OTP to your email address. Please enter it below.</p>
@@ -67,7 +69,7 @@
                     </form>
                 </div>
 
-                <!-- Step 3: Reset Password -->
+                
                 <div id="step-3" class="d-none">
                     <h1 class="auth-title">Reset Password</h1>
                     <p class="auth-subtitle">Please enter your new password below.</p>
@@ -111,7 +113,7 @@
 
     </div>
 
-    <!-- Scripts -->
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/notiflix-aio-3.2.8.min.js"></script>
     <script src="assets/js/forgot-password.js"></script>

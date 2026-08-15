@@ -39,7 +39,6 @@ public class SearchResponseDTO implements Serializable {
 
     public void setPrice(double price) {
         this.price = price;
-    }
-
-
+    }
+
 }

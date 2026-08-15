@@ -6,9 +6,8 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import lk.jiat.ElectroZone.annotation.IsUser;
 import lk.jiat.ElectroZone.dto.UserDTO;
-import lk.jiat.ElectroZone.service.UserService;
-
-
+import lk.jiat.ElectroZone.service.UserService;
+
 @Path("/verify-accounts")
 public class VerificationController {
     @POST

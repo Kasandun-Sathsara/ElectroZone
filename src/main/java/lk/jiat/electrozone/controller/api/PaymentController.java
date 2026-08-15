@@ -16,10 +16,10 @@ public class PaymentController {
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public Response paymentSuccess(@QueryParam("order_id") String payhereOrderId) {
-        // NOTE: PayHere returns order_id parameter, not orderId in the query string
+
         OrderService orderService = new OrderService();
         try {
-            // Check if order is still pending, if so, complete it as a fallback for localhost testing
+
             int oId = Integer.parseInt(payhereOrderId.replaceAll(lk.jiat.ElectroZone.validation.Validator.NON_DIGIT_PATTERN, ""));
             org.hibernate.Session hibernateSession = lk.jiat.ElectroZone.util.HibernateUtil.getSessionFactory().openSession();
             lk.jiat.ElectroZone.entity.Order order = hibernateSession.find(lk.jiat.ElectroZone.entity.Order.class, oId);
@@ -54,10 +54,10 @@ public class PaymentController {
 
         OrderService orderService = new OrderService();
         if (Integer.parseInt(statusCode) == PayHereUtil.PAYMENT_SUCCESS) {
-            // success situation
+
             orderService.completeOrder(orderId);
         } else {
-            // failed situation
+
             orderService.failedOrder(orderId);
         }
         return Response.ok().build();

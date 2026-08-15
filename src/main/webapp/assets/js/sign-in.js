@@ -1,4 +1,4 @@
-// Load remembered credentials on page load
+
 window.addEventListener("load", () => {
     if(localStorage.getItem("userEmail")) {
         const emailInput = document.getElementById("email");
@@ -35,9 +35,8 @@ async function signIn() {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(userLoginObj)
-        });
-
-
+        });
+
         if (response.ok) {
             const data = await response.json();
             if(data.status){
@@ -52,7 +51,7 @@ async function signIn() {
                 Notiflix.Report.success(
                     'ElectroZone',
                     data.message,
-                    'Okay', // button title
+                    'Okay', 
                     () => {
                         window.location = "index.jsp"
                     },

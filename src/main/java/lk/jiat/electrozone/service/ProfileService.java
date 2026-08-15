@@ -61,7 +61,6 @@ public class ProfileService {
         boolean status = false;
         String message = "";
 
-        /// user-profile-data-loading-start
         HttpSession httpSession = request.getSession(false);
         User user = (User) httpSession.getAttribute("user");
 
@@ -74,9 +73,8 @@ public class ProfileService {
 
         Session hibernateSession = HibernateUtil.getSessionFactory().openSession();
         List<Address> addressList = hibernateSession.createQuery("FROM Address a WHERE a.user=:user", Address.class)
-                .setParameter("user", user).getResultList();
-
-
+                .setParameter("user", user).getResultList();
+
         Address primaryAddress = null;
         for (Address address : addressList) {
             if (address.isPrimary()) {
@@ -106,20 +104,18 @@ public class ProfileService {
         responseObject.add("user", AppUtil.GSON.toJsonTree(userDTO));
         status = true;
         message = "Profile loaded successfully";
-        /// user-profile-data-loading-end
+
         hibernateSession.close();
         responseObject.addProperty("status", status);
         responseObject.addProperty("message", message);
         return AppUtil.GSON.toJson(responseObject);
-    }
-
-
+    }
+
     public String updateProfile(UserDTO userDTO, @Context HttpServletRequest request) {
         JsonObject responseObject = new JsonObject();
         boolean status = false;
         String message = "";
 
-        /// profile-update-start
         if (userDTO.getFirstName() == null) {
             message = "First name is required!";
         } else if (userDTO.getFirstName().isBlank()) {
@@ -183,9 +179,8 @@ public class ProfileService {
 
                 List<Address> addressList = hibernateSession.createQuery("FROM Address a WHERE a.user=:user", Address.class)
                         .setParameter("user", dbUser)
-                        .getResultList();
-
-
+                        .getResultList();
+
                 Address currentAddress = null;
                 for (Address address : addressList) {
                     if (address.getLineOne().equals(userDTO.getLineOne()) &&
@@ -216,7 +211,7 @@ public class ProfileService {
                     hibernateSession.merge(dbUser);
                     hibernateSession.merge(currentAddress);
                     transaction.commit();
-                    httpSession.setAttribute("user", dbUser); /// update session user
+                    httpSession.setAttribute("user", dbUser); 
                     status = true;
                     message = "Profile details update successful...";
                 } catch (HibernateException e) {
@@ -226,9 +221,8 @@ public class ProfileService {
 
                 hibernateSession.close();
             }
-        }
-        /// profile-update-end
-
+        }
+
         responseObject.addProperty("status", status);
         responseObject.addProperty("message", message);
         return AppUtil.GSON.toJson(responseObject);

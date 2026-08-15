@@ -95,8 +95,7 @@ function populateAddressForm() {
         document.getElementById("lineOne").value = address.lineOne;
         document.getElementById("lineTwo").value = address.lineTwo || "";
         document.getElementById("postalCode").value = address.postalCode;
-        
-        // Disable them by default if using current address
+
         toggleAddressFields(true);
         document.getElementById("usePrimaryAddressCheckbox").checked = true;
     }
@@ -147,10 +146,10 @@ async function processCheckout() {
         if (response.ok) {
             const data = await response.json();
             if (data.status) {
-                // Initialize PayHere
+
                 payhere.onCompleted = async function onCompleted(orderId) {
                     Notiflix.Notify.success("Payment completed. OrderID:" + orderId, { position: 'center-top' });
-                    // Complete the order first before redirecting to invoice
+
                     try {
                         await fetch("api/payments/return?order_id=" + orderId);
                     } catch(e) { console.error("Return call error:", e); }

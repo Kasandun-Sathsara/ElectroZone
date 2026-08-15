@@ -29,7 +29,7 @@ async function verifyAccount() {
                 Notiflix.Report.success(
                     'ElectroZone',
                     data.message,
-                    'Okay', // button title
+                    'Okay', 
                     () => {
                         window.location = "login.jsp"
                     },

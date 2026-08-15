@@ -22,7 +22,7 @@ async function sendOtp() {
 
         if (data.status) {
             Notiflix.Notify.success(data.message);
-            // Switch to Step 2
+
             document.getElementById('step-1').classList.add('d-none');
             document.getElementById('step-2').classList.remove('d-none');
             document.getElementById('otp').focus();
@@ -60,7 +60,7 @@ async function verifyOtp() {
 
         if (data.status) {
             Notiflix.Notify.success(data.message);
-            // Switch to Step 3
+
             document.getElementById('step-2').classList.add('d-none');
             document.getElementById('step-3').classList.remove('d-none');
             document.getElementById('new-password').focus();
@@ -104,8 +104,7 @@ async function resetPassword() {
 
         if (data.status) {
             Notiflix.Notify.success(data.message);
-            
-            // Redirect to login after 2 seconds
+
             setTimeout(() => {
                 window.location.href = 'login.jsp';
             }, 2000);
