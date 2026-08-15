@@ -89,11 +89,11 @@ function populateProductsTable(products) {
     
     products.forEach(p => {
         let rawImg = (p.images && p.images.length > 0) ? p.images[0] : "";
-        let img = "https:
+        let img = "https://placehold.co/100x100?text=No+Image";
         
         if (rawImg && typeof rawImg === 'string' && rawImg.trim() !== '') {
             rawImg = rawImg.trim();
-            if (rawImg.startsWith("http:
+            if (rawImg.startsWith("http://") || rawImg.startsWith("https://")) {
                 img = rawImg;
             } else {
                 if (rawImg.startsWith("/")) rawImg = rawImg.substring(1);
@@ -116,7 +116,7 @@ function populateProductsTable(products) {
                 <td>
                     <div class="product-cell">
                         <div class="admin-product-img-wrapper" style="background-color: #f1f5f9;">
-                            <img src="${img}" alt="${p.title}" onerror="this.onerror=null; this.src='https:
+                            <img src="${img}" alt="${p.title}" onerror="this.onerror=null; this.src='https://placehold.co/100x100?text=No+Image';">
                         </div>
                         <div class="product-info">
                             <p class="product-name text-truncate" style="max-width: 200px;" title="${p.title}">${p.title}</p>

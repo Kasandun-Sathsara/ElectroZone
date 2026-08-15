@@ -48,6 +48,7 @@ public class ProductService {
                     dto.setStockId(stock.getId());
                     dto.setTitle(stock.getProduct().getTitle());
                     dto.setPrice(stock.getPrice());
+                    dto.setQty(stock.getQty());
                     List<lk.jiat.ElectroZone.entity.ProductImage> pImages = hibernateSession.createQuery("FROM ProductImage p WHERE p.product=:product", lk.jiat.ElectroZone.entity.ProductImage.class)
                             .setParameter("product", stock.getProduct())
                             .setMaxResults(1)

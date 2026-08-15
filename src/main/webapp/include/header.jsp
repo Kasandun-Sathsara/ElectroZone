@@ -34,12 +34,6 @@
                     <li class="nav-item">
                         <a class="nav-link text-dark px-2 py-1 rounded" href="products.jsp">Products</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark px-2 py-1 rounded" href="deals.jsp">Deals</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark px-2 py-1 rounded" href="new-arrivals.jsp">New Arrivals</a>
-                    </li>
                 </ul>
 
                 

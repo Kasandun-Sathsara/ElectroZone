@@ -77,13 +77,6 @@
                     <i class="bi bi-gear"></i> Settings
                 </div>
             </a>
-
-            
-            <div class="pro-plan-card">
-                <div class="pro-plan-title">Pro Plan</div>
-                <div class="pro-plan-text">Your subscription renews on Nov 1st.</div>
-                <button class="btn-manage-plan">Manage Plan</button>
-            </div>
             
         </aside>
 

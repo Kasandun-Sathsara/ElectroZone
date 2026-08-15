@@ -64,32 +64,32 @@ public class AdvancedSearchService {
                 "LEFT JOIN p.storage st " +
                 "WHERE 1=1 ");
         Map<String, Object> params = new HashMap<>();
-        if (requestObject.has("brandName")) {
+        if (requestObject.has("brandName") && !requestObject.get("brandName").getAsString().isBlank()) {
             hql.append(" AND b.name=:brandName ");
             params.put("brandName", requestObject.get("brandName").getAsString());
         }
 
-        if (requestObject.has("title")) {
+        if (requestObject.has("title") && !requestObject.get("title").getAsString().isBlank()) {
             hql.append(" AND p.title LIKE :title ");
             params.put("title", "%" + requestObject.get("title").getAsString() + "%");
         }
 
-        if (requestObject.has("categoryId")) {
+        if (requestObject.has("categoryId") && requestObject.get("categoryId").getAsInt() > 0) {
             hql.append(" AND p.category.id=:categoryId ");
             params.put("categoryId", requestObject.get("categoryId").getAsInt());
         }
 
-        if (requestObject.has("conditionValue")) {
+        if (requestObject.has("conditionValue") && !requestObject.get("conditionValue").getAsString().isBlank()) {
             hql.append(" AND q.value=:conditionValue ");
             params.put("conditionValue", requestObject.get("conditionValue").getAsString());
         }
 
-        if (requestObject.has("colorValue")) {
+        if (requestObject.has("colorValue") && !requestObject.get("colorValue").getAsString().isBlank()) {
             hql.append(" AND c.value=:colorValue ");
             params.put("colorValue", requestObject.get("colorValue").getAsString());
         }
 
-        if (requestObject.has("storageValue")) {
+        if (requestObject.has("storageValue") && !requestObject.get("storageValue").getAsString().isBlank()) {
             hql.append(" AND st.value=:storageValue ");
             params.put("storageValue", requestObject.get("storageValue").getAsString());
         }
@@ -106,6 +106,16 @@ public class AdvancedSearchService {
         if (requestObject.has("sortValue")) {
             String sortValue = requestObject.get("sortValue").getAsString();
             switch (sortValue) {
+                case "2":
+                case "Price: Low to High":
+                    hql.append(" ORDER BY s.price ASC ");
+                    break;
+                case "3":
+                case "Price: High to Low":
+                    hql.append(" ORDER BY s.price DESC ");
+                    break;
+                case "4":
+                case "Newest Arrivals":
                 case "Sort by Latest":
                     hql.append(" ORDER BY s.createdAt DESC ");
                     break;
@@ -115,10 +125,12 @@ public class AdvancedSearchService {
                 case "Sort by Name":
                     hql.append(" ORDER BY p.title ASC ");
                     break;
-                case "Sort by Price":
-                    hql.append(" ORDER BY s.price ASC ");
+                default:
+                    hql.append(" ORDER BY s.id ASC ");
                     break;
             }
+        } else {
+            hql.append(" ORDER BY s.id ASC ");
         }
 
         Query<Stock> query = hibernateSession.createQuery(hql.toString(), Stock.class);
@@ -234,9 +246,11 @@ public class AdvancedSearchService {
         List<ProductDTO> productDTOList = new ArrayList<>();
         for (Stock stock : stockList) {
             ProductDTO productDTO = new ProductDTO();
+            productDTO.setProductId(stock.getProduct().getId());
             productDTO.setStockId(stock.getId());
             productDTO.setTitle(stock.getProduct().getTitle());
             productDTO.setPrice(stock.getPrice());
+            productDTO.setQty(stock.getQty());
             List<String> imagePaths = new ArrayList<>();
             Session session = HibernateUtil.getSessionFactory().openSession();
             List<lk.jiat.ElectroZone.entity.ProductImage> pImages = session.createQuery("FROM ProductImage p WHERE p.product=:product", lk.jiat.ElectroZone.entity.ProductImage.class)

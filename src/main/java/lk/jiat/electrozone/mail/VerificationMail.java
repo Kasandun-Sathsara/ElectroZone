@@ -25,7 +25,7 @@ public class VerificationMail extends lk.jiat.ElectroZone.mail.Mailable {
 
         HtmlTextEmail htmlTextEmail = getEmailTemplateBuilder()
                 .header()
-                .logo("https:
+                .logo("https://ui-avatars.com/api/?name=Electro+Zone&background=0284c7&color=fff&size=120").and()
                 .text("WELCOME " + to).h1().center().and()
                 .text("Thanks for register in our website").center().and()
                 .text("To verify your email please click on the button below.").center().and()

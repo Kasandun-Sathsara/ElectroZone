@@ -91,8 +91,7 @@ function populateCustomersTable(customers) {
         let actionBtnClass = isBlocked ? "unblock" : "";
         let actionBtnIcon = isBlocked ? "bi-check-circle-fill" : "bi-slash-circle-fill";
         let newStatusToSet = isBlocked ? "ACTIVE" : "BLOCKED";
-
-        let avatarUrl = `https:
+        let avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent(customer.fullName)}&background=f1f5f9&color=0284c7&rounded=true&bold=true`;
         let date = customer.sinceAt ? customer.sinceAt.substring(0, 10) : "N/A";
         
         tbody.innerHTML += `

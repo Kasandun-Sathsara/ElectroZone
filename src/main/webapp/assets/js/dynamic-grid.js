@@ -224,7 +224,7 @@ function renderDynamicProducts() {
         const id = product.stockId || product.id;
         const title = product.title;
         const price = product.price;
-        const image = product.images && product.images.length > 0 ? product.images[0] : "https:
+        const image = product.images && product.images.length > 0 ? product.images[0] : "https://placehold.co/300x300?text=No+Image";
         const isOutOfStock = (product.qty <= 0);
         
         let badge = isOutOfStock ? `<span class="badge bg-danger rounded-pill px-2 py-1 fs-8 fw-bold">OUT OF STOCK</span>` :

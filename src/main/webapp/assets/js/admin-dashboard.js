@@ -76,7 +76,7 @@ function populateLowStockAlerts(products) {
     }
     
     products.forEach(p => {
-        let img = (p.images && p.images.length > 0) ? "../" + p.images[0] : "https:
+        let img = (p.images && p.images.length > 0) ? "../" + p.images[0] : "https://placehold.co/100x100?text=No+Image";
         let statusText = p.qty === 0 ? "Out of Stock" : "Low Stock";
         let colorClass = p.qty === 0 ? "bg-rose" : "bg-peach";
         

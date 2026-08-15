@@ -239,10 +239,10 @@
         
         <div class="container footer-bottom">
             <div class="d-flex flex-column flex-md-row justify-content-between align-items-center">
-                <p class="text-muted fs-8 mb-2 mb-md-0">&copy; 2024 ElectroZone. All rights reserved.</p>
-                <div class="d-flex gap-2">
-                    <div class="bg-light p-1 rounded"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/1280px-Mastercard-logo.svg.png" alt="Mastercard" height="20"></div>
-                    <div class="bg-light p-1 rounded"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/2560px-Visa_Inc._logo.svg.png" alt="Visa" height="20"></div>
+                <p class="text-muted fs-8 mb-0">&copy; 2023 ElectroZone Inc. All rights reserved.</p>
+                <div class="d-flex gap-3 align-items-center text-muted fs-7">
+                    <span><i class="bi bi-shield-check text-success me-1"></i> Secure Payments</span>
+                    <span><i class="bi bi-truck text-primary me-1"></i> Island-wide Delivery</span>
                 </div>
             </div>
         </div>

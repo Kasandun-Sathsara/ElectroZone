@@ -1,13 +1,13 @@
 
 :root {
-    /* Core Theme Colors: Deep Midnight & Electric Cyan/Violet */
-    --primary-color: #00d4ff;     /* Electric Cyan */
+    
+    --primary-color: #00d4ff;     
     --primary-hover: #00b8e6;
-    --secondary-color: #6366f1;   /* Deep Violet */
+    --secondary-color: #6366f1;   
     --secondary-hover: #4f46e5;
     
-    --bg-light: #f8fafc;          /* Very light slate */
-    --bg-dark: #0f172a;           /* Deep navy / midnight */
+    --bg-light: #f8fafc;          
+    --bg-dark: #0f172a;           
     --bg-card: #ffffff;
     --bg-card-dark: #1e293b;
 
@@ -22,7 +22,7 @@
 
     --font-primary: 'Plus Jakarta Sans', sans-serif;
     
-    /* Common UI variables */
+    
     --radius-sm: 8px;
     --radius-md: 12px;
     --radius-lg: 16px;
@@ -35,7 +35,7 @@
     --glass-bg-dark: rgba(15, 23, 42, 0.7);
     --glass-border-dark: rgba(255, 255, 255, 0.1);
 }
-/* Body and General Styles */
+
 body {
     font-family: var(--font-primary);
     color: var(--text-main);
@@ -79,9 +79,8 @@ h6 {
 
 .link-primary:hover {
     color: #0a58ca;
-}
-
-/* Left Panel */
+}
+
 .left-panel {
     background: linear-gradient(135deg, var(--bg-dark) 0%, #000000 100%);
     overflow: hidden;
@@ -141,18 +140,16 @@ h6 {
 
 .avatar:first-child {
     margin-left: 0;
-}
-
-/* Right Panel */
+}
+
 .right-panel {
     background-color: #ffffff;
 }
 
 .custom-max-width {
     max-width: 460px;
-}
-
-/* Form Styles */
+}
+
 .input-wrapper {
     position: relative;
 }
@@ -241,9 +238,8 @@ h6 {
 .btn-google:hover {
     background-color: #f6f8fa;
     color: #24292e;
-}
-
-/* Divider */
+}
+
 .divider {
     position: relative;
 }
@@ -265,11 +261,8 @@ h6 {
     font-size: 1.15rem;
     color: #959da5 !important;
     z-index: 4;
-}
-
-/* Home Page Styles */
-
-/* Navbar */
+}
+
 .navbar-brand .brand-icon {
     width: 36px;
     height: 36px;
@@ -288,9 +281,8 @@ h6 {
     top: 50%;
     transform: translateY(-50%);
     color: #6c757d;
-}
-
-/* Hero Section */
+}
+
 .hero-section {
     border-radius: 20px;
     background-size: cover;
@@ -308,9 +300,8 @@ h6 {
 .hero-content {
     position: relative;
     z-index: 2;
-}
-
-/* Category Slider */
+}
+
 .category-item {
     display: flex;
     flex-direction: column;
@@ -347,9 +338,8 @@ h6 {
     justify-content: center;
     color: #4a5568;
     text-decoration: none;
-}
-
-/* Product Cards */
+}
+
 .product-card {
     border: 1px solid var(--border-light);
     border-radius: 16px;
@@ -406,9 +396,8 @@ h6 {
 .add-to-cart-btn:hover {
     background-color: var(--primary-color);
     color: #fff;
-}
-
-/* Banners */
+}
+
 .promo-banner {
     border-radius: 20px;
     padding: 3rem;
@@ -437,9 +426,8 @@ h6 {
     position: relative;
     z-index: 2;
     max-width: 50%;
-}
-
-/* Newsletter */
+}
+
 .newsletter-section {
     background-color: #fafbfc;
     border-radius: 24px;
@@ -457,9 +445,8 @@ h6 {
     justify-content: center;
     font-size: 1.5rem;
     margin-bottom: 1.5rem;
-}
-
-/* Footer */
+}
+
 .footer-top {
     border-top: 1px solid #e1e4e8;
     padding-top: 4rem;
@@ -481,8 +468,23 @@ h6 {
 .footer-link:hover {
     color: var(--primary-color);
 }
-
-/* Responsive Overrides for Mobile & Tablet */
+.footer-payment-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 28px;
+    padding: 2px 6px;
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+}
+.footer-payment-icon img {
+    height: 18px !important;
+    width: auto !important;
+    max-width: 40px !important;
+    object-fit: contain;
+}
+
 @media (max-width: 991.98px) {
     .product-gallery-main {
         height: auto;
@@ -555,9 +557,8 @@ h6 {
         min-height: 250px;
         padding: 1rem;
     }
-}
-
-/* Single Product Page Styles */
+}
+
 .breadcrumb-link {
     color: #6c757d;
     text-decoration: none;
@@ -760,9 +761,8 @@ h6 {
     font-weight: 600;
     font-size: 0.9rem;
     padding: 0 1.25rem;
-}
-
-/* Products Page Styles */
+}
+
 .hover-dark:hover {
     color: #212529 !important;
 }
@@ -819,11 +819,10 @@ h6 {
 .custom-radio .form-check-input:checked {
     background-color: var(--primary-color);
     border-color: var(--primary-color);
-}
-
-/* Extracted from root/forgot-password.jsp */
+}
+
 .auth-page-body { 
-            background-color: var(--bg-light); /* Very light gray */
+            background-color: var(--bg-light); 
             height: 100vh;
             display: flex;
             flex-direction: column;
@@ -897,7 +896,7 @@ h6 {
             left: 1rem;
             top: 50%;
             transform: translateY(-50%);
-            color: var(--primary-color); /* Blue icon */
+            color: var(--primary-color); 
             z-index: 5;
         }
         .auth-input {
@@ -966,9 +965,8 @@ h6 {
         }
         .auth-help-link:hover {
             text-decoration: underline;
-        }
-
-/* Extracted from root/checkout.jsp */
+        }
+
 .checkout-page-body { background-color: var(--bg-light); }
         .step-circle {
             width: 24px;
@@ -1104,17 +1102,16 @@ h6 {
             text-decoration: none;
             margin-left: 1rem;
         }
-        .footer-link-small:hover { color: #343a40; }
-
-/* Extracted from admin/products.jsp */
+        .footer-link-small:hover { color: #343a40; }
+
 .admin-page-body {
             font-family: 'Plus Jakarta Sans', sans-serif;
             background-color: var(--bg-light);
             margin: 0;
-            padding-top: 70px; /* Space for fixed navbar */
+            padding-top: 70px; 
         }
 
-        /* Top Navbar */
+        
         .admin-navbar {
             background-color: #fff;
             border-bottom: 1px solid #e2e8f0;
@@ -1136,7 +1133,7 @@ h6 {
             gap: 0.75rem;
             text-decoration: none;
             color: #0f172a;
-            min-width: 240px; /* Align with sidebar width */
+            min-width: 240px; 
         }
         .navbar-brand-icon {
             width: 32px;
@@ -1210,13 +1207,13 @@ h6 {
             cursor: pointer;
         }
 
-        /* Layout Structure */
+        
         .admin-layout {
             display: flex;
             min-height: calc(100vh - 70px);
         }
 
-        /* Light Sidebar */
+        
         .admin-sidebar-light {
             width: 250px;
             background-color: #fff;
@@ -1267,7 +1264,7 @@ h6 {
             color: #0f172a;
         }
         .sidebar-nav-link.active {
-            background-color: #eff6ff; /* Light blue */
+            background-color: #eff6ff; 
             color: var(--primary-color);
         }
         .sidebar-nav-link.active i { color: var(--primary-color); }
@@ -1286,7 +1283,7 @@ h6 {
             color: white;
             border-radius: 12px;
             padding: 1.25rem;
-            margin-top: auto; /* Push to bottom */
+            margin-top: auto; 
             margin-bottom: 1rem;
         }
         .pro-plan-title { font-weight: 800; font-size: 0.95rem; margin-bottom: 0.5rem; }
@@ -1304,14 +1301,14 @@ h6 {
         }
         .btn-manage-plan:hover { background-color: rgba(255,255,255,0.3); }
 
-        /* Main Content */
+        
         .admin-main {
             flex-grow: 1;
             padding: 2rem 2.5rem;
-            margin-left: 250px; /* Offset for fixed sidebar */
+            margin-left: 250px; 
         }
 
-        /* Breadcrumbs */
+        
         .admin-breadcrumbs {
             font-size: 0.85rem;
             color: #64748b;
@@ -1324,7 +1321,7 @@ h6 {
         .admin-breadcrumbs a:hover { color: #0f172a; }
         .breadcrumb-current { color: #0f172a; font-weight: 600; }
 
-        /* Header Area */
+        
         .page-header {
             display: flex;
             justify-content: space-between;
@@ -1379,7 +1376,7 @@ h6 {
         }
         .btn-primary-custom:hover { background-color: var(--primary-hover); }
 
-        /* Filter Bar */
+        
         .filter-card {
             background-color: #fff;
             border: 1px solid #e2e8f0;
@@ -1431,7 +1428,7 @@ h6 {
             display: flex;
             flex-wrap: wrap;
             gap: 0.5rem;
-            margin-left: auto; /* Push to right */
+            margin-left: auto; 
         }
         .filter-tag {
             background-color: #fff;
@@ -1443,7 +1440,7 @@ h6 {
             border-radius: 20px;
         }
 
-        /* Data Table Card */
+        
         .table-card {
             background-color: #fff;
             border: 1px solid #e2e8f0;
@@ -1485,7 +1482,7 @@ h6 {
         }
         .form-check-input:checked { background-color: var(--primary-color); border-color: var(--primary-color); }
 
-        /* Product Cell */
+        
         .product-cell {
             display: flex;
             align-items: center;
@@ -1512,7 +1509,7 @@ h6 {
         .product-name { font-weight: 700; color: #0f172a; margin: 0 0 0.2rem 0; font-size: 0.9rem; }
         .product-sku { font-size: 0.75rem; color: #64748b; margin: 0; }
 
-        /* Stock Visualizer */
+        
         .stock-wrapper { display: flex; flex-direction: column; gap: 0.35rem; width: 100px; }
         .stock-text { font-size: 0.85rem; font-weight: 600; margin: 0; }
         .stock-text.normal { color: #1e293b; }
@@ -1531,7 +1528,7 @@ h6 {
         .stock-bar.low { background-color: #ea580c; width: 15%; }
         .stock-bar.out { width: 0%; }
 
-        /* Status Pills */
+        
         .status-pill {
             font-size: 0.7rem;
             font-weight: 700;
@@ -1543,7 +1540,7 @@ h6 {
         .pill-draft { background-color: #f1f5f9; color: #64748b; }
         .pill-inactive { background-color: #fee2e2; color: #dc2626; }
 
-        /* Action Icons */
+        
         .action-icons { display: flex; gap: 0.75rem; }
         .action-icon-btn {
             color: #94a3b8;
@@ -1557,7 +1554,7 @@ h6 {
         .action-icon-btn:hover { color: #0f172a; }
         .action-icon-btn.delete:hover { color: #dc2626; }
 
-        /* Table Footer / Pagination */
+        
         .table-footer {
             padding: 1.25rem 1.5rem;
             display: flex;
@@ -1584,9 +1581,8 @@ h6 {
         .page-btn:hover:not(.disabled) { background-color: #f8fafc; border-color: #cbd5e1; color: #0f172a; }
         .page-btn.active { background-color: var(--primary-color); color: #fff; border-color: var(--primary-color); font-weight: 600; }
         .page-btn.disabled { color: #94a3b8; cursor: not-allowed; background-color: #fcfcfd; }
-        .page-dots { padding: 0.35rem 0.25rem; color: #94a3b8; }
-
-/* Extracted from admin/dashboard.jsp */
+        .page-dots { padding: 0.35rem 0.25rem; color: #94a3b8; }
+
 .admin-page-body {
             font-family: 'Plus Jakarta Sans', sans-serif;
             background-color: var(--bg-light);
@@ -1594,13 +1590,13 @@ h6 {
             overflow-x: hidden;
         }
 
-        /* Layout Structure */
+        
         .admin-layout {
             display: flex;
             min-height: 100vh;
         }
 
-        /* Sidebar */
+        
         .admin-sidebar {
             width: 260px;
             background-color: #0f172a;
@@ -1688,7 +1684,7 @@ h6 {
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            background-color: #fca5a5; /* Placeholder color matching mockup */
+            background-color: #fca5a5; 
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1709,7 +1705,7 @@ h6 {
             color: #94a3b8;
         }
 
-        /* Main Content */
+        
         .admin-main {
             flex-grow: 1;
             padding: 2rem 2.5rem;
@@ -1719,7 +1715,7 @@ h6 {
             max-height: 100vh;
         }
 
-        /* Top Header */
+        
         .admin-header {
             display: flex;
             justify-content: space-between;
@@ -1779,7 +1775,7 @@ h6 {
         }
         .btn-notification:hover { background-color: #f8fafc; color: #0f172a; }
 
-        /* Dashboard Cards common */
+        
         .admin-card {
             background-color: #fff;
             border-radius: 12px;
@@ -1808,7 +1804,7 @@ h6 {
         }
         .admin-card-link:hover { text-decoration: underline; }
 
-        /* Stat Cards */
+        
         .stat-icon-wrapper {
             width: 48px;
             height: 48px;
@@ -1848,7 +1844,7 @@ h6 {
             margin: 0;
         }
 
-        /* Table Styles */
+        
         .admin-table {
             width: 100%;
             border-collapse: separate;
@@ -1874,7 +1870,7 @@ h6 {
         .td-total { font-weight: 700 !important; color: #0f172a !important; text-align: right; }
         .th-total { text-align: right !important; }
 
-        /* Status Pills */
+        
         .status-pill {
             font-size: 0.75rem;
             font-weight: 700;
@@ -1885,10 +1881,10 @@ h6 {
         .pill-shipped { background-color: #eff6ff; color: #2563eb; }
         .pill-pending { background-color: #fff7ed; color: #ea580c; }
         .pill-delivered { background-color: #dcfce7; color: #16a34a; }
-        .pill-processing { background-color: #eff6ff; color: #3b82f6; } /* Similar to shipped in mockup */
+        .pill-processing { background-color: #eff6ff; color: #3b82f6; } 
         .pill-cancelled { background-color: #fee2e2; color: #dc2626; }
 
-        /* Low Stock Alert List */
+        
         .alert-item {
             display: flex;
             align-items: center;
@@ -1932,9 +1928,8 @@ h6 {
             margin-top: 1rem;
             transition: background-color 0.2s;
         }
-        .btn-restock:hover { background-color: #fee2e2; }
-
-/* Extracted from admin/customers.jsp */
+        .btn-restock:hover { background-color: #fee2e2; }
+
 .admin-page-body {
             font-family: 'Plus Jakarta Sans', sans-serif;
             background-color: var(--bg-light);
@@ -1942,13 +1937,13 @@ h6 {
             overflow-x: hidden;
         }
 
-        /* Layout Structure */
+        
         .admin-layout {
             display: flex;
             min-height: 100vh;
         }
 
-        /* Light Sidebar */
+        
         .admin-sidebar {
             width: 260px;
             background-color: #fff;
@@ -1970,7 +1965,7 @@ h6 {
             gap: 1rem;
             text-decoration: none;
             color: #0f172a;
-            border-bottom: 1px solid transparent; /* Align visually */
+            border-bottom: 1px solid transparent; 
         }
         .sidebar-brand-icon {
             width: 36px;
@@ -2023,7 +2018,7 @@ h6 {
             color: #0f172a;
         }
         .sidebar-link.active {
-            background-color: #eff6ff; /* Light blue */
+            background-color: #eff6ff; 
             color: var(--primary-color);
         }
         .sidebar-link.active i { color: var(--primary-color); }
@@ -2065,17 +2060,17 @@ h6 {
         .user-name { font-weight: 700; font-size: 0.85rem; color: #0f172a; margin-bottom: 0.1rem; }
         .user-email { font-size: 0.7rem; color: #64748b; }
 
-        /* Main Content */
+        
         .admin-main {
             flex-grow: 1;
             padding: 2rem 2.5rem;
-            margin-left: 260px; /* Offset for fixed sidebar */
+            margin-left: 260px; 
             display: flex;
             flex-direction: column;
             min-height: 100vh;
         }
 
-        /* Top Header */
+        
         .admin-header {
             display: flex;
             justify-content: space-between;
@@ -2127,7 +2122,7 @@ h6 {
             font-size: 0.8rem;
         }
 
-        /* Stats Row */
+        
         .stat-card {
             background-color: #fff;
             border-radius: 12px;
@@ -2167,7 +2162,7 @@ h6 {
         .icon-bg-green { background-color: #dcfce7; color: #16a34a; }
         .icon-bg-purple { background-color: #f5f3ff; color: #8b5cf6; }
 
-        /* Filter Action Bar */
+        
         .filter-action-bar {
             display: flex;
             flex-wrap: wrap;
@@ -2247,7 +2242,7 @@ h6 {
         }
         .btn-primary-custom:hover { background-color: var(--primary-hover); }
 
-        /* Data Table Card */
+        
         .table-card {
             background-color: #fff;
             border: 1px solid #e2e8f0;
@@ -2303,7 +2298,7 @@ h6 {
         
         .join-date { color: #475569; font-size: 0.85rem; }
 
-        /* Status Pills with Dots */
+        
         .status-pill {
             font-size: 0.75rem;
             font-weight: 600;
@@ -2324,7 +2319,7 @@ h6 {
         .pill-blocked { background-color: #fee2e2; color: #991b1b; }
         .pill-blocked .dot { background-color: #ef4444; }
 
-        /* Action Icons */
+        
         .action-icons { display: flex; gap: 0.75rem; }
         .action-icon-btn {
             color: #64748b;
@@ -2338,7 +2333,7 @@ h6 {
         .action-icon-btn:hover { color: #0f172a; }
         .action-icon-btn.unblock { color: #10b981; }
 
-        /* Table Footer / Pagination */
+        
         .table-footer {
             padding: 1.25rem 1.5rem;
             display: flex;
@@ -2371,19 +2366,18 @@ h6 {
         .page-btn.disabled { color: #94a3b8; cursor: not-allowed; background-color: #fcfcfd; }
         .page-dots { padding: 0 0.25rem; color: #94a3b8; }
 
-        /* Page Footer */
+        
         .page-footer {
             margin-top: auto;
             text-align: center;
             padding-top: 2rem;
             color: #64748b;
             font-size: 0.8rem;
-        }
-
-/* Extracted from root/orders.jsp */
+        }
+
 body { background-color: var(--bg-light); }
 
-        /* Sidebar Navigation */
+        
         .account-sidebar-link {
             display: flex;
             align-items: center;
@@ -2406,14 +2400,14 @@ body { background-color: var(--bg-light); }
             color: #212529;
         }
         .account-sidebar-link.active {
-            background-color: #e0f2fe; /* Light blue */
+            background-color: #e0f2fe; 
             color: #0369a1;
         }
         .account-sidebar-link.active i {
             color: #0369a1;
         }
 
-        /* Filter Bar */
+        
         .filter-input-group {
             background-color: var(--bg-light);
             border: 1px solid #dee2e6;
@@ -2454,7 +2448,7 @@ body { background-color: var(--bg-light); }
             color: #334155;
         }
 
-        /* Order Card */
+        
         .order-card {
             border: 1px solid #e2e8f0;
             border-radius: 12px;
@@ -2487,7 +2481,7 @@ body { background-color: var(--bg-light); }
             padding: 1.5rem;
         }
 
-        /* Status Badges */
+        
         .status-badge {
             display: inline-flex;
             align-items: center;
@@ -2501,7 +2495,7 @@ body { background-color: var(--bg-light); }
         .status-shipped { background-color: #dbeafe; color: #1e40af; }
         .status-processing { background-color: #fef3c7; color: #b45309; }
 
-        /* Order Items */
+        
         .order-item-img {
             width: 80px;
             height: 80px;
@@ -2532,7 +2526,7 @@ body { background-color: var(--bg-light); }
             margin: 0 0.5rem;
         }
 
-        /* Action Buttons */
+        
         .btn-order-action {
             width: 160px;
             font-weight: 600;
@@ -2547,12 +2541,11 @@ body { background-color: var(--bg-light); }
             .order-header > div { width: 100%; display: flex; justify-content: space-between; }
             .btn-order-action { width: 100%; }
             .action-buttons-container { width: 100%; margin-top: 1rem; }
-        }
-
-/* Extracted from root/search.jsp */
+        }
+
 body { background-color: var(--bg-light); }
         
-        /* Hero Search Area */
+        
         .search-hero {
             padding: 4rem 0 3rem 0;
             text-align: center;
@@ -2588,7 +2581,7 @@ body { background-color: var(--bg-light); }
             font-weight: 600;
         }
 
-        /* Filter Bar */
+        
         .filter-bar-card {
             border-radius: 12px;
             border: 1px solid #e2e8f0;
@@ -2629,7 +2622,7 @@ body { background-color: var(--bg-light); }
             cursor: pointer;
         }
 
-        /* Horizontal Product Card */
+        
         .product-list-card {
             border: 1px solid #e2e8f0;
             border-radius: 16px;
@@ -2657,7 +2650,7 @@ body { background-color: var(--bg-light); }
         .card-img-container img {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* Mockup shows full bleed for some images */
+            object-fit: cover; 
             border-radius: 8px;
         }
         .card-body-wrapper {
@@ -2714,7 +2707,7 @@ body { background-color: var(--bg-light); }
             margin-bottom: 0.5rem;
         }
 
-        /* Out of Stock State */
+        
         .out-of-stock-card {
             opacity: 0.6;
             background-color: #f8fafc;
@@ -2736,9 +2729,8 @@ body { background-color: var(--bg-light); }
             .price-section { width: 100%; border-left: none; border-top: 1px solid #e2e8f0; padding-left: 0; padding-top: 1.5rem; margin-top: 1.5rem; align-items: flex-start; }
             .price-section .btn { width: 100%; }
             .price-section .text-end { text-align: left !important; }
-        }
-
-/* Extracted from root/wishlist.jsp */
+        }
+
 body { background-color: var(--bg-light); }
         
         .wishlist-header {
@@ -2762,7 +2754,7 @@ body { background-color: var(--bg-light); }
             color: #212529;
         }
 
-        /* Wishlist Card Styles */
+        
         .wishlist-card {
             background-color: #fff;
             border-radius: 12px;
@@ -2794,7 +2786,7 @@ body { background-color: var(--bg-light); }
             object-fit: contain;
         }
 
-        /* Floating Delete Button */
+        
         .btn-delete-item {
             position: absolute;
             top: 12px;
@@ -2817,7 +2809,7 @@ body { background-color: var(--bg-light); }
             color: white;
         }
 
-        /* Floating Status Badge */
+        
         .stock-badge {
             position: absolute;
             bottom: -12px;
@@ -2834,7 +2826,7 @@ body { background-color: var(--bg-light); }
         .badge-outofstock { background-color: #f1f5f9; color: #64748b; }
 
         .wishlist-body {
-            padding: 2rem 1.25rem 1.25rem 1.25rem; /* extra top padding for floating badge */
+            padding: 2rem 1.25rem 1.25rem 1.25rem; 
             display: flex;
             flex-direction: column;
             flex-grow: 1;
@@ -2901,13 +2893,11 @@ body { background-color: var(--bg-light); }
             color: #64748b;
         }
 
-        /* Out of Stock Card State */
+        
         .card-outofstock .product-title { color: #64748b; }
         .card-outofstock .price-current { color: #94a3b8; }
-        .card-outofstock .wishlist-img-wrapper img { filter: grayscale(100%); opacity: 0.6; }
-
-
-/* Global Bootstrap Overrides for new Theme */
+        .card-outofstock .wishlist-img-wrapper img { filter: grayscale(100%); opacity: 0.6; }
+
 .text-primary { color: rgba(0, 212, 255, var(--bs-text-opacity, 1)) !important; }
 .bg-primary { background-color: rgba(0, 212, 255, var(--bs-bg-opacity, 1)) !important; }
 .btn-primary { 
@@ -2920,13 +2910,8 @@ body { background-color: var(--bg-light); }
     border-color: var(--primary-hover) !important; 
 }
 .link-primary { color: var(--primary-color) !important; }
-.link-primary:hover { color: var(--primary-hover) !important; }
-
-/* ==========================================================================
-   Comprehensive Global Responsive Design Enhancements
-   ========================================================================== */
-
-/* 1. Universal Layout & Fluid Typography */
+.link-primary:hover { color: var(--primary-hover) !important; }
+
 html, body {
     overflow-x: hidden;
     max-width: 100vw;
@@ -2935,9 +2920,8 @@ html, body {
 img {
     max-width: 100%;
     height: auto;
-}
-
-/* 2. Responsive Product Cards & Grids */
+}
+
 .product-card {
     transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
@@ -2947,9 +2931,8 @@ img {
         transform: translateY(-4px);
         box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.15) !important;
     }
-}
-
-/* 3. Hero & Banner Responsiveness */
+}
+
 @media (max-width: 767.98px) {
     .hero-section {
         padding: 2.5rem 1.25rem !important;
@@ -2964,9 +2947,8 @@ img {
     .hero-section .d-flex {
         justify-content: center !important;
     }
-}
-
-/* 4. Single Product Page Responsiveness */
+}
+
 @media (max-width: 991.98px) {
     .main-image-wrapper {
         min-height: 280px !important;
@@ -2987,9 +2969,8 @@ img {
     #product-actions-wrapper .btn {
         width: 100% !important;
     }
-}
-
-/* 5. Cart & Checkout Responsiveness */
+}
+
 @media (max-width: 767.98px) {
     .cart-item-card {
         padding: 1rem !important;
@@ -3015,9 +2996,8 @@ img {
     .checkout-summary-card {
         margin-top: 1.5rem;
     }
-}
-
-/* 6. User Account, Orders & Wishlist Sidebars */
+}
+
 @media (max-width: 991.98px) {
     .account-sidebar {
         margin-bottom: 2rem;
@@ -3040,9 +3020,8 @@ img {
         align-items: flex-start !important;
         gap: 1rem;
     }
-}
-
-/* 7. Admin Panel Mobile & Tablet Responsiveness */
+}
+
 @media (max-width: 991.98px) {
     .admin-layout {
         flex-direction: column !important;
@@ -3121,9 +3100,8 @@ img {
         overflow: hidden !important;
         border-radius: 12px !important;
     }
-}
-
-/* 8. Table Responsiveness & Touch Optimization */
+}
+
 .table-responsive {
     -webkit-overflow-scrolling: touch;
     width: 100%;
@@ -3131,9 +3109,8 @@ img {
 
 .table-responsive table {
     min-width: 600px;
-}
-
-/* 9. Auth Screens Responsiveness */
+}
+
 @media (max-width: 767.98px) {
     .auth-card {
         margin: 1rem !important;
@@ -3145,9 +3122,8 @@ img {
     .custom-max-width {
         max-width: 100% !important;
     }
-}
-
-/* 10. Invoice Responsiveness */
+}
+
 @media (max-width: 767.98px) {
     .invoice-card-wrapper {
         padding: 1.25rem !important;

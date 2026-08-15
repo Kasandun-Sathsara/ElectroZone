@@ -8,6 +8,15 @@ public class SearchResponseDTO implements Serializable {
     private String title;
     private double price;
     private String image;
+    private int qty;
+
+    public int getQty() {
+        return qty;
+    }
+
+    public void setQty(int qty) {
+        this.qty = qty;
+    }
 
     public String getImage() {
         return image;
